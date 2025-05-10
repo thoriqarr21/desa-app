@@ -1,0 +1,145 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+
+/* Optional: sticky header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white; /* or your bg */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #2e2e2e; /* Ungu */
+    border-color: #464546;
+    color: #fff;
+}
+
+.pagination .page-link {
+    color: #343337;
+    margin-left: 20px;
+}
+ 
+.pagination .page-link:hover {
+    background-color: #e2d9f3;
+    border-color: #343336;
+    color: #252228;
+}
+a:hover .show {
+    color: #c0c607; /* Ganti dengan warna yang diinginkan */
+    transform: scale(1.2); /* Memperbesar icon sedikit */
+    transition: color 0.3s, transform 0.3s; /* Animasi transisi */
+}
+a:hover .edit {
+    color: #007bff; /* Ganti dengan warna yang diinginkan */
+    transform: scale(1.2); /* Memperbesar icon sedikit */
+    transition: color 0.3s, transform 0.3s; /* Animasi transisi */
+}
+a:hover .approve {
+    color: #0abf00; /* Ganti dengan warna yang diinginkan */
+    transform: scale(1.2); /* Memperbesar icon sedikit */
+    transition: color 0.3s, transform 0.3s; /* Animasi transisi */
+}
+form:hover .delete{
+    color: #c42020; /* Ganti dengan warna yang diinginkan */
+    transform: scale(1.2); /* Memperbesar icon sedikit */
+    transition: color 0.3s, transform 0.3s; /* Animasi transisi */
+}
+.text-muted {
+    margin-left: 5px;
+}
+
+.status {
+    height: 80px;
+    /* border: 1px solid #767676; */
+    box-shadow: 1px 2px 4px 1px rgb(74, 74, 74);
+    transition: all 0.3s ease;
+    border-left: 4px solid #6d0dfd; /* default border-primary */
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.status:hover {
+    background: #f0f8ff;
+    box-shadow: 0 8px 16px rgba(13, 110, 253, 0.2);
+    transform: translateY(-3px);
+    border-left: 4px solid #6d0dfd;
+}
+.status .card-body h5,
+.status .card-body small {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.status:hover .card-body h5 {
+  color: #6d0dfd;
+  transform: translateX(5px);
+}
+
+.status:hover .card-body small {
+  color: #495057;
+  transform: translateX(3px);
+  opacity: 0.9;
+}
+
+.animated-hr {
+    border: 0;
+    height: 5px;
+    background: linear-gradient(270deg, #0be82c, #f21010, #0d6efd);
+    background-size: 600% 600%;
+    width: 100%;
+    margin: 2rem 0;
+    animation: moveGradient 3s ease infinite, expandHr 1s ease-out forwards;
+    border-radius: 10px;
+  }
+  
+  @keyframes expandHr {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  @keyframes moveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .welcome-hover {
+    display: inline-block;
+    transition: transform 0.4s ease, color 0.4s ease;
+    cursor: pointer;
+  }
+  
+  .welcome-hover:hover {
+    transform: scale(1.1) translateY(-5px);
+    color: #650dfd; 
+  }
+
+  .animated-welcome {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    animation: fadeUpScale 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeUpScale {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  
+  
