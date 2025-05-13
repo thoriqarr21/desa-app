@@ -2,11 +2,16 @@
 
 @section('content')
 
-@session('success')
-    <div class="alert alert-success" role="alert"> 
-        {{ $value }}
+@foreach (['success', 'primary', 'danger'] as $type)
+    @if(session($type))
+        <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+    @endif
+@endforeach
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
     </div>
-@endsession
+@endif
 <div class="px-4 py-4 container-fluid mb-5">
     <div class="mt-4 row">
         <div class="px-3 ">
@@ -39,7 +44,7 @@
                         </div>
                         </form>
                         
-                        <a href="{{ route('proyek.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 me-2">
+                        <a href="{{ route('proyek.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 ms-2 me-2">
                             <i class="fas fa-plus me-2" style="font-size: 13px;"></i>
                             Proyek
                         </a>
@@ -53,10 +58,10 @@
                             <tr>
                                 <th class="text-secondary  font-weight-semibold opacity-7">
                                     No</th>
-                                <th class="text-secondary  font-weight-semibold opacity-7 ps-3">
-                                    Nama Proyek</th>
                                 <th class="text-secondary  font-weight-semibold opacity-7">
                                     Gambar Proyek</th>
+                                <th class="text-secondary  font-weight-semibold opacity-7 ps-3">
+                                    Nama Proyek</th>
                                 
                                 <th class="text-secondary  font-weight-semibold opacity-7 ps-3">
                                     Anggaran</th>
@@ -78,18 +83,28 @@
                                 <td>
                                     <p class="fs-6 font-weight-bold mb-0 text-center">{{ ++$i }}</p>
                                 </td>
+                                <td style=" width: 100px;">
+                                    <img src="{{ asset('storage/' . $proyek->gambar) }}" class="img-fluid rounded-4 w-100" alt="Gambar">
+                                </td>
                                 <td style="white-space: normal; word-break: break-word;">
                                     <p class="fs-6 font-weight-normal mb-0">{{ $proyek->nama_proyek }}</p>
                                 </td>
                                 
-                                <td style="max-width: 180px; width: 160px;">
-                                    <img src="{{ asset('storage/' . $proyek->gambar) }}" class="img-fluid rounded w-100" alt="Gambar">
+                                
+                                <td>
+                                    <span class="fs-6 font-weight-normal">Rp. {{ number_format($proyek->anggaran, 0, ',', '.') }}</span>
                                 </td>
                                 <td>
-                                    <span class="fs-6 font-weight-normal">{{ number_format($proyek->anggaran, 0, ',', '.') }}</span>
-                                </td>
-                                <td>
-                                    <span class="fs-6 font-weight-normal">{{ $proyek->progresTerbaru?->persentase ?? 0 }}%</span>
+                                    <div class="progress-wrapper">
+                                        <span class="fs-6 font-weight-normal">
+                                            {{ $proyek->laporanProyek && $proyek->laporanProyek->progresTerbaru ? $proyek->laporanProyek->progresTerbaru->persentase : 0 }}%
+                                        </span>
+                                        <div class="progress-container">
+                                            <div class="progress-bar"
+                                                 style="width: {{ $proyek->laporanProyek && $proyek->laporanProyek->progresTerbaru ? $proyek->laporanProyek->progresTerbaru->persentase : 0 }}%;">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex">

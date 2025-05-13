@@ -22,7 +22,7 @@
     </div>
 </div>
 <hr>
-<div class="container py-4">
+<div class="container">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white d-flex align-items-center">
             <i class="bi bi-info-circle me-2"></i>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="card-body">
-            <div class="row mb-4">
+            <div class="row mb-1">
                 <div class="col-md-6">
                     <img src="{{ asset('storage/' . $kegiatan->gambar) }}" class="img-fluid rounded shadow" alt="Gambar Proyek">
                 </div>
@@ -51,15 +51,22 @@
                         <strong><i class="bi bi-cash-stack me-1"></i>Anggaran:</strong>
                         <div class="text-muted">Rp {{ number_format($kegiatan->anggaran, 0, ',', '.') }}</div>
                     </div> --}}
-                    <div class="mb-3">
-                        <strong><i class="bi bi-calendar-week me-1"></i>Periode Kegiatan :</strong>
-                        <div class="text-muted">{{ $kegiatan->tanggal_mulai }} sampai {{ $kegiatan->tanggal_selesai }}</div>
-                    </div>
+                    <div class="periode-container">
+                        <div class="periode-header">
+                          <i class="bi bi-calendar-week"></i>
+                          <span>Periode Kegiatan :</span>
+                        </div>
+                        <div class="periode-dates">
+                          <span class="date-badge">{{ $kegiatan->tanggal_mulai }}</span>
+                          <span> sampai </span>
+                          <span class="date-badge">{{ $kegiatan->tanggal_selesai }}</span>
+                        </div>
+                      </div>
                 </div>
                 <div class="col-md-6 mt-1">
                     <div class="mb-3">
                         <strong><i class="bi bi-calendar-week me-1"></i>Periode Waktu :</strong>
-                        <div class="text-muted">{{ $kegiatan->waktu_mulai }} sampai {{ $kegiatan->waktu_selesai }}</div>
+                        <div class="text-muted">{{ $kegiatan->waktu_mulai }} WIB S/D {{ $kegiatan->waktu_selesai }} WIB</div>
                     </div>
                     <div class="mb-3">
                         <strong><i class="bi bi-clock-history me-1"></i>Lama Hari Kegiatan :</strong>
@@ -70,23 +77,20 @@
                         <span class="badge text-bg-success">{{ ucfirst($kegiatan->status) }}</span>
 
                     </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-wallet2 me-1"></i>Lokasi Kegiatan :</strong>
-                        <div class="text-muted">{{ $kegiatan->lokasi }}</div>
-                    </div>
-                </div>
-                {{-- <div class="mb-3">
-                    <label><strong>Lokasi Proyek :</strong></label>
-                    <div class="mr-2" hidden>{{ $kegiatan->lokasi }}</div>
-                    <p class="mt-2 text-muted">
-                        <span id="alamat-lokasi">Sedang mengambil alamat...</span>
-                    </p>
-                    <a href="https://www.google.com/maps?q={{ $kegiatan->lokasi }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3 mb-2 ">
-                        Lihat di Google Maps
-                    </a>
-                    <div id="map" style="height: 300px;"></div>
                     
-                </div> --}}
+                    
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong><i class="bi bi-geo-alt me-1"></i>Lokasi Kegiatan :</strong>
+                <div class="mr-2" hidden>{{ $kegiatan->lokasi }}</div>
+                <p class="mt-2 text-muted">
+                    <span id="alamat-lokasi">Sedang mengambil alamat...</span>
+                </p>
+                <a href="https://www.google.com/maps?q={{ $kegiatan->lokasi }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3 mb-2">
+                    Lihat di Google Maps
+                </a>
+                <div id="map" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
     </div>
@@ -98,5 +102,58 @@
         margin-left: 5px;
     }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @php
+            $koordinat = explode(',', $kegiatan->lokasi);
+            $lat = isset($koordinat[0]) ? floatval(trim($koordinat[0])) : -6.200000;
+            $lng = isset($koordinat[1]) ? floatval(trim($koordinat[1])) : 106.816666;
+        @endphp
+    
+        var lat = {{ $lat }};
+        var lng = {{ $lng }};
+    
+        var map = L.map('map').setView([lat, lng], 15);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+    
+        var marker = L.marker([lat, lng]).addTo(map)
+            .bindPopup('Sedang mendeteksi alamat...')
+            .openPopup();
+    
+        var geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
+    
+        fetch(geocodeUrl)
+    .then(response => response.json())
+    .then(data => {
+        let lokasiElement = document.getElementById('alamat-lokasi');
+        if (data && data.address) {
+            let parts = [
+                data.address.amenity,
+                data.address.building,
+                data.address.road,
+                data.address.suburb,
+                data.address.village || data.address.city,
+                data.address.state,
+                data.address.country
+            ];
+            let address = parts.filter(Boolean).join(', ');
+            marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
+            if (lokasiElement) lokasiElement.innerText = address;
+        } else {
+            marker.setPopupContent('Alamat tidak ditemukan').openPopup();
+            if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
+        }
+    })
+    .catch(error => {
+        console.error('Gagal ambil alamat:', error);
+        marker.setPopupContent('Gagal mengambil alamat').openPopup();
+        let lokasiElement = document.getElementById('alamat-lokasi');
+        if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
+    });
+    });
+    </script>
 
 @endsection

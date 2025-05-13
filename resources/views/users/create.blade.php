@@ -35,7 +35,7 @@
 
 <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
     <div class="card-body p-4">
-<form method="POST" action="{{ route('users.store') }}">
+<form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -67,6 +67,10 @@
                 <strong>Confirm Password:</strong>
                 <input type="password" name="confirm-password" placeholder="Confirm Password" class="form-control">
             </div>
+        </div>
+        <div class="form-group">
+            <label>Foto</label>
+            <input type="file" name="gambar" class="form-control">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">

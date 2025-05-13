@@ -32,7 +32,7 @@ $persentase50 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentas
 $persentase80 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 80)->count();
 $persentase100 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 100)->count();
 
-return view('frontend.dashboard', [
+return view('frontend.index', [
     'jumlahProyek' => PembangunanProyek::count(),
     'jumlahLaporanProyek' => LaporanProyek::count(),
     'jumlahKegiatan' => DesaKegiatan::count(),

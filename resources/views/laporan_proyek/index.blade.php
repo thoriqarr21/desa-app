@@ -86,16 +86,22 @@
 
 @section('content')
 
-@session('success')
-    <div class="alert alert-success" role="alert"> 
-        {{ $value }}
+@foreach (['success', 'primary', 'danger'] as $type)
+    @if(session($type))
+        <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+    @endif
+@endforeach
+
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
     </div>
-@endsession
+@endif
 <div class="px-4 py-4 container-fluid mb-5">
     <div class="mt-4 row">
         <div class="px-3 ">
             <h6 class="text-muted mb-3">
-                Berikut adalah daftar <strong style="font-weight :bold; color:#e8c461; font-size: 18px">Laporan Proyek</strong> yang telah dibuat untuk mendukung dalam pengelolaan program desa secara efektif.
+                Berikut adalah daftar <strong style="font-weight :bold; color:#312f2f; font-size: 18px">Laporan Proyek</strong> yang telah dibuat untuk mendukung dalam pengelolaan program desa secara efektif.
             </h6>
         </div>
         <div class="col-12">
@@ -123,7 +129,7 @@
                         </div>
                     </form>
                         
-                        <a href="{{ route('laporan_proyek.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 me-2">
+                        <a href="{{ route('laporan_proyek.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 ms-2 me-2">
                             <i class="fas fa-plus me-2" style="font-size: 13px;"></i>
                             Laporan
                         </a>
@@ -167,7 +173,14 @@
                                     <span class="fs-6 font-weight-normal">{{ number_format($item->proyek->anggaran, 0, ',', '.') }}</span>
                                 </td>
                                 <td>
-                                    <span class="fs-6 font-weight-normal pe-1">{{ $item->progresTerbaru?->persentase ?? 0 }}%</span>
+                                    <div class="progress-wrapper">
+                                        <span class="fs-6 font-weight-normal">
+                                            {{ $item->progresTerbaru?->persentase ?? 0 }}%
+                                        </span>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: {{ $item->progresTerbaru?->persentase ?? 0 }}%;"></div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <span class="fs-6 font-weight-normal">{{ $item->user->name }}</span>

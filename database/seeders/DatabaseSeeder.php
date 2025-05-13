@@ -14,12 +14,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        $this->call([
+            PermissionTableSeeder::class,
+            CreateAdminUserSeeder::class,
+            CreateKadesUserSeeder::class,
+            CreatePegawaiUserSeeder::class,
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',
             'username' => 'test12345',
             // 'email' => 'test@example.com',
-            'password'=> bcrypt('12345678')
+            'password'=> bcrypt('12345678'),
+            'gambar' => 'logo_pemkab_bogor.jpg'
         ]);
     }
 }

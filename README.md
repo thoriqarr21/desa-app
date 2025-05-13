@@ -59,3 +59,57 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+# Sistem Informasi Proyek Pembangunan Desa
+
+## Instalasi
+
+clone project atau download
+
+```bash
+  git clone https://github.com/lacsapadnan/Sistem-Informasi-Sekolah.git
+  cd Sistem-Informasi-Sekolah
+  npm install
+  composer install
+  cp .env.example .env
+```
+
+Buka `.env` dan atur database anda
+```bash
+  DB_PORT=3306
+  DB_DATABASE=desaapp
+  DB_USERNAME=root
+  DB_PASSWORD=
+```
+
+Install website
+```bash
+  php artisan migrate --seed
+```
+
+Jalankan website
+```bash
+  php artisan serve
+  npm run dev 
+```
+Jalankan keduanya
+## Default akun untuk testing
+
+Admin
+```bash
+  email : admin12345
+  password : 123456
+```
+
+Pegawai
+```bash
+  email : pegawai12345
+  password : 12345678
+```
+
+Kades
+```bash
+  email : kades12345
+  password : 12345678
+```

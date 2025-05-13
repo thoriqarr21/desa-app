@@ -49,15 +49,22 @@
         <div id="form-jalan" style="display: none;">
             <div class="mb-3">
                 <label>Panjang Jalan</label>
-                <input type="number" name="panjang_jalan" class="form-control">
+                <input type="number" name="panjang_jalan" class="form-control" placeholder="Satuan Meter">
             </div>
             <div class="mb-3">
                 <label>Lebar Jalan</label>
-                <input type="number" name="lebar_jalan" class="form-control">
+                <input type="number" name="lebar_jalan" class="form-control" placeholder="Satuan Meter">
             </div>
             <div class="mb-3">
                 <label>Jenis Permukaan</label>
-                <input type="text" name="jenis_permukaan" class="form-control">
+                <select name="jenis_permukaan" class="form-control">
+                    <option value="">Pilih Jenis Permukaan</option>
+                    <option value="aspal">Aspal</option>
+                    <option value="cor beton">Cor Beton</option>
+                    <option value="batu kerikil">Batu Kerikil</option>
+                    <option value="kayu/papan">Kayu/Papan</option>
+                    <option value="tanah">Tanah</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label>Kondisi Jalan</label>
@@ -82,7 +89,7 @@
             </div>
             <div class="mb-3">
                 <label>Luas Bangunan</label>
-                <input type="text" name="luas_bangunan" class="form-control">
+                <input type="text" name="luas_bangunan" class="form-control" placeholder="Satuan Meter Persegi">
             </div>
             <div class="mb-3">
                 <label>Fungsi</label>

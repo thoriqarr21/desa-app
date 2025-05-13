@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('frontend.layouts.master')
 
 @section('content')
 <div class="container">
     <h3>📝 Buat Laporan Proyek</h3>
 
-    <form action="{{ route('laporan_proyek.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('frontend.laporan_proyek.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">

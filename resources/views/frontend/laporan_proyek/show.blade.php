@@ -1,9 +1,20 @@
-@extends('layouts.app')
+@extends('frontend.layouts.master')
 
 @section('content')
+@session('success')
+    <div class="alert alert-success" role="alert" id="alert-message"> 
+        {{ $value }}
+    </div>
+@endsession
+
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
+    </div>
+@endif
 <div class="container">
-    <a href="{{ route('laporan_proyek.index') }}" class="btn btn-secondary mb-3">kembali</a>
-    <a href="{{ route('laporan_proyek.cetak', $laporanProyek->id) }}" class="btn btn-sm btn-primary" target="_blank">
+    <a href="{{ route('frontend.laporan_proyek.index') }}" class="btn btn-secondary mb-3">kembali</a>
+    <a href="{{ route('frontend.laporan_proyek.cetak', $laporanProyek->id) }}" class="btn btn-sm btn-primary" target="_blank">
         Cetak PDF
     </a>
     <h3>📄 Detail Laporan Proyek</h3>
@@ -89,7 +100,7 @@
         
     {{-- Upload Tambahan --}}
     {{-- Form Tambah Dokumentasi Langsung --}}
-    <form action="{{ route('laporan_proyek.storeTambahan') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+    <form action="{{ route('frontend.laporan_proyek.storeTambahan') }}" method="POST" enctype="multipart/form-data" class="mb-4">
         @csrf
         <input type="hidden" name="laporan_id" value="{{ $laporanProyek->id }}">
     

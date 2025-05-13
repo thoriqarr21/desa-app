@@ -24,10 +24,11 @@ class UserController extends Controller
 
      function __construct()
      {
-          $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+          $this->middleware('permission:user-list|user-create|user-edit|user-delete|user-show', ['only' => ['index','store']]);
           $this->middleware('permission:user-create', ['only' => ['create','store']]);
           $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
           $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+          $this->middleware('permission:user-show', ['only' => ['show']]);
      }
     public function index(Request $request): View
     {
@@ -67,20 +68,30 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            // 'email' => 'required|email|unique:users,email',
             'username' => 'required',
             'password' => 'required|same:confirm-password',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'roles' => 'required'
         ]);
     
+        $existingUser = User::where('username', $request->username)->first();
+    
+        if ($existingUser) {
+            return redirect()->route('users.index')->with('error', 'User ini sudah dibuat.');
+        }
+    
         $input = $request->all();
         $input['password'] = \Illuminate\Support\Facades\Hash::make($input['password']);
+    
+        if ($request->hasFile('gambar')) {
+            $input['gambar'] = $request->file('gambar')->store('users', 'public');
+        }
     
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+                        ->with('success', 'User berhasil dibuat.');
     }
     
     /**
@@ -122,9 +133,9 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            // 'email' => 'required|email|unique:users,email,'.$id,
             'username' => 'required|unique:users,username,'.$id,
             'password' => 'same:confirm-password',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'roles' => 'required'
         ]);
     
@@ -135,6 +146,11 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));    
         }
     
+        
+        if ($request->hasFile('gambar')) {
+            $input = $request->file('gambar')->store('users', 'public');
+        }
+
         $user = User::find($id);
         $user->update($input);
         \Illuminate\Support\Facades\DB::table('model_has_roles')->where('model_id',$id)->delete();

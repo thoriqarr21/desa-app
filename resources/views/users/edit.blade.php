@@ -7,9 +7,9 @@
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Edit User</h5>
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}">
-                        <i class="fa fa-arrow-left"></i> Back
-                    </a>
+                    <div class="d-flex align-items-center ms-3 ">
+                        <a class="btn btn-primary btn-sm fs-6 " href="{{ route('users.index') }}"><i class="fa fa-arrow-left fs-6"></i> Kembali</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     @if (count($errors) > 0)
@@ -23,10 +23,20 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('users.update', $user->id) }}">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
+                        <div class="form-group">
+                            <label for="gambar">Ganti Gambar (biarkan kosong jika tidak diganti)</label><br>
+                            @if ($user->gambar)
+                                <img src="{{ asset('storage/' . $user->gambar) }}" alt="Foto User" width="100" class="mb-2"><br>
+                            @endif
+                            <input type="file" name="gambar" class="form-control">
+                            @error('gambar')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                         <div class="mb-3">
                             <label for="name" class="form-label"><strong>Name:</strong></label>
                             <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>

@@ -66,15 +66,22 @@
         {{-- Upload Awal --}}
         <h5 class="mt-4">📌 Upload Awal</h5>
         @foreach ($grupUploadAwal as $dok)
-            <div class="col-md-4 mb-3">
-                <img src="{{ asset('storage/' . $dok->file_path) }}" class="img-fluid rounded" alt="Dokumentasi">
-                <p class="mt-2">{{ $dok->keterangan }}</p>
-                <p class="mt-2">Progress: {{ $dok->progres?->persentase ?? '-' }}%</p>
-                {{-- <p>is_initial: {{ $dok->is_initial ? 'true' : 'false' }}</p> --}}
+        <div class="col-md-4 mb-3">
+        @if ($dok->file_type === 'video')
+            <video controls class="img-fluid rounded" style="max-height: 300px; width: 100%;">
+                <source src="{{ asset('storage/' . $dok->file_path) }}" type="video/mp4">
+                Browser Anda tidak mendukung tag video.
+            </video>
+        @else
+            <img src="{{ asset('storage/' . $dok->file_path) }}" class="img-fluid rounded" alt="Dokumentasi">
+        @endif
 
-            </div>
+        <p class="mt-2">{{ $dok->keterangan }}</p>
+        <p class="mt-2">Progress: {{ $dok->progres?->persentase ?? '-' }}%</p>
+        {{-- <p>is_initial: {{ $dok->is_initial ? 'true' : 'false' }}</p> --}}
+        </div>
         @endforeach
-        
+
         {{-- Upload Tambahan --}}
         <h5 class="mt-4">📌 Upload Tambahan</h5>
 
@@ -90,7 +97,14 @@
                 <strong class="mb-2">Foto Dokumentasi Proyek</strong>
                 @foreach ($doks as $dok)
                     <div class="col-md-4 mb-3">
-                        <img src="{{ asset('storage/' . $dok->file_path) }}" class="img-fluid rounded" alt="Dokumentasi">
+                        @if ($dok->file_type === 'video')
+                            <video controls class="img-fluid rounded" style="max-height: 300px; width: 100%;">
+                            <source src="{{ asset('storage/' . $dok->file_path) }}" type="video/mp4">
+                                Browser Anda tidak mendukung tag video.
+                            </video>
+                        @else
+                            <img src="{{ asset('storage/' . $dok->file_path) }}" class="img-fluid rounded" alt="Dokumentasi">
+                        @endif
                         <p><strong>Keterangan:</strong> {{ $dok->keterangan }}</p>
                         <form action="{{ route('dokumentasi.destroy', $dok->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus dokumentasi ini?');">
                             @csrf
@@ -126,8 +140,8 @@
             
     
             <div class="col-md-6">
-                <label for="dokumentasi">Upload Gambar</label>
-                <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*">
+            <label><strong>Upload Dokumentasi (max 3 file: gambar/video)</strong></label>
+            <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required>
             </div>
     
             <div class="col-md-3">

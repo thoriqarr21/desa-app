@@ -73,14 +73,25 @@
             <input type="date" name="tanggal_selesai" class="form-control" required>
         </div>
         <div class="form-group">
-            <label>Waktu Mulai</label>
-            <input type="time" name="waktu_mulai" class="form-control" required>
+            <label class="form-label fw-semibold">Waktu Mulai</label>
+            <div class="time-picker-wrapper">
+                <span class="time-icon">
+                    <i class="fas fa-clock"></i> <!-- Requires FontAwesome -->
+                </span>
+                <input type="text" id="waktuMulai" name="waktu_mulai" class="form-control custom-time-picker" placeholder="Pilih waktu" required>
+            </div>
         </div>
 
         <div class="form-group">
-            <label>Waktu Selesai</label>
-            <input type="time" name="waktu_selesai" class="form-control" required>
+            <label class="form-label fw-semibold">Waktu Selesai</label>
+            <div class="time-picker-wrapper">
+                <span class="time-icon">
+                    <i class="fas fa-clock"></i> <!-- Icon jam -->
+                </span>
+                <input type="text" id="waktuSelesai" name="waktu_selesai" class="form-control custom-time-picker" placeholder="Pilih waktu" required>
+            </div>
         </div>
+        
 
         <div class="form-group">
             <label>Status</label>
@@ -97,10 +108,11 @@
         </div>
         <div class="form-group">
             <label>Lokasi Kegiatan</label>
-            <input type="text" name="lokasi" id="lokasi" class="form-control" required>
-            {{-- <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
-            <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small> --}}
+            <input type="text" name="lokasi" id="lokasi" class="form-control" readonly required hidden>
+            <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
+            <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
         </div>
+        <div id="map" style="height: 300px;"></div>   
 
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary btn-sm mt-2 mb-3"><i class="fa-solid fa-floppy-disk me-1" style="font-size: 12px"></i> Submit</button>
@@ -111,4 +123,63 @@
 </div>
 </div>
 
+<script>
+const timeOptions = {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",   // 24-hour format
+    time_24hr: true,
+    defaultHour: 12,
+    defaultMinute: 0
+  };
+  // Initialize waktuMulai
+  flatpickr("#waktuMulai", timeOptions);
+  // Initialize waktuSelesai
+  flatpickr("#waktuSelesai", timeOptions);
+
+        // <! ---- >
+
+        var map = L.map('map').setView([-6.200000, 106.816666], 13); // Jakarta default
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+var marker = L.marker([-6.200000, 106.816666], { draggable: true }).addTo(map);
+
+// Set koordinat awal
+document.getElementById("lokasi").value = '-6.200000,106.816666';
+getLocationName(-6.200000, 106.816666); // Ambil nama lokasi awal
+
+marker.on('dragend', function (e) {
+    var position = marker.getLatLng();
+    document.getElementById("lokasi").value = position.lat + ',' + position.lng;
+    getLocationName(position.lat, position.lng); // Tampilkan nama tempat
+});
+
+map.on('click', function (e) {
+    marker.setLatLng(e.latlng);
+    document.getElementById("lokasi").value = e.latlng.lat + ',' + e.latlng.lng;
+    getLocationName(e.latlng.lat, e.latlng.lng); // Tampilkan nama tempat
+});
+
+function getLocationName(lat, lon) {
+    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let lokasiDiv = document.getElementById('alamat-lokasi');
+            if (data && data.display_name) {
+                lokasiDiv.innerText = data.display_name;
+            } else {
+                lokasiDiv.innerText = "Alamat tidak ditemukan";
+            }
+        })
+        .catch(error => {
+            console.error("Gagal ambil alamat:", error);
+            document.getElementById('alamat-lokasi').innerText = "Gagal mengambil alamat";
+        });
+}
+</script>
 @endsection

@@ -74,8 +74,8 @@
         
         <div class="form-group">
             <label for="dokumentasi">Dokumentasi (opsional)</label>
-            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*">
-            <small class="form-text text-muted">Boleh upload lebih dari satu. Hanya gambar (jpg/png).</small>
+            <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*">
+            <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
         <a href="{{ route('laporan_proyek.index') }}" class="btn btn-secondary mt-3">Batal</a>

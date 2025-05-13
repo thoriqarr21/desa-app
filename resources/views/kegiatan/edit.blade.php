@@ -89,13 +89,23 @@
                 <option value="selesai" {{ $kegiatan->status === 'selesai' ? 'selected' : '' }}>Selesai</option>
             </select>
         </div>
+        @php
+        $lokasi = old('lokasi', $kegiatan->lokasi);
+        $koordinat = explode(',', $lokasi);
+        $lat = isset($koordinat[0]) ? floatval(trim($koordinat[0])) : -6.200000;
+        $lng = isset($koordinat[1]) ? floatval(trim($koordinat[1])) : 106.816666;
+        @endphp
         <div class="form-group">
-            <strong for="lokasi">Lokasi Kegiatan</strong>
-            <input type="text" name="lokasi" placeholder="waktu Selesai" class="form-control" value="{{ $kegiatan->lokasi }}">
+            <label>Lokasi Kegiatan</label>
+            <input type="text" name="lokasi" id="lokasi" class="form-control" value="{{ $lat }},{{ $lng }}" readonly required hidden>
+            <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
+            <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
         </div>
+        
+        <div id="map" style="height: 300px;"></div>
 
         <div class="form-group">
-            <strong for="gambar">Gambar Proyek</strong>
+            <strong for="gambar">Gambar Kegiatan</strong>
             <input type="file" name="gambar" id="gambar" class="form-control">
         </div>
         
@@ -107,6 +117,75 @@
 </div>
 </div>
 </div>
+<script>
+    // <! ---- >
 
+    var lat = {{ $lat }};
+    var lng = {{ $lng }};
+
+    var map = L.map('map').setView([lat, lng], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker([lat, lng], { draggable: true }).addTo(map)
+        .bindPopup('Sedang mendeteksi alamat...')
+        .openPopup();
+
+    // Set lokasi awal
+    document.getElementById('lokasi').value = lat + ',' + lng;
+    updateAlamat(lat, lng);
+
+    // Klik pada peta
+    map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+        updateLokasiDanAlamat(e.latlng.lat, e.latlng.lng);
+    });
+
+    // Drag marker
+    marker.on('dragend', function(e) {
+        var pos = marker.getLatLng();
+        updateLokasiDanAlamat(pos.lat, pos.lng);
+    });
+
+    function updateLokasiDanAlamat(lat, lng) {
+        document.getElementById('lokasi').value = lat + ',' + lng;
+        updateAlamat(lat, lng);
+    }
+
+    function updateAlamat(lat, lng) {
+        let url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let lokasiElement = document.getElementById('alamat-lokasi');
+            if (data && data.address) {
+                let parts = [
+                    data.address.amenity,
+                    data.address.building,
+                    data.address.road,
+                    data.address.suburb,
+                    data.address.village || data.address.city,
+                    data.address.state,
+                    data.address.country
+                ];
+                let address = parts.filter(Boolean).join(', ');
+                marker.setPopupContent(`<strong>Alamat Kegiatan:</strong><br>${address}`).openPopup();
+                if (lokasiElement) lokasiElement.innerText = address;
+            } else {
+                marker.setPopupContent('Alamat tidak ditemukan').openPopup();
+                if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
+            }
+        })
+        .catch(error => {
+            console.error('Gagal ambil alamat:', error);
+            marker.setPopupContent('Gagal mengambil alamat').openPopup();
+            let lokasiElement = document.getElementById('alamat-lokasi');
+            if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
+        });
+    }
+</script>
 
 @endsection

@@ -1,46 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2> Show User</h2>
+<div class="container-fluid py-4 mb-5">
+    <div class="row mb-3">
+        <div class="col-lg-6">
+            <h2>Detail User</h2>
         </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+        <div class="col-lg-6 text-end">
+            <a class="btn btn-primary" href="{{ route('users.index') }}">← Kembali</a>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Name:</strong>
-            {{ $user->name }}
-        </div>
-    </div>
-    {{-- <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Email:</strong>
-            {{ $user->email }}
-        </div>
-    </div> --}}
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Username:</strong>
-            {{ $user->username }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Roles:</strong>
-            <td>
-                @if(!empty($user->getRoleNames()))
-                  @foreach($user->getRoleNames() as $v)
-                     <label>{{ $v }}</label>
-                  @endforeach
-                @endif
-              </td>
+    <div class="card shadow-sm rounded p-4">
+        <div class="row">
+            @if($user->gambar)
+                <div class="col-md-4 mb-3 text-center">
+                    <img src="{{ asset('storage/' . $user->gambar) }}" alt="Foto User" class="img-fluid rounded shadow" style="max-height: 250px;">
+                </div>
+            @endif
+
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <strong>Nama:</strong>
+                    <div>{{ $user->name }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Username:</strong>
+                    <div>{{ $user->username }}</div>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Roles:</strong>
+                    <div>
+                        @foreach($user->getRoleNames() as $role)
+                            <span class="badge bg-info text-dark">{{ $role }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

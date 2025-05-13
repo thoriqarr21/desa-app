@@ -36,7 +36,7 @@ class DokumentasiProyekController extends Controller
         $request->validate([
             'laporan_id'   => 'required|exists:laporan_proyeks,id',
             'persentase'  => 'required|integer|min:0|max:100',
-            'file_path'   => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'file_path'    => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:10240', // max 10MB
             'keterangan'  => 'required|string|max:255',
         ]);
 
@@ -53,53 +53,25 @@ class DokumentasiProyekController extends Controller
         );
 
         // Simpan file gambar
-        $filePath = $request->file('file_path')->store('dokumentasi', 'public');
-
-        // Simpan dokumentasi baru
+        $file = $request->file('file_path');
+        $filePath = $file->store('dokumentasi', 'public');
+        
+        // Tentukan tipe file
+        $mime = $file->getMimeType();
+        $fileType = str_contains($mime, 'video') ? 'video' : 'image';
+        
+        // Simpan dokumentasi
         DokumentasiProyek::create([
-            'laporan_id'             => $request->laporan_id,
-            'progres_id'             => $progres->id,
-            'file_path'              => $filePath,
-            'keterangan'             => $request->keterangan,
-            'persentase'             => $request->persentase,
+            'laporan_id'    => $request->laporan_id,
+            'progres_id'    => $progres->id,
+            'file_path'     => $filePath,
+            'file_type'     => $fileType, // <- tambahan
+            'keterangan'    => $request->keterangan,
+            'persentase'    => $request->persentase,
         ]);
-
         return redirect()->back()->with('success', 'Dokumentasi berhasil ditambahkan.');
     }
 
-    // public function storeTambahan(Request $request)
-    // {
-    //     $request->validate([
-    //         'laporan_id' => 'required|exists:laporan_proyeks,id',
-    //         'persentase' => 'required|numeric',
-    //         'file_path' => 'required|array|max:3',  // Pastikan hanya menerima array dan maksimal 3 file
-    //         'file_path.*' => 'image|mimes:jpg,jpeg,png|max:2048',  // Validasi masing-masing file
-    //         'keterangan' => 'nullable|string',
-    //     ]);
-    
-    //     // Dapatkan progres sesuai persentase
-    //     $progres = ProgresPembangunan::where('persentase', $request->persentase)->latest()->first();
-    
-    //     // Periksa apakah file_path ada
-    //     if ($request->hasFile('dokumentasi')) {
-    //         // Proses setiap file yang di-upload
-    //         foreach ($request->file('dokumentasi') as $file) {
-    //             // Simpan file
-    //             $path = $file->store('dokumentasi', 'public');
-                
-    //             // Simpan data dokumentasi ke database
-    //             DokumentasiProyek::create([
-    //                 'laporan_id' => $request->laporan_id,
-    //                 'progres_id' => $progres?->id,
-    //                 'file_path' => $path,
-    //                 'keterangan' => $request->keterangan,
-    //                 'persentase' => $request->persentase,
-    //             ]);
-    //         }
-    //     }
-    
-    //     return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
-    // }
     
     public function storeTambahan(Request $request)
 {
@@ -107,7 +79,7 @@ class DokumentasiProyekController extends Controller
         'laporan_id' => 'required|exists:laporan_proyeks,id',
         'persentase' => 'required|numeric',
         'file_path' => 'required|array|max:3',  // Pastikan hanya menerima array dan maksimal 3 file
-        'file_path.*' => 'image|mimes:jpg,jpeg,png|max:2048',  // Validasi masing-masing file
+        'file_path.*'  => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
         'keterangan' => 'nullable|string',
     ]);
 

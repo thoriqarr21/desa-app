@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('progres_id')->constrained('progres_pembangunans')->onDelete('cascade');
             $table->foreignId('laporan_id')->constrained('laporan_proyeks')->onDelete('cascade');
             $table->string('file_path');
+            $table->string('file_type');
             $table->integer('persentase')->nullable();
             $table->string('keterangan')->nullable(); 
             $table->boolean('is_initial')->nullable();

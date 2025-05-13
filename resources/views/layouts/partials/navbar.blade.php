@@ -1,6 +1,6 @@
 <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-sm rounded " id="navbarBlur" navbar-scroll="true">
-  <div class="container-fluid py-1 px-2">
-      <nav aria-label="breadcrumb">
+    <div class="container-fluid py-1 px-2 rounded-2" style="box-shadow: 0px 5px 15px 0px rgba(61, 61, 61, 0.709);">
+        <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
               <li class="breadcrumb-item text-sm "><a class="opacity-5 text-dark" href="{{ route('home') }}">Home</a></li>
                 @if (Request::is('kegiatan*'))
@@ -42,16 +42,6 @@
                   <input type="text" class="form-control ps-0" placeholder="Search">
               </div>
           </div>
-          <div class="mb-0 font-weight-bold breadcrumb-text text-white">
-              <form id="logout-form" method="POST" action="{{ route('logout') }}" >
-                  @csrf
-
-                  <a href="login" onclick="event.preventDefault();
-              this.closest('form').submit();">
-                      <button class="btn btn-sm  btn-white  mb-0 me-1" type="submit">Log out</button>
-                  </a>
-              </form>
-          </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -61,12 +51,34 @@
                       <i class="sidenav-toggler-line" style="background-color: rgb(226, 37, 37); height: 3px; width: 20px;"></i>
                   </div>
               </a>
-          </li>          
-              <li class="nav-item ps-2 d-flex align-items-center">
-                  <a href="{{ route('users.profile') }}" class="nav-link text-body p-0">
-                    <img src="{{ asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm" alt="avatar" />
-                  </a>
-              </li>
+          </li> 
+          <li class="nav-item dropdown ms-3 me-2">
+            <a id="navbarDropdown" class="nav-linkdropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <img src="{{ asset('storage/' . Auth::user()->gambar) }}" class="avatar avatar-sm" alt="avatar" />
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end shadow-sm rounded-3" aria-labelledby="navbarDropdown" style="min-width: 180px;">
+    
+                <a class="dropdown-item d-flex align-items-center fs-6 text-primary" href="{{ route('users.profile') }}">
+                    <i class="fas fa-user me-2"></i></i> Profil
+                </a>
+            
+                <div class="dropdown-divider"></div>
+            
+                <a class="dropdown-item d-flex align-items-center fs-6 text-danger" href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                   <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
+            
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            
+            </div>
+            
+            
+        </li>         
+
           </ul>
       </div>
   </div>

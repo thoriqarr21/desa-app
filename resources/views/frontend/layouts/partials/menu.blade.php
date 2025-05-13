@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('home') }}">
             Desa Bojong Gede 
@@ -21,12 +21,10 @@
                         </li>
                     @endif
                 @else
-                    @can('kategori-list')
-                    <li><a class="nav-link" href="{{ route('frontend.kategori_kegiatan.index') }}">Manage Kategori Kegiatan</a></li>
+                    @can('laporan-list')
+                    <li><a class="nav-link" href="{{ route('frontend.laporan_proyek.index') }}">Laporan Proyek</a></li>
                     @endcan
-                    @can('kegiatan-list')
-                    <li><a class="nav-link" href="{{ route('frontend.kegiatan.index') }}">Manage Kegiatan</a></li>
-                    @endcan
+                    <li><a class="nav-link" href="{{ route('frontend.laporan_kegiatan.index') }}">Laporan Kegiatan</a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}

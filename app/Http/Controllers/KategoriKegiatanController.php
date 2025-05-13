@@ -52,6 +52,12 @@ class KategoriKegiatanController extends Controller
             'deskripsi_kategori' => 'required',
         ]);
     
+        $existingKategoriKegiatan = kategoriKegiatan::where('nama_kategori', $request->nama_kategori)->first();
+    
+        // Jika sudah ada KategoriKegiatan, redirect dengan pesan
+        if ($existingKategoriKegiatan) {
+            return redirect()->route('kategori_kegiatan.index')->with('error', 'Kategori Kegiatan ini sudah di buat.');
+        }
         KategoriKegiatan::create($request->all());
     
         return redirect()->route('kategori_kegiatan.index')
@@ -98,6 +104,6 @@ class KategoriKegiatanController extends Controller
         $kategoriKegiatan->delete();
     
         return redirect()->route('kategori_kegiatan.index')
-                        ->with('success','Jenis Proyek deleted successfully');
+                        ->with('success','Kategori Kegiatan deleted successfully');
     }
 }

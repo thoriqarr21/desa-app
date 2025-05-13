@@ -2,11 +2,16 @@
 
 @section('content')
 
-@session('success')
-    <div class="alert alert-success" role="alert"> 
-        {{ $value }}
+@foreach (['success', 'primary', 'danger'] as $type)
+    @if(session($type))
+        <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+    @endif
+@endforeach
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
     </div>
-@endsession
+@endif
 <div class="px-4 py-4 container-fluid mb-5">
     <div class="mt-4 row">
         <div class="px-3 ">

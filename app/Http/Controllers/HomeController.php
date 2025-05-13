@@ -21,9 +21,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'role:Admin']);
+        $this->middleware('role:Admin|Kades');
     }
-
     /**
      * Show the application dashboard.
      *

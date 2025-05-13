@@ -61,9 +61,11 @@
                     </div>
                     <div class="mb-3">
                         <strong><i class="bi bi-percent me-1"></i>Persentase Progres :</strong>
-                        <div class="text-muted">{{ $proyek->progresTerbaru?->persentase ?? 0 }}%</div>
+                        {{ $proyek->laporanProyek && $proyek->laporanProyek->progresTerbaru ? $proyek->laporanProyek->progresTerbaru->persentase : 0 }}%
+                        </div>
                     </div>
                 </div>
+                <hr class="animasi-hr">
                 <div class="mb-3">
                     <strong>Lokasi Proyek :</strong>
                     <div class="mr-2" hidden>{{ $proyek->lokasi }}</div>
@@ -144,7 +146,8 @@
             @endif
         </div>
     </div>
-</div>
+</div> 
+</div> 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         @php

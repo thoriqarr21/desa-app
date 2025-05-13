@@ -64,6 +64,14 @@ class DesaKegiatanController extends Controller
             'lokasi' => 'required',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        $existingKegiatan = DesaKegiatan::where('nama_kegiatan', $request->nama_kegiatan)->first();
+    
+        // Jika sudah ada Kegiatan, redirect dengan pesan
+        if ($existingKegiatan) {
+            return redirect()->route('kegiatan.index')->with('error', 'Kegiatan ini sudah di buat.');
+        }
+
         $tanggalMulai = \Carbon\Carbon::parse($request->tanggal_mulai);
         $tanggalSelesai = \Carbon\Carbon::parse($request->tanggal_selesai);
         // $lamaHari = $tanggalMulai->diffInDays($tanggalSelesai) . ' hari';

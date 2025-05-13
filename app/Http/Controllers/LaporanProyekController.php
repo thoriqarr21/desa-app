@@ -33,11 +33,11 @@ class LaporanProyekController extends Controller
     public function index(Request $request): View
     {
         $search = $request->input('search');
-        $user = Auth::user();
+        // $user = Auth::user();
         
         // Query untuk mengambil data laporan proyek
         $laporan = LaporanProyek::with('progresTerbaru')
-                        ->where('user_id', $user->id)
+                        
                         ->when($search, function ($query, $search) {
                             return $query->where('nama_proyek', 'like', "%{$search}%")
                                          ->orWhere('deskripsi_proyek', 'like', "%{$search}%");
@@ -61,15 +61,25 @@ class LaporanProyekController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Validasi input
         $request->validate([
             'keterangan'=> 'required',
             'kendala'=> 'required',
             'evaluasi'=> 'required',
             'proyek_id' => 'required|exists:pembangunan_proyeks,id',
             'persentase' => 'required|integer|min:0|max:100',
-            'dokumentasi.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'dokumentasi.*' => 'file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240', // max 10MB
         ]);
-
+        
+        // Cek apakah proyek sudah memiliki laporan
+        $existingLaporan = LaporanProyek::where('proyek_id', $request->proyek_id)->first();
+    
+        // Jika sudah ada laporan, redirect dengan pesan
+        if ($existingLaporan) {
+            return redirect()->route('laporan_proyek.index')->with('error', 'Proyek ini sudah memiliki laporan.');
+        }
+    
+        // Jika belum ada laporan, lanjutkan untuk menyimpan laporan baru
         $laporan = LaporanProyek::create([
             'proyek_id' => $request->proyek_id,
             'keterangan' => $request->keterangan,
@@ -78,27 +88,38 @@ class LaporanProyekController extends Controller
             'user_id' => Auth::id(),
             'is_approved' => null,
         ]);
-
+    
+        // Simpan progres
         $progres = $laporan->progres()->create([
             'persentase' => $request->persentase
         ]);
-
+    
+        // Menyimpan dokumentasi jika ada
         if ($request->hasFile('dokumentasi')) {
             foreach ($request->file('dokumentasi') as $file) {
                 $path = $file->store('dokumentasi', 'public');
+    
+                // Deteksi jenis file: image atau video
+                $mime = $file->getMimeType();
+                $fileType = str_contains($mime, 'video') ? 'video' : 'image';
+    
+                // Simpan dokumentasi
                 $progres->dokumentasi()->create([
-                    'laporan_id' => $laporan->id,
-                    'file_path' => $path,
-                    'keterangan' => 'Upload awal',
-                    'progres_id' => $progres->id,
-                    'persentase' => $progres->persentase,
-                    'is_initial' => false, 
+                    'laporan_id'   => $laporan->id,
+                    'file_path'    => $path,
+                    'file_type'    => $fileType,
+                    'keterangan'   => 'Upload awal',
+                    'progres_id'   => $progres->id,
+                    'persentase'   => $progres->persentase,
+                    'is_initial'   => false,
                 ]);
             }
         }
-
+    
         return redirect()->route('laporan_proyek.index')->with('success', 'Laporan berhasil dikirim.');
     }
+    
+    
 
     public function storeTambahan(Request $request)
     {
@@ -120,26 +141,38 @@ class LaporanProyekController extends Controller
     }
     
     // Jika ada file dokumentasi
-    if ($request->hasFile('dokumentasi')) {
-        foreach ($request->file('dokumentasi') as $file) {
-            $path = $file->store('dokumentasi', 'public');
+    foreach ($request->file('dokumentasi') as $file) {
+        $path = $file->store('dokumentasi', 'public');
+        $extension = $file->getClientOriginalExtension(); // contoh: jpg, png
     
-            // Pastikan progres tidak null dan buat dokumentasi
-            $progres->dokumentasi()->create([
-                'laporan_id' => $request->laporan_id,
-                'file_path' => $path,
-                'keterangan' => $request->keterangan,
-                'progres_id' => $progres->id,
-                'persentase' => $progres->persentase,
-                'is_initial' => true, 
-            ]);
-        }
+        $fileType = $this->tentukanFileType($extension);
+    
+        $progres->dokumentasi()->create([
+            'laporan_id' => $request->laporan_id,
+            'file_path' => $path,
+            'keterangan' => $request->keterangan,
+            'progres_id' => $progres->id,
+            'persentase' => $progres->persentase,
+            'is_initial' => true,
+            'file_type' => $fileType, // ← tambahkan ini
+        ]);
     }
+    
 
 
     return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
 }
+private function tentukanFileType($ext)
+{
+    $imageExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    $videoExt = ['mp4', 'mov', 'avi'];
+    $pdfExt = ['pdf'];
 
+    if (in_array($ext, $imageExt)) return 'image';
+    if (in_array($ext, $videoExt)) return 'video';
+    if (in_array($ext, $pdfExt)) return 'pdf';
+    return 'other';
+}
 public function createTambahan($laporanId)
 {
     $semuaPersen = [50, 80, 100];
@@ -241,7 +274,7 @@ public function createTambahan($laporanId)
         'evaluasi'=> 'required',
         'proyek_id' => 'required|exists:pembangunan_proyeks,id',
         'persentase' => 'required|integer|min:0|max:100',
-        'dokumentasi.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+        'dokumentasi.*' => 'file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240',
     ]);
 
     // Mencari laporan berdasarkan ID
@@ -275,13 +308,18 @@ public function createTambahan($laporanId)
         // Menambahkan file baru
         foreach ($request->file('dokumentasi') as $file) {
             $path = $file->store('dokumentasi', 'public');
+
+            // Deteksi jenis file: image atau video
+            $mime = $file->getMimeType();
+            $fileType = str_contains($mime, 'video') ? 'video' : 'image';
+
             $progres->dokumentasi()->create([
                 'laporan_id' => $laporan->id,
                 'file_path' => $path,
-                'keterangan' => 'Upload baru', // Anda bisa mengganti keterangan sesuai kebutuhan
+                'file_type' => $fileType, // Menyimpan jenis file
+                'keterangan' => 'Upload baru', // Ganti dengan keterangan sesuai kebutuhan
                 'progres_id' => $progres->id,
-                // 'persentase' => $progres->persentase, 
-                'is_initial' => false,  // Pastikan persentase tetap sama jika itu bagian dari dokumentasi
+                'is_initial' => false,  // Mengindikasikan ini bukan dokumentasi awal
             ]);
         }
     }

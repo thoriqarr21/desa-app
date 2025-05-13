@@ -18,25 +18,6 @@
 @endsection
 
 @section('content')
-{{-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 <div class="container-fluid py-4 px-5">
   <div class="d-flex">
@@ -56,6 +37,7 @@
     </div>
     
   </div>
+  
   
 <hr class="animated-hr">
   <div class="row">
@@ -227,6 +209,16 @@
     </div>
   </div>
 </div>
+<div class="container-clock d-flex justify-content-center">
+  <div class="card-clock text-center text-white p-3 rounded-1"
+       style="background: linear-gradient(135deg, #5e00ff, #00e0ff); width: 250px;">
+       
+    <h6 id="clock-day" class="mb-1 text-uppercase fw-semibold" style="letter-spacing: 1px;">Senin</h6>
+    <h1 id="clock-time" class="display-4 fw-bold">00:00:00</h1>
+    <p id="clock-date" class="mb-0">1 Januari 2025</p>
+    
+  </div>
+</div>
 <script>
   const ctx = document.getElementById('progresChart').getContext('2d');
   const progresChart = new Chart(ctx, {
@@ -275,7 +267,34 @@
       }
     }
   });
+
+  function updateClock() {
+    const now = new Date();
+
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    const dayName = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    document.getElementById('clock-day').textContent = dayName;
+    document.getElementById('clock-time').textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('clock-date').textContent = `${date} ${month} ${year}`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
 </script>
+
 
 @endsection
 

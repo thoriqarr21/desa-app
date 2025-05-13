@@ -29,18 +29,13 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="">
-                            @session('success')
-                                <div class="alert alert-success" role="alert"> 
-                                    {{ $value }}
-                                 </div>
-                            @endsession
-                            @if (session('success'))
-                                <div class="alert alert-success" role="alert" id="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                            @foreach (['success', 'primary', 'danger'] as $type)
+                                @if(session($type))
+                                <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+                                @endif
+                            @endforeach
                             @if (session('error'))
-                                <div class="alert alert-danger" role="alert" id="alert">
+                                <div class="alert alert-danger" role="alert" id="alert-message">
                                     {{ session('error') }}
                                 </div>
                             @endif

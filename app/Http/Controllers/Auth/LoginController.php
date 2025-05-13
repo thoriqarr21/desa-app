@@ -27,12 +27,10 @@ class LoginController extends Controller
 {
     $user = Auth::user();
 
-    if ($user->hasRole('Admin')) {
+    if ($user->hasAnyRole(['Admin', 'Kades'])) {
         return '/home';
     } elseif ($user->hasRole('Pegawai')) {
-        return '/frontend/dashboard'; // pastikan ini sesuai rute yang benar
-    } else {
-        return '/kades/dashboard';
+        return '/frontend/index';
     }
 }
     

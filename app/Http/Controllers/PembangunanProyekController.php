@@ -23,16 +23,27 @@ class PembangunanProyekController extends Controller
          $this->middleware('permission:proyek-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:proyek-delete', ['only' => ['destroy']]);
      }
-    public function index(Request $request): View
-    {
-        $search = $request->input('search');
-        $proyeks = PembangunanProyek::when($search, function ($query, $search) {
-            return $query->where('nama_proyek', 'like', "%{$search}%")
-                         ->orWhere('deskripsi_proyek', 'like', "%{$search}%");
-        })->latest()->paginate(5);
-
-        return view('proyek.index',compact('proyeks'));
-    }
+     public function index(Request $request): View
+     {
+         $search = $request->input('search');
+         $proyeks = PembangunanProyek::with('progresTerbaru') // Eager load
+             ->when($search, function ($query, $search) {
+                 return $query->where('nama_proyek', 'like', "%{$search}%")
+                              ->orWhere('deskripsi_proyek', 'like', "%{$search}%");
+             })
+             ->latest()
+             ->paginate(5);
+     
+         // Log untuk memeriksa data progres
+         foreach ($proyeks as $proyek) {
+             \Log::info('Proyek: ' . $proyek->nama_proyek . ' - Progres: ' . ($proyek->progresTerbaru ? $proyek->progresTerbaru->persentase : 'No Progress'));
+         }
+     
+         return view('proyek.index', compact('proyeks'));
+     }
+     
+     
+     
 
     /**
      * Show the form for creating a new resource.
@@ -47,9 +58,9 @@ class PembangunanProyekController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Validasi input
         $request->validate([
             'nama_proyek' => 'required',
-            // 'jenis_proyek' => 'required',
             'deskripsi_proyek' => 'required',
             'anggaran' => 'required|numeric',
             'status' => 'required',
@@ -62,6 +73,14 @@ class PembangunanProyekController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     
+        // Cek apakah proyek dengan nama yang sama sudah ada
+        $existingProyek = PembangunanProyek::where('nama_proyek', $request->nama_proyek)->first();
+        
+        // Jika sudah ada proyek dengan nama yang sama, redirect dengan pesan error
+        if ($existingProyek) {
+            return redirect()->route('proyek.index')->with('error', 'Proyek dengan nama tersebut sudah ada.');
+        }
+        
         // Hitung masa kontrak
         $tanggalMulai = \Carbon\Carbon::parse($request->tanggal_mulai);
         $tanggalSelesai = \Carbon\Carbon::parse($request->tanggal_selesai);
@@ -79,18 +98,19 @@ class PembangunanProyekController extends Controller
             'penanggung_jawab',
             'lokasi',
         ]);
-
+    
         $data['jenis_proyek'] = $request->jenis_proyek;
         $data['masa_kontrak'] = $masaKontrak;
         
-    
         // Simpan gambar jika ada
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('gambar_proyek', 'public');
         }
     
+        // Simpan proyek
         $proyek = PembangunanProyek::create($data);
     
+        // Sesuaikan dengan jenis proyek
         if ($request->jenis_proyek === 'jalan') {
             $proyek->proyekJalan()->create([
                 'panjang_jalan' => $request->panjang_jalan,
@@ -117,15 +137,14 @@ class PembangunanProyekController extends Controller
         return redirect()->route('proyek.index')->with('success', 'Proyek berhasil ditambahkan');
     }
     
+    
     /**
      * Display the specified resource.
      */
     public function show(PembangunanProyek $proyek): View
-    {
-        
+    {// eager load
         return view('proyek.show', compact('proyek'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

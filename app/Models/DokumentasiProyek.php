@@ -9,7 +9,7 @@ class DokumentasiProyek extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['laporan_id','progres_id', 'file_path','persentase', 'keterangan', 'is_initial'];
+    protected $fillable = ['laporan_id','progres_id', 'file_path','file_type','persentase', 'keterangan', 'is_initial'];
 
     public function progres()
     {

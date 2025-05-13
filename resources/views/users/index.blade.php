@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-@session('success')
-    <div class="alert alert-success" role="alert"> 
-        {{ $value }}
+@foreach (['success', 'primary', 'danger'] as $type)
+    @if(session($type))
+        <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+    @endif
+@endforeach
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
     </div>
-@endsession
-
+@endif
     <div class="px-5 py-4 container-fluid mb-5">
         <div class="row">
             <div class="px-3 ">
@@ -24,9 +28,11 @@
                         </div>
                         <div class="ms-auto d-flex">
                             <div class="text-end">
-                               <a href="{{ route('users.create') }}" class="btn btn-dark btn-primary">
-                                    <i class="fas fa-user-plus me-2"></i> Add Member
-                                </a>
+                                @can('user-create')               
+                                <a href="{{ route('users.create') }}" class="btn btn-dark btn-primary">
+                                     <i class="fas fa-user-plus me-2"></i> Add Member
+                                 </a>
+                                @endcan
                             </div> 
                         </div>
                     </div>
@@ -80,7 +86,7 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex align-items-center">
-                                                <img src="../assets/img/team-2.jpg"
+                                                <img src="{{ asset('storage/' . $user->gambar) }}"
                                                     class="avatar avatar-sm rounded-circle me-2"
                                                     alt="user1">
                                             </div>
@@ -104,14 +110,20 @@
                                         </span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <a href="{{ route('users.show',$user->id) }}"><i class="fas fa-list-ul" aria-hidden="true"></i></a>
-                                        <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
+                                        @can('user-edit')
+                                        <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-user-edit" aria-hidden="true"></i></a>                        
+                                        @endcan
+                                        @can('user-show')
+                                        <a href="{{ route('users.show',$user->id) }}"><i class="fas fa-list-ul ms-1" aria-hidden="true"></i></a>
+                                        @endcan
+                                        @can('user-delete')                                     
                                         <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
                                             @csrf
                                             @method('DELETE')
                           
-                                            <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                                            <button type="submit"><i class="fa-solid fa-trash ms-1"></i></button>
                                         </form>
+                                        @endcan
 
                                     </td>
                                     {{-- <td class="align-middle">
