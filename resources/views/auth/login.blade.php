@@ -90,7 +90,7 @@
     box-sizing: border-box;
 }
 body {
-    background-image: url('{{ asset('storage/desa.jpg') }}');
+    background-image: url('{{ asset('assets/img/desa.jpg') }}');
 }
 
 .background{
