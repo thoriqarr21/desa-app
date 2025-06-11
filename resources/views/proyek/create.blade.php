@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             🛠️ Tambah Proyek Pembangunan
                         </h4>
                     </div>
@@ -37,7 +37,7 @@
 
         <div class="form-group">
             <strong>Deskripsi Proyek</strong>
-            <textarea name="deskripsi_proyek" class="form-control" rows="3" required placeholder="Deskripsi Proyek"></textarea>
+            <textarea name="deskripsi_proyek" class="form-control text-long" rows="3" required placeholder="Deskripsi Proyek"></textarea>
         </div>
 
         <div class="mb-3">
@@ -181,7 +181,7 @@
         </div>
         <div id="map" style="height: 300px;"></div>   
             
-        <div class="form-group">
+        <div class="form-group mt-3">
             <strong>Gambar</strong>
             <input type="file" name="gambar" class="form-control">
         </div>

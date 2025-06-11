@@ -32,51 +32,37 @@
                 <div class="mb-4 text-center">
                     <img src="{{ asset('storage/' . $proyek->gambar) }}" class="img-fluid rounded shadow img-fluid-project" alt="Gambar Proyek">
                 </div>
-                {{-- <div class="d-flex align-items-center mb-4">
-                    <img src="{{ asset('storage/' . $kegiatan->user->gambar) }}" alt="Profile Picture" class="profile-img">
-                    <div>
-                        <h6 class="mb-0" style="font-weight: 700; color: #333;">{{ ucfirst($kegiatan->user->name) }}</h6>
-                        <small class="text-muted">Roles</small>
-                    </div>
-                </div> --}}
 
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-hard-hat icon"></i>
                     <div>
                         <p class="text-value mb-0 title-proyek">{{ $proyek->nama_proyek }}</p>
                         <p class="text-label">Nama Proyek</p>
                     </div>
                 </div>
-                {{-- <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
-                    <div>
-                        <p class="text-value mb-0">{{ ucfirst($proyek->jenis_proyek) }}</p>
-                        <p class="text-label">Jenis Proyek</p>
-                    </div>
-                </div> --}}
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-money-bill-wave icon"></i>
                     <div>
                         <p class="text-value mb-0">Rp {{ number_format($proyek->anggaran, 0, ',', '.') }}</p>
                         <p class="text-label">Anggaran</p>
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-chart-line icon"></i>
                     <div>
                         <p class="text-value mb-0">{{ $proyek->laporanProyek && $proyek->laporanProyek->progresTerbaru ? $proyek->laporanProyek->progresTerbaru->persentase : 0 }}%</p>
                         <p class="text-label">Progres</p>
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-landmark icon"></i>
                     <div>
                         <p class="text-value mb-0">{{ $proyek->sumber_dana }}</p>
                         <p class="text-label">Sumber Dana</p>
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-calendar-alt icon"></i>
                     <div>
                         <div class="periode-dates">
                             <span class="text-value-flex mb-0">{{ $proyek->tanggal_mulai }}</span>
@@ -87,23 +73,13 @@
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-file-contract icon"></i>
                     <div>
                         <p class="text-value mb-0">{{ $proyek->masa_kontrak }}</p>
                         <p class="text-label">Masa Kontrak Proyek</p>
                     </div>
                 </div>
-                {{-- <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
-                    <div>
-                        <div class="periode-dates">
-                            <span class="text-value-flex mb-0">{{ $proyek->waktu_mulai }} WIB</span>
-                            <span> s/d </span>
-                            <span class="text-value-flex mb-0">{{ $proyek->waktu_selesai }} WIB</span>
-                          </div>
-                        <p class="text-label">Waktu</p>
-                    </div>
-                </div> --}}
+    
             </div>
         </div>
 
@@ -220,153 +196,7 @@
         </div>
     </div>
 </div>
-{{-- <div class="container py-4 mb-5">
-    <div class="d-flex justify-content-between align-items-center margin-tb">
-        <div class="d-flex align-items-center ms-3 ">
-            <a class="btn btn-primary btn-sm fs-6 " href="{{ route('frontend.proyek.index') }}"><i class="fa fa-arrow-left fs-6"></i> Kembali</a>
-        </div>
-        <div class="card border-0 mb-4 w-65" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-center">
-                    <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
-                        Proyek Pembangunan Desa <h4 class="ms-2 mb-0 text-primary">{{ ucfirst($proyek->jenis_proyek) }}</h4>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        
-    </div>
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-primary text-white d-flex align-items-center">
-            <i class="bi bi-info-circle me-2"></i>
-            <h4 class="mb-0">Detail Proyek {{ $proyek->nama_proyek }}</h4>
-        </div>
 
-        <div class="card-body">
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <img src="{{ asset('storage/' . $proyek->gambar) }}" class="img-fluid rounded shadow" alt="Gambar Proyek">
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3 mt-4 mt-md-0">
-                        <strong><i class="bi bi-pencil-square me-1"></i>Deskripsi:</strong>
-                        <div class="text-muted">{{ $proyek->deskripsi_proyek }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-diagram-3 me-1"></i>Jenis Proyek:</strong>
-                        <div class="text-muted">{{ ucfirst($proyek->jenis_proyek) }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-cash-stack me-1"></i>Anggaran:</strong>
-                        <div class="text-muted">Rp {{ number_format($proyek->anggaran, 0, ',', '.') }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-calendar-week me-1"></i>Periode:</strong>
-                        <div class="text-muted">{{ $proyek->tanggal_mulai }} sampai {{ $proyek->tanggal_selesai }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-clock-history me-1"></i>Masa Kontrak:</strong>
-                        <div class="text-muted">{{ $proyek->masa_kontrak }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-flag me-1"></i>Status:</strong>
-                        <span class="badge text-bg-success">{{ ucfirst($proyek->status) }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-wallet2 me-1"></i>Sumber Dana:</strong>
-                        <div class="text-muted">{{ $proyek->sumber_dana }}</div>
-                    </div>
-                    <div class="mb-3">
-                        <strong><i class="bi bi-percent me-1"></i>Persentase Progres :</strong>
-                        {{ $proyek->laporanProyek && $proyek->laporanProyek->progresTerbaru ? $proyek->laporanProyek->progresTerbaru->persentase : 0 }}%
-                        </div>
-                    </div>
-                </div>
-                <hr class="animasi-hr">
-                <div class="mb-3">
-                    <strong>Lokasi Proyek :</strong>
-                    <div class="mr-2" hidden>{{ $proyek->lokasi }}</div>
-                    <p class="mt-2 text-muted">
-                        <span id="alamat-lokasi">Sedang mengambil alamat...</span>
-                    </p>
-                    <a href="https://www.google.com/maps?q={{ $proyek->lokasi }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3 mb-2 ">
-                        Lihat di Google Maps
-                    </a>
-                    <div id="map" style="height: 300px;"></div>
-                    
-                </div>
-            </div>
-
-            @if($proyek->jenis_proyek === 'jalan')
-                <hr>
-                <h5 class="text-detail-proyek"><i class="bi bi-truck me-2"></i>Detail Proyek Jalan</h5>
-                <div class="row ms-auto">
-                    <div class="col-md-6 mb-2 ms-8">
-                        <strong>Panjang Jalan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJalan->panjang_jalan ?? '-' }} Meter</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Lebar Jalan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJalan->lebar_jalan ?? '-' }} Meter</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Jenis Permukaan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJalan->jenis_permukaan ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Kondisi</strong>
-                        <div class="text-muted">{{ $proyek->proyekJalan ? ucwords($proyek->proyekJalan->kondisi_jalan) : '-' }}</div>
-                    </div>
-                </div>
-            @elseif($proyek->jenis_proyek === 'bangunan')
-                <hr>
-                <h5 class="text-detail-proyek"><i class="bi bi-building me-2"></i>Detail Proyek Bangunan</h5>
-                <div class="row ms-auto">
-                    <div class="col-md-6 mb-2">
-                        <strong>Nama Bangunan</strong>
-                        <div class="text-muted">{{ $proyek->proyekBangunan->nama_bangunan ?? '-' }}</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Jumlah Lantai</strong>
-                        <div class="text-muted">{{ $proyek->proyekBangunan->jumlah_lantai ?? '-' }} Lantai</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Luas Bangunan</strong>
-                        <div class="text-muted">{{ $proyek->proyekBangunan->luas_bangunan ?? '-' }} m<sup>2</sup></div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Fungsi Sebagai</strong>
-                        <div class="text-muted">{{ $proyek->proyekBangunan->fungsi ?? '-' }}</div>
-                    </div>
-                </div>
-            @elseif($proyek->jenis_proyek === 'jembatan')
-                <hr>
-                <h5 class="text-detail-proyek"><i class="bi bi-building me-2"></i>Detail Proyek Jembatan</h5>
-                <div class="row ms-auto">
-                    <div class="col-md-6 mb-2">
-                        <strong>Panjang Jembatan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJembatan->panjang_jembatan ?? '-' }} Meter</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Lebar_jembatan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJembatan->lebar_jembatan ?? '-' }} Meter</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Kapasitas Beban</strong>
-                        <div class="text-muted">{{ $proyek->proyekJembatan->kapasitas_beban ?? '-' }} Ton</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>Tipe Struktur Jembatan</strong>
-                        <div class="text-muted">{{ $proyek->proyekJembatan ? ucwords($proyek->proyekJembatan->tipe_struktur) : '-' }}</div>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
-</div> 
-</div>  --}}
  <style>
 
     .card {
@@ -408,7 +238,7 @@
     .text-deskripsi .text-muted {
         text-align: justify;
         font-size: 1rem;
-        color: #6c757d; /* warna gray ala Bootstrap */
+        color: #6c757d; 
         line-height: 1.6;
     }
 
@@ -428,7 +258,7 @@
         font-weight: 600;
     }
     .btn-back {
-        background-color: #6ba1ff; /* Reddish color from image */
+        background-color: #6ba1ff;
         border-color: #6ba1ff;
         color: white;
         font-weight: 600;
@@ -503,8 +333,8 @@
         padding: 8px 20px;
     }
     .nav-pills .nav-link.active {
-        background-color: #e0f7e9; /* Light green background for active tab */
-        color: #28a745; /* Darker green text for active tab */
+        background-color: #e0f7e9; 
+        color: #28a745;
         font-weight: 600;
     }
     .activity-card {
@@ -564,15 +394,15 @@
         border-radius: 20px;
         font-weight: 600;
         font-size: 13px;
-        margin-left: auto; /* Push badge to the right */
+        margin-left: auto; 
     }
     .status-pending {
-        background-color: #fff3cd; /* Light orange */
-        color: #ffc107; /* Orange text */
+        background-color: #fff3cd; 
+        color: #ffc107; 
     }
     .status-accepted {
-        background-color: #d4edda; /* Light green */
-        color: #28a745; /* Green text */
+        background-color: #d4edda;
+        color: #28a745; 
     }
     .nominal-pengajuan {
         font-size: 14px;
@@ -582,7 +412,7 @@
     .nominal-value {
         font-size: 18px;
         font-weight: 700;
-        color: #ff6b81; /* Reddish color for nominal value */
+        color: #ff6b81; 
         margin-top: 5px;
     }
 .text-muted {

@@ -47,9 +47,25 @@ class PegawaiDashboardController extends Controller
                 $item->tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai)->format('Y-m-d');
                 return $item;
             });
+
+            $dataProyek = PembangunanProyek::select('nama_proyek', 'tanggal_mulai', 'tanggal_selesai', 'lokasi')
+            ->get()
+            ->map(function ($item) {
+                $item->tanggal_mulai = \Carbon\Carbon::parse($item->tanggal_mulai)->format('Y-m-d');
+                $item->tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai)->format('Y-m-d');
+                return $item;
+            });
+
+            
             $rasioDisetujui = LaporanKegiatan::where('is_approved', true)->count();
             $rasioDitolak = LaporanKegiatan::where('is_approved', false)->count();
+            $rasioPending = LaporanKegiatan::whereNull('is_approved')->count();
+            
             $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
+            $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')->get();
+            
+            // Gabungkan menjadi satu koleksi
+            $lokasiGabungan = $lokasiKegiatan->concat($lokasiProyek);
 
 return view('frontend.index', [
     'jumlahProyek' => PembangunanProyek::count(),
@@ -60,6 +76,7 @@ return view('frontend.index', [
 
     'laporanDisetujui' => LaporanProyek::where('is_approved', 'setuju')->count(),
     'laporanDitolak' => LaporanProyek::where('is_approved', 'tidak_setuju')->count(),
+    'laporanDipending' => LaporanProyek::where('is_approved', 'pending')->count(),
 
     'proyekPerencanaan' => PembangunanProyek::where('status', 'perencanaan')->count(),
     'proyekBerjalan' => PembangunanProyek::where('status', 'berjalan')->count(),
@@ -73,9 +90,10 @@ return view('frontend.index', [
     'kegiatan' => $kegiatan,
 
     'dataKegiatan' => $dataKegiatan,
+    'dataProyek' => $dataProyek,
         'rasioDisetujui' => $rasioDisetujui,
+        'rasioPending' => $rasioPending, 
         'rasioDitolak' => $rasioDitolak,
-        'lokasiKegiatan' => $lokasiKegiatan,
-]);
+        'lokasiGabungan' => $lokasiGabungan,]);
     }
 }

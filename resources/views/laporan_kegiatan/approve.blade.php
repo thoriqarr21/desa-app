@@ -9,7 +9,7 @@
         @method('PUT')
 
         <div class="form-group">
-            <label class="fw-bold mb-2">Status Persetujuan</label><br>
+            <label class="fw-bold form-label">Status Persetujuan</label><br>
             <div class="btn-group" role="group" aria-label="Status Persetujuan">
                 <input type="radio" class="btn-check" name="is_approved" value="1" id="setuju"
                     autocomplete="off"
@@ -25,7 +25,7 @@
         
 
         <div class="form-group mt-3" id="alasanTolak" style="display: {{ old('is_approved', $laporanKegiatan->is_approved) == 0 ? 'block' : 'none' }};">
-            <label>Alasan Penolakan</label>
+            <label class="form-label">Alasan Penolakan</label>
             <textarea name="keterangan_tolak" class="form-control" style="height: 100px">{{ old('keterangan_tolak', $laporanKegiatan->keterangan_tolak) }}</textarea>
         </div>
 

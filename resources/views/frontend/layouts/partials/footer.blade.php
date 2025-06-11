@@ -33,7 +33,7 @@
 
     footer a {
         transition: all 0.3s ease;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
     }
     .foot {
@@ -43,11 +43,10 @@
     .social-icons a {
         position: relative;
         display: inline-block;
-        color: #6c757d; /* text-secondary */
+        color: #6c757d; 
         transition: all 0.4s ease;
     }
 
-    /* Animasi icon saat hover */
     .social-icons a:hover {
         color: transparent;
         transform: scale(1.2) rotate(15deg);
@@ -55,7 +54,6 @@
         filter: drop-shadow(0 0 6px #198754);
     }
 
-    /* Membuat gradient warna untuk teks icon saat hover */
     .social-icons a:hover i {
         background: linear-gradient(45deg, #198754, #64c69d, #198754);
         -webkit-background-clip: text;

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="logo-link-wrapper">
             <img class="logo" src="{{ asset('assets/img/logo_pemkab_bogor.jpg') }}" alt="logo">
-            <a href="#" class="logo-text">Desa Bojong Gede</a>
+            <a href="{{ route('frontend.index') }}" class="logo-text">Desa Bojong Gede</a>
         </div>
         <button class="navbar-toggler border-0" type="button" onclick="toggleMobileMenu()">
             <span class="navbar-toggler-icon"></span>

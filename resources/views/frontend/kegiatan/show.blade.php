@@ -32,7 +32,7 @@
                     <img src="{{ asset('storage/' . $kegiatan->user->gambar) }}" alt="Profile Picture" class="profile-img">
                     <div>
                         <h6 class="mb-0" style="font-weight: 700; color: #333;">{{ ucfirst($kegiatan->user->name) }}</h6>
-                        <small class="text-muted">Roles</small>
+                        <small class="text-label">Nama</small>
                     </div>
                 </div>
 
@@ -44,14 +44,14 @@
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-tags icon"></i>
                     <div>
                         <p class="text-value mb-0">{{ ucfirst($kegiatan->kategoriKegiatan->nama_kategori) }}</p>
                         <p class="text-label">Kategori Kegiatan</p>
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-calendar-alt icon"></i>
                     <div>
                         <div class="periode-dates">
                             <span class="text-value-flex mb-0">{{ $kegiatan->tanggal_mulai }}</span>
@@ -62,14 +62,14 @@
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-calendar-day icon"></i>
                     <div>
                         <p class="text-value mb-0">{{ $kegiatan->lama_hari }}</p>
                         <p class="text-label">Lama Hari Kegiatan</p>
                     </div>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-th-list icon"></i>
+                    <i class="fas fa-clock icon"></i>
                     <div>
                         <div class="periode-dates">
                             <span class="text-value-flex mb-0">{{ $kegiatan->waktu_mulai }} WIB</span>
@@ -93,8 +93,9 @@
                         <button class="nav-link" id="pills-deskripsi-tab" data-bs-toggle="pill" data-bs-target="#pills-deskripsi" type="button" role="tab" aria-controls="pills-deskripsi" aria-selected="false">Deskripsi</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-applicants-tab" data-bs-toggle="pill" data-bs-target="#pills-applicants" type="button" role="tab" aria-controls="pills-applicants" aria-selected="false">Applicants</button>
+                        <button class="nav-link" id="pills-dokumentasi-tab" data-bs-toggle="pill" data-bs-target="#pills-dokumentasi" type="button" role="tab" aria-controls="pills-dokumentasi" aria-selected="false">Dokumentasi</button>
                     </li>
+           
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-lokasi" role="tabpanel" aria-labelledby="pills-lokasi-tab">
@@ -119,54 +120,18 @@
                             <p class="text-muted text-center m-0 p-3">No applicants to display.</p>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-applicants" role="tabpanel" aria-labelledby="pills-applicants-tab">
+                    <div class="tab-pane fade" id="pills-dokumentasi" role="tabpanel" aria-labelledby="pills-dokumentasi-tab">
                         <div class="activity-card">
-                            
-                            <div class="activity-date">
-                                Tue, 31 Dec 2024
-                                <span class="material-symbols-outlined">calendar_month</span>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon-wrapper">
-                                    <span class="material-symbols-outlined activity-icon">wallet</span>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div class="activity-title">Bantuan Untuk Rakyat Kurang Mampu</div>
-                                            <div class="activity-detail">Nominal Pengajuan</div>
-                                        </div>
-                                        <span class="status-badge status-pending">MENUNGGU</span>
-                                    </div>
-                                    <div class="activity-detail mt-2">Rp120.000.000</div>
-                                </div>
-                            </div>
-                            <div class="nominal-pengajuan">Nominal Pengajuan:</div>
-                            <div class="nominal-value">Rp2.500.000</div>
-                        </div>
-
-                        <div class="activity-card mt-3">
-                            <div class="activity-date">
-                                Tue, 25 Dec 2024
-                                <span class="material-symbols-outlined">calendar_month</span>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon-wrapper">
-                                    <span class="material-symbols-outlined activity-icon">redeem</span>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div class="activity-title">Bantuan Pangan Sehari-hari</div>
-                                            <div class="activity-detail">Bahan Pokok</div>
-                                        </div>
-                                        <span class="status-badge status-accepted">DITERIMA</span>
-                                    </div>
-                                    <div class="activity-detail mt-2">Beras 200 Ton</div>
-                                </div>
-                            </div>
+                            <div class="text-deskripsi">
+                                <strong><i class="bi bi-image me-2"></i>Dokumentasi Kegiatan</strong>
+                                <img src="{{ asset('storage/' . $kegiatan->gambar) }}" 
+                                class="img-fluid rounded w-100 img-hover-animate border-animate card-animate" 
+                                alt="Gambar">    
+                            </div>                            
+                            <p class="text-muted text-center m-0 p-3">No applicants to display.</p>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -207,7 +172,7 @@
     .text-deskripsi .text-muted {
         text-align: justify;
         font-size: 1rem;
-        color: #6c757d; /* warna gray ala Bootstrap */
+        color: #6c757d;
         line-height: 1.6;
     }
 
@@ -227,7 +192,7 @@
         font-weight: 600;
     }
     .btn-back {
-        background-color: #6ba1ff; /* Reddish color from image */
+        background-color: #6ba1ff; 
         border-color: #6ba1ff;
         color: white;
         font-weight: 600;
@@ -302,8 +267,8 @@
         padding: 8px 20px;
     }
     .nav-pills .nav-link.active {
-        background-color: #e0f7e9; /* Light green background for active tab */
-        color: #28a745; /* Darker green text for active tab */
+        background-color: #e0f7e9; 
+        color: #28a745;
         font-weight: 600;
     }
     .activity-card {
@@ -363,15 +328,15 @@
         border-radius: 20px;
         font-weight: 600;
         font-size: 13px;
-        margin-left: auto; /* Push badge to the right */
+        margin-left: auto; 
     }
     .status-pending {
-        background-color: #fff3cd; /* Light orange */
-        color: #ffc107; /* Orange text */
+        background-color: #fff3cd;
+        color: #ffc107; 
     }
     .status-accepted {
-        background-color: #d4edda; /* Light green */
-        color: #28a745; /* Green text */
+        background-color: #d4edda; 
+        color: #28a745; 
     }
     .nominal-pengajuan {
         font-size: 14px;
@@ -381,7 +346,7 @@
     .nominal-value {
         font-size: 18px;
         font-weight: 700;
-        color: #ff6b81; /* Reddish color for nominal value */
+        color: #ff6b81; 
         margin-top: 5px;
     }
 .text-muted {

@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             📝 Buat Laporan Kegiatan
                         </h4>
                     </div>
@@ -24,7 +24,6 @@
         </div> 
         
     </div>
-    <h3>📝 Buat Laporan Kegiatan</h3>
 
     <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
         <div class="card-body p-4">
@@ -32,7 +31,7 @@
         @csrf
 
         <div class="form-group">
-            <strong for="kegiatan_id">Pilih Proyek</strong>
+            <label class="form-label" for="kegiatan_id">Pilih Proyek</label>
             <select name="kegiatan_id" id="kegiatan_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($kegiatans as $kegiatan)
@@ -44,28 +43,28 @@
             @enderror
         </div>
         <div class="form-group">
-            <strong>Keterangan</strong>
+            <label class="form-label">Keterangan</label>
             <textarea name="keterangan" id="keterangan" class="form-control text-long" maxlength="255" placeholder="Masukkan Keterangan" rows="3"></textarea>
             <small id="keterangan-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
-            <strong>Hasil</strong>
+            <label class="form-label">Hasil</label>
             <textarea name="hasil" id="hasil" class="form-control text-long" maxlength="255" placeholder="Masukkan Hasil" rows="3"></textarea>
             <small id="hasil-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
-            <strong>Tujuan Kegiatan</strong>
+            <label class="form-label">Tujuan Kegiatan</label>
             <textarea name="tujuan_kegiatan" id="tujuan_kegiatan" class="form-control text-long" maxlength="255" placeholder="Masukkan Tujuan Kegiatan" rows="3"></textarea>
             <small id="tujuan_kegiatan-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
-            <strong>Evaluasi</strong>
+            <label class="form-label">Evaluasi</label>
             <textarea name="evaluasi" id="evaluasi" class="form-control text-long" maxlength="255" placeholder="Masukkan Evaluasi" rows="3"></textarea>
             <small id="evaluasi-count" class="text-muted">0 / 255 karakter</small>
         </div>
 
         <div class="form-group mb-3">
-            <label><strong>Upload Dokumentasi (max 3 file: gambar/video)</strong></label>
+            <label><label class="form-label">Upload Dokumentasi (max 3 file: gambar/video)</label></label>
             <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required>
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>

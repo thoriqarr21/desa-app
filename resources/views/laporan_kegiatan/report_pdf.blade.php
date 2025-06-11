@@ -1,105 +1,3 @@
-{{-- <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Laporan Kegiatan {{ $tahun }}</title>
-    <style>
-        body { font-family: sans-serif; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #000; padding: 6px; text-align: left; }
-        th { background-color: #eee; }
-        /* Kop Surat */
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header img {
-            max-height: 70px;
-            margin-bottom: 5px;
-        }
-
-        .header h4 {
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-
-        .header h5 {
-            font-size: 12px;
-            margin-bottom: 2px;
-        }
-
-        .header hr {
-            border-top: 1px solid black;
-            margin: 10px 0;
-        }
-
-        h3 {
-            font-size: 16px;
-            text-align: center;
-            margin-bottom: 15px;
-            text-decoration: underline;
-        }
-
-        h4 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #000; 
-            padding-bottom: 5px;
-        }
-
-        h5 {
-            font-size: 12px;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <img src="{{ public_path('path/ke/logo-instansi.png') }}" alt="Logo Instansi">
-        <h4>PEMERINTAH KABUPATEN/KOTA BOGOR </h4>
-        <h4>KECAMATAN BOJONG GEDE</h4>
-        <h5>KANTOR DESA/KELURAHAN BOJONG GEDE</h5>
-        <p>Jl. Raya Bojonggede No. 250, Bojonggede, Kabupaten Bogor</p>
-        <hr>
-    </div>
-    <h3>Laporan Kegiatan Tahun {{ $tahun }}</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Kegiatan</th>
-                <th>Tanggal Mulai</th>
-                <th>Tujuan</th>
-                <th>Hasil</th>
-                <th>Evaluasi</th>
-                <th>Status Approval</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($laporan as $i => $item)
-            <tr>
-                <td>{{ $i + 1 }}</td>
-                <td>{{ $item->kegiatan->nama_kegiatan ?? '-' }}</td>
-                <td>{{ $item->kegiatan->tanggal_mulai ?? '-' }}</td>
-                <td>{{ $item->tujuan_kegiatan }}</td>
-                <td>{{ $item->hasil }}</td>
-                <td>{{ $item->evaluasi }}</td>
-                <td>      @if ($item->is_approved == 1)
-                    <span class="badge text-bg-success">Disetujui</span>
-                @elseif ($item->is_approved === 0)
-                    <span class="badge text-bg-danger">Ditolak</span>
-                @else 
-                    <span class="badge text-bg-warning text-dark">Pending</span>
-                @endif</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html> --}}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -210,30 +108,32 @@
             font-weight: bold;
         }
 
-        .signature-table {      
-           width: 100%;
-           margin-top: 40px;
-       }
+        .signature-table {
+             margin-left: auto;   
+             margin-top: 40px;
+             width: max-content; 
+         }
+         
+         .signature-table td {
+             border: none;
+             text-align: center;
+             vertical-align: top;
+             height: 100px;
+         }
 
-       .signature-table td {
-            border: none;
-           text-align: center;
-           vertical-align: top;
-           height: 100px;
-       }
         .justify-text {
            text-align: justify;
            word-wrap: break-word;  
            overflow-wrap: break-word; 
-           max-width: 100px; /* Batasi lebar agar tetap dalam kolom */
+           max-width: 100px; 
            white-space: normal;
         }        
         .name-text {
-           width: 100px; /* Batasi lebar agar tetap dalam kolom */
+           width: 100px; 
            white-space: normal;
         }        
         .tanggal-text {
-           width: 80px; /* Batasi lebar agar tetap dalam kolom */
+           width: 80px; 
            white-space: normal;
         }        
         .detail th:nth-child(2),
@@ -297,11 +197,9 @@
        <!-- TANDA TANGAN -->
    <table class="signature-table">
     <tr>
-        <td>Mengetahui,<br>Kepala Desa Bojong Gede</td>
         <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
     </tr>
     <tr>
-        <td style="padding-top: 70px;">{{ $nama_pejabat ?? 'Nama Pejabat' }}</td>
         <td style="padding-top: 70px;">Dede Malvina</td>
     </tr>
 </table>

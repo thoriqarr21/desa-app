@@ -2,13 +2,26 @@
 
 @section('content')
 <div class="container-fluid py-4 mb-5">
-    <div class="row mb-3">
-        <div class="col-lg-6">
-            <h2>Detail User</h2>
+    <div class="d-flex justify-content-between align-items-center margin-tb">
+        <div class="d-flex align-items-center ms-3 ">
+            <a class="btn btn-primary btn-sm fs-5 d-flex align-items-center" 
+            href="{{ route('users.index') }}" 
+            style="height: 45px; padding: 0 20px;">
+             <i class="fas fa-reply fs-6 me-2"></i>
+             <span>Kembali</span>
+         </a>                       
         </div>
-        <div class="col-lg-6 text-end">
-            <a class="btn btn-primary" href="{{ route('users.index') }}">← Kembali</a>
-        </div>
+        <div class="card border-0 mb-4 w-30" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-center">
+                        <h4 class="fw-bolder text-dark mb-0">
+                        Users Detail
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>   
     </div>
 
     <div class="card shadow-sm rounded p-4">

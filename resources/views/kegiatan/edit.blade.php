@@ -46,17 +46,17 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong for="nama_kegiatan">Nama Kegiatan</strong>
+                <label class="form-label" for="nama_kegiatan">Nama Kegiatan</label>
                 <input type="text" name="nama_kegiatan" placeholder="Nama Kegiatan" class="form-control" value="{{ $kegiatan->nama_kegiatan }}">
             </div>
         </div>
         <div class="form-group">
-            <strong for="deskripsi_kegiatan">Deskripsi Kegiatan</strong>
-            <textarea name="deskripsi_kegiatan" id="deskripsi_kegiatan" class="form-control" required>{{ $kegiatan->deskripsi_kegiatan }}</textarea>
+            <label class="form-label" for="deskripsi_kegiatan">Deskripsi Kegiatan</label>
+            <textarea name="deskripsi_kegiatan" id="deskripsi_kegiatan" class="form-control text-long" required>{{ $kegiatan->deskripsi_kegiatan }}</textarea>
         </div>
 
         <div class="form-group">
-            <strong for="kategori_id">Pilih Kategori</strong>
+            <label class="form-label" for="kategori_id">Pilih Kategori</label>
             <select name="kategori_id" id="kategori_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($kategoriKegiatans as $kategoriKegiatan)
@@ -71,23 +71,23 @@
         </div>
 
         <div class="form-group">
-            <strong for="tanggal_mulai">Tanggal Mulai</strong>
+            <label class="form-label" for="tanggal_mulai">Tanggal Mulai</label>
             <input type="date" name="tanggal_mulai" placeholder="Tanggal Mulai" class="form-control" value="{{ $kegiatan->tanggal_mulai }}">
         </div>
         <div class="form-group">
-            <strong for="tanggal_selesai">Tanggal Selesai</strong>
+            <label class="form-label" for="tanggal_selesai">Tanggal Selesai</label>
             <input type="date" name="tanggal_selesai" placeholder="Tanggal Selesai" class="form-control" value="{{ $kegiatan->tanggal_selesai }}">
         </div>
         <div class="form-group">
-            <strong for="waktu_mulai">Waktu Mulai</strong>
+            <label class="form-label" for="waktu_mulai">Waktu Mulai</label>
             <input type="time" name="waktu_mulai" placeholder="waktu Mulai" class="form-control" value="{{ $kegiatan->waktu_mulai }}">
         </div>
         <div class="form-group">
-            <strong for="waktu_selesai">Waktu Selesai</strong>
+            <label class="form-label" for="waktu_selesai">Waktu Selesai</label>
             <input type="time" name="waktu_selesai" placeholder="waktu Selesai" class="form-control" value="{{ $kegiatan->waktu_selesai }}">
         </div>
         <div class="form-group">
-            <strong for="status">Status</strong>
+            <label class="form-label" for="status">Status</label>
             <select name="status" id="status" class="form-control" required>
                 <option value="batal" {{ $kegiatan->status === 'batal' ? 'selected' : '' }}>Batal</option>
                 <option value="berjalan" {{ $kegiatan->status === 'berjalan' ? 'selected' : '' }}>Berjalan</option>
@@ -100,8 +100,9 @@
         $lat = isset($koordinat[0]) ? floatval(trim($koordinat[0])) : -6.200000;
         $lng = isset($koordinat[1]) ? floatval(trim($koordinat[1])) : 106.816666;
         @endphp
+
         <div class="form-group">
-            <label>Lokasi Kegiatan</label>
+            <label class="form-label">Lokasi Kegiatan</label>
             <input type="text" name="lokasi" id="lokasi" class="form-control" value="{{ $lat }},{{ $lng }}" readonly required hidden>
             <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
             <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
@@ -109,8 +110,8 @@
         
         <div id="map" style="height: 300px;"></div>
 
-        <div class="form-group">
-            <strong for="gambar">Gambar Kegiatan</strong>
+        <div class="form-group mt-3">
+            <label class="form-label" for="gambar">Gambar Kegiatan</label>
             <input type="file" name="gambar" id="gambar" class="form-control">
         </div>
         

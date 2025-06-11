@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             📝 Buat Laporan Proyek
                         </h4>
                     </div>
@@ -24,7 +24,6 @@
         </div> 
         
     </div>
-    <h3>📝 Buat Laporan Proyek</h3>
 
     <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
         <div class="card-body p-4">
@@ -45,15 +44,18 @@
         </div>
         <div class="form-group">
             <strong>Keterangan</strong>
-            <textarea name="keterangan" class="form-control" maxlength="255" placeholder="Masukkan Keterangan" rows="3"></textarea>
+            <textarea name="keterangan" id="keterangan" class="form-control text-long" maxlength="255" placeholder="Masukkan Keterangan" rows="3"></textarea>
+            <small id="keterangan-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
             <strong>Kendala</strong>
-            <textarea name="kendala" class="form-control" maxlength="255" placeholder="Masukkan Kendala" rows="3"></textarea>
+            <textarea name="kendala" id="kendala"  class="form-control text-long" maxlength="255" placeholder="Masukkan Kendala" rows="3"></textarea>
+            <small id="kendala-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
             <strong>Evaluasi</strong>
-            <textarea name="evaluasi" class="form-control" maxlength="255" placeholder="Masukkan Evaluasi" rows="3"></textarea>
+            <textarea name="evaluasi" id="evaluasi"  class="form-control text-long" maxlength="255" placeholder="Masukkan Evaluasi" rows="3"></textarea>
+            <small id="evaluasi-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
             <strong>Persentase Awal</strong>
@@ -68,7 +70,7 @@
 
 
         <div class="form-group mb-3">
-            <label><strong>Upload Dokumentasi (max 3 file: gambar/video)</strong></label>
+            <strong>Upload Dokumentasi (max 3 file: gambar/video)</strong>
             <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required>
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
@@ -79,4 +81,28 @@
 </div>
 </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // List semua textarea yang ingin dihitung
+    const textareas = [
+        'keterangan',
+        'kendala',
+        'evaluasi'
+    ];
+
+    textareas.forEach(id => {
+        const textarea = document.getElementById(id);
+        const counter = document.getElementById(id + '-count');
+
+        // Update hitungan saat load halaman (jika ada isi default)
+        counter.textContent = `${textarea.value.length} / 255 karakter`;
+
+        // Event input untuk update hitungan realtime
+        textarea.addEventListener('input', () => {
+            const length = textarea.value.length;
+            counter.textContent = `${length} / 255 karakter`;
+        });
+    });
+});
+</script>
 @endsection

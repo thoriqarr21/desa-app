@@ -11,12 +11,12 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-65" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 mb-4 w-45" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
-                        Proyek Pembangunan Desa <h4 class="ms-2 mb-0 text-primary">{{ ucfirst($proyek->jenis_proyek) }}</h4>
+                        <h4 class="fw-bolder text-dark mb-0">
+                        Proyek Pembangunan Desa 
                         </h4>
                     </div>
                 </div>

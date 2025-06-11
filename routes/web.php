@@ -22,7 +22,7 @@ use App\Http\Controllers\JalanController;
 use App\Http\Controllers\LaporanKegiatanController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
   
 Auth::routes();
@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 Route::middleware(['auth', 'role:Pegawai'])->name('frontend.')->group(function () {
-    Route::get('/frontend/proyek/index', [PegawaiDashboardController::class, 'index'])->name('index');
+    Route::get('/frontend/index', [PegawaiDashboardController::class, 'index'])->name('index');
 
     Route::get('/frontend/proyek/index', [FrontController::class, 'proyekIndex'])->name('proyek.index');
     Route::get('/frontend/proyek/{proyek}', [FrontController::class, 'proyekShow'])->name('proyek.show');

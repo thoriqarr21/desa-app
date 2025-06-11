@@ -15,43 +15,39 @@
          .header {
              text-align: center;
              margin-bottom: 10px;
-             /* No need for position: relative here */
-             overflow: hidden; /* Clear float */
+             overflow: hidden; 
          }
  
          .header img {
-             float: left; /* Make the image float to the left */
-             height: 70px; /* Adjusted height to match the image better */
+             float: left; 
+             height: 70px;
              width: auto;
              margin-right: 5px; 
-             margin-left: 1px; /* Adjust left margin for logo if needed */
+             margin-left: 1px; 
          }
  
          .header .info {
-             /* No display: inline-block needed if using float */
              text-align: center;
-             /* margin-left: auto; margin-right: auto; to center text when logo floats */
-             /* But since text is center aligned within available space, no specific margin-left is required from parent */
-             overflow: hidden; /* Contain the text when float is applied to the image */
+             overflow: hidden; 
          }
  
          .header h4 {
              margin: 0;
-             font-size: 14pt; /* Larger font for main government body */
+             font-size: 14pt; 
              font-weight: bold;
-             line-height: 1.2; /* Adjust line height for closer text */
+             line-height: 1.2; 
          }
  
          .header h5 {
              margin: 0;
-             font-size: 16pt; /* Largest for Desa name */
+             font-size: 16pt; 
              font-weight: bold;
              line-height: 1.2;
          }
  
          .header p {
              margin: 0;
-             font-size: 10pt; /* Smaller font for address */
+             font-size: 10pt; 
              line-height: 1.2;
          }
  
@@ -71,13 +67,13 @@
              text-align: center;
              text-decoration: underline;
              font-size: 14pt;
-             margin-bottom: 5px; /* Reduce margin to be closer to number */
-             margin-top: 2px; /* Add margin to separate from the line */
+             margin-bottom: 5px; 
+             margin-top: 2px; 
          }
  
          .nomor {
              text-align: center;
-             margin-bottom: 30px; /* Increased margin for better spacing */
+             margin-bottom: 30px;
              font-size: 12pt;
          }
  
@@ -88,42 +84,44 @@
  
          table.detail {
              width: 100%;
-             margin-top: 0; /* Remove top margin as text is directly above */
+             margin-top: 0;
              margin-bottom: 20px;
-             border-collapse: collapse; /* Ensure no extra spacing between cells */
+             border-collapse: collapse; 
              table-layout: fixed;
          }
  
          table.detail td {
             vertical-align: top;
-            padding: 2px 0; /* Reduced padding for tighter spacing */
+            padding: 2px 0; 
             line-height: 1.5; 
             word-wrap: break-word;
             overflow-wrap: break-word;
          }
  
          table.detail td:nth-child(1) {
-             width: 150px; /* Adjust width for the first column (labels) */
-             padding-left: 20px; /* Indent labels */
+             width: 150px;
+             padding-left: 20px; 
          }
  
          table.detail td:nth-child(2) {
-             width: 10px; /* For the colon */
+             width: 10px; 
          }
          .signature-table {
-            width: 100%;
-            margin-top: 40px;
-        }
+             margin-left: auto; 
+             margin-top: 40px;
+             width: max-content; 
+         }
+         
+         .signature-table td {
+             text-align: center;
+             vertical-align: top;
+             height: 100px;
+         }
 
-        .signature-table td {
-            text-align: center;
-            vertical-align: top;
-            height: 100px;
-        }
         .justify-text {
             text-align: justify;
-            word-wrap: break-word;   /* Penting untuk memotong kata panjang */
-            overflow-wrap: break-word; /* Versi modern dari word-wrap */
+            word-wrap: break-word;  
+            overflow-wrap: break-word;
         }
      </style>
  </head>
@@ -134,29 +132,18 @@
              <h4>PEMERINTAH KABUPATEN BOGOR</h4>
              <h4>KECAMATAN BOJONG GEDE</h4>
              <h5>DESA BOJONG GEDE</h5>
-             {{-- <p>Telp/Hp. 085700157725 Website: http://sered-banjarnegara.desa.id</p> --}}
+             
             </div>
             <p>Jl. Raya Bojonggede No. 250 Bojonggede-Kabupaten Bogor, Kode Pos 16922</p>
          <div style="clear: both;"></div>
          <div class="line"></div>
      </div>
  
- 
-     {{-- <div class="no-surat">No. Kode Desa : 33.04.08.2010</div> --}}
- 
     <h3 class="title">LAPORAN KEGIATAN DESA</h3>
     <div class="nomor">Nomor : 140/{{ $nomorUrutFormatted }}/LapKeg/{{ $bulanRomawiFormatted }}/{{ $tahun }}</div>
-    {{-- @php
-    $bulanRomawi = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
-    $bulan = $bulanRomawi[date('n') - 1];
-    $tahun = date('Y');
-    @endphp
-    <div class="nomor">Nomor : 140/01/LapKeg/{{ $bulan }}/{{ $tahun }}</div> --}}
 
- 
      <p class="intro-text">
-         Yang bertanda tangan di bawah ini Kepala Desa Bojong Gede, Kecamatan Bojong Gede,
-         Kabupaten Bogor, Provinsi Jawa Barat isi laporan kegiatan sebagai berikut :
+        Dengan hormat, bersama ini kami sampaikan laporan pelaksanaan kegiatan Desa Bojong Gede yang dilaksanakan sesuai dengan rencana, sebagaimana rincian berikut:
      </p>
  
      <table class="detail">
@@ -237,22 +224,21 @@
     <p style="padding-top: 5px; border-top: 1px solid rgb(202, 202, 202)">Dokumentasi Kegiatan</p>
     @forelse ($laporanKegiatan->dokumentasi as $dok)
     @if ($dok->file_type == 'image')
-        <img src="{{ public_path('storage/' . $dok->file_path) }}" style="width: 200px; margin: 5px;" alt="Dokumentasi">
+        <img src="{{ public_path('storage/' . $dok->file_path) }}" style="width: 220px; margin: 5px;" alt="Dokumentasi">
     @else
         <p><p>Dokumentasi Video:</p> {{ $dok->file_path }}</p>
     @endif
     @empty
         <p><em>Tidak ada dokumentasi tersedia.</em></p>
     @endforelse
+    
     <!-- Dokumentasi -->
     <!-- TANDA TANGAN -->
     <table class="signature-table">
         <tr>
-            <td>Mengetahui,<br>Kepala Desa Bojong Gede</td>
             <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
         </tr>
         <tr>
-            <td style="padding-top: 70px;">{{ $nama_pejabat ?? 'Nama Pejabat' }}</td>
             <td style="padding-top: 70px;">Dede Malvina</td>
         </tr>
     </table>

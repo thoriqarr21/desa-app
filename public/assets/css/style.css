@@ -265,6 +265,7 @@ form:hover .delete {
     color: #4a4a4a;
     margin-bottom: 6px;
     display: block;
+    font-size: 15px;
 }
 
 .form-control {

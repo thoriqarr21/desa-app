@@ -105,17 +105,17 @@
         }
 
         .signature-table {
-           
-           width: 100%;
-           margin-top: 40px;
-       }
-
-       .signature-table td {
-            border: none;
-           text-align: center;
-           vertical-align: top;
-           height: 100px;
-       }
+             margin-left: auto;   /* Mendorong tabel ke kanan */
+             margin-top: 40px;
+             width: max-content;  /* Supaya tidak melebar ke seluruh halaman */
+         }
+         
+         .signature-table td {
+             border: none;
+             text-align: center;
+             vertical-align: top;
+             height: 100px;
+         }
        .justify-text {
            /* text-align: justify; */
            word-wrap: break-word;  
@@ -193,11 +193,9 @@
        <!-- TANDA TANGAN -->
    <table class="signature-table">
     <tr>
-        <td>Mengetahui,<br>Kepala Desa Bojong Gede</td>
         <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
     </tr>
     <tr>
-        <td style="padding-top: 70px;">{{ $nama_pejabat ?? 'Nama Pejabat' }}</td>
         <td style="padding-top: 70px;">Dede Malvina</td>
     </tr>
 </table>

@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             Tambah User
                         </h4>
                     </div>
@@ -44,12 +44,6 @@
                 <input type="text" name="name" placeholder="Name" class="form-control">
             </div>
         </div>
-        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                <input type="email" name="email" placeholder="Email" class="form-control">
-            </div>
-        </div> --}}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Username:</strong>
@@ -85,7 +79,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary btn-sm mt-2 mb-3"><i class="fa-solid fa-floppy-disk"></i> Submit</button>
+            <button type="submit" class="btn btn-primary btn-sm mt-2 mb-3 fs-6"><i class="fa-solid fa-floppy-disk fs-6"></i> Submit</button>
         </div>
     </div>
 </form>

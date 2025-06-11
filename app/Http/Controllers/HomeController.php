@@ -51,12 +51,22 @@ $kegiatan = DesaKegiatan::selectRaw('YEAR(tanggal_mulai) as tahun, COUNT(*) as j
         $item->tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai)->format('Y-m-d');
         return $item;
     });
-    $rasioDisetujui = LaporanKegiatan::where('is_approved', true)->count();
-    $rasioDitolak = LaporanKegiatan::where('is_approved', false)->count();
-    $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
-    
+$rasioDisetujui = LaporanKegiatan::where('is_approved', true)->count();
+$rasioDitolak = LaporanKegiatan::where('is_approved', false)->count();
+$rasioPending = LaporanKegiatan::whereNull('is_approved')->count();
 
+    $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
+    $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')->get();
     
+    // Gabungkan menjadi satu koleksi
+    $lokasiGabungan = $lokasiKegiatan->concat($lokasiProyek);
+    $dataProyek = PembangunanProyek::select('nama_proyek', 'tanggal_mulai', 'tanggal_selesai', 'lokasi')
+    ->get()
+    ->map(function ($item) {
+        $item->tanggal_mulai = \Carbon\Carbon::parse($item->tanggal_mulai)->format('Y-m-d');
+        $item->tanggal_selesai = \Carbon\Carbon::parse($item->tanggal_selesai)->format('Y-m-d');
+        return $item;
+    });
 
 return view('home', [
     'jumlahProyek' => PembangunanProyek::count(),
@@ -67,6 +77,7 @@ return view('home', [
 
     'laporanDisetujui' => LaporanProyek::where('is_approved', 'setuju')->count(),
     'laporanDitolak' => LaporanProyek::where('is_approved', 'tidak_setuju')->count(),
+    'laporanDipending' => LaporanProyek::where('is_approved', 'pending')->count(),
 
     'proyekPerencanaan' => PembangunanProyek::where('status', 'perencanaan')->count(),
     'proyekBerjalan' => PembangunanProyek::where('status', 'berjalan')->count(),
@@ -80,9 +91,11 @@ return view('home', [
     'kegiatan' => $kegiatan,
 
     'dataKegiatan' => $dataKegiatan,
+    'dataProyek' => $dataProyek,
         'rasioDisetujui' => $rasioDisetujui,
         'rasioDitolak' => $rasioDitolak,
-        'lokasiKegiatan' => $lokasiKegiatan,
+        'rasioPending' => $rasioPending, 
+        'lokasiGabungan' => $lokasiGabungan,
 
 ]);
 

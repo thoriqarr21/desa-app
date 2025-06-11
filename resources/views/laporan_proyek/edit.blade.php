@@ -24,20 +24,14 @@
         </div> 
         
     </div>
-    <h3>✅ Edit Laporan</h3>
 
     <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
         <div class="card-body p-4">
     <form action="{{ route('laporan_proyek.update', $laporanProyek) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-
         <div class="form-group">
-            <label for="keterangan">Deskripsi Proyek</label>
-            <textarea name="keterangan" id="keterangan" class="form-control" required>{{ old('keterangan', $laporanProyek->keterangan) }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="proyek_id">Pilih Proyek</label>
+            <label class="form-label" for="proyek_id">Pilih Proyek</label>
             <select name="proyek_id" id="proyek_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($proyek as $item)
@@ -51,16 +45,23 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="kendala">KendalaProyek</label>
-            <textarea name="kendala" id="kendala" class="form-control" required>{{ old('kendala', $laporanProyek->kendala) }}</textarea>
+            <label class="form-label" for="keterangan">Keterangan Proyek</label>
+            <textarea name="keterangan" id="keterangan" class="form-control text-long" required>{{ old('keterangan', $laporanProyek->keterangan) }}</textarea>
+            <small id="keterangan-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
-            <label for="evaluasi">Evaluasi Proyek</label>
-            <textarea name="evaluasi" id="evaluasi" class="form-control" required>{{ old('evaluasi', $laporanProyek->evaluasi) }}</textarea>
+            <label class="form-label" for="kendala">KendalaProyek</label>
+            <textarea name="kendala" id="kendala" class="form-control text-long" required>{{ old('kendala', $laporanProyek->kendala) }}</textarea>
+            <small id="kendala-count" class="text-muted">0 / 255 karakter</small>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="evaluasi">Evaluasi Proyek</label>
+            <textarea name="evaluasi" id="evaluasi" class="form-control text-long" required>{{ old('evaluasi', $laporanProyek->evaluasi) }}</textarea>
+            <small id="evaluasi-count" class="text-muted">0 / 255 karakter</small>
         </div>
 
         <div class="form-group">
-            <label for="persentase">Persentase Proyek</label>
+            <label class="form-label" for="persentase">Persentase Proyek</label>
             <select name="persentase" id="persentase" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ([30, 50, 80, 100] as $value)
@@ -78,7 +79,7 @@
     
         
         <div class="form-group">
-            <label for="dokumentasi">Dokumentasi (opsional)</label>
+            <label class="form-label" for="dokumentasi">Dokumentasi (opsional)</label>
             <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple>
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
@@ -88,6 +89,29 @@
 </div>
 </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // List semua textarea yang ingin dihitung
+    const textareas = [
+        'keterangan',
+        'kendala',
+        'evaluasi'
+    ];
 
+    textareas.forEach(id => {
+        const textarea = document.getElementById(id);
+        const counter = document.getElementById(id + '-count');
+
+        // Update hitungan saat load halaman (jika ada isi default)
+        counter.textContent = `${textarea.value.length} / 255 karakter`;
+
+        // Event input untuk update hitungan realtime
+        textarea.addEventListener('input', () => {
+            const length = textarea.value.length;
+            counter.textContent = `${length} / 255 karakter`;
+        });
+    });
+});
+</script>
 
 @endsection

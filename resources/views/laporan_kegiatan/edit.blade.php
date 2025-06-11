@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             Edit Laporan Kegiatan
                         </h4>
                     </div>
@@ -24,7 +24,6 @@
         </div> 
         
     </div>
-    <h3>✅ Edit Laporan</h3>
 
     <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
         <div class="card-body p-4">
@@ -32,7 +31,7 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <strong for="kegiatan_id">Pilih Kegiatan</strong>
+            <label class="form-label" for="kegiatan_id">Pilih Kegiatan</label>
             <select name="kegiatan_id" id="kegiatan_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($kegiatan as $item)
@@ -46,7 +45,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <strong for="keterangan">Keterangan Kegiatan</strong>
+            <label class="form-label" for="keterangan">Keterangan Kegiatan</label>
             <textarea
                 name="keterangan"
                 id="keterangan"
@@ -62,7 +61,7 @@
         </div>
     
         <div class="form-group">
-            <strong for="hasil">Hasil Kegiatan</strong>
+            <label class="form-label" for="hasil">Hasil Kegiatan</label>
             <textarea
                 name="hasil"
                 id="hasil"
@@ -78,7 +77,7 @@
         </div>
     
         <div class="form-group">
-            <strong for="tujuan_kegiatan">Tujuan Kegiatan</strong>
+            <label class="form-label" for="tujuan_kegiatan">Tujuan Kegiatan</label>
             <textarea
                 name="tujuan_kegiatan"
                 id="tujuan_kegiatan"
@@ -94,7 +93,7 @@
         </div>
     
         <div class="form-group">
-            <strong for="evaluasi">Evaluasi Kegiatan</strong>
+            <label class="form-label" for="evaluasi">Evaluasi Kegiatan</label>
             <textarea
                 name="evaluasi"
                 id="evaluasi"
@@ -110,8 +109,8 @@
         </div>
         
         <div class="form-group">
-            <strong for="dokumentasi">Dokumentasi (opsional)</strong>
-            <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*">
+            <label class="form-label" for="dokumentasi">Dokumentasi (opsional)</label>
+            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*,video/*">
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Simpan</button>

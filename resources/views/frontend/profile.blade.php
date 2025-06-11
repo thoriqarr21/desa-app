@@ -388,7 +388,6 @@ h5.animated-title:hover i {
                     <h5 class="mb-4 animated-title">
                         <i class="fas fa-key text-dark me-2"></i>Ganti Password
                     </h5>
-                    {{-- <h5 class="mb-4"><i class="fas fa-key text-dark me-2"></i>Ganti Password</h5> --}}
                     <form method="POST" action="{{ route('frontend.updatePassword') }}">
                         @csrf
                         <div class="mb-3">

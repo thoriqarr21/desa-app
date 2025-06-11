@@ -304,15 +304,16 @@
             width: 10px; 
         }
         .signature-table {
-           width: 100%;
-           margin-top: 40px;
-       }
-
-       .signature-table td {
-           text-align: center;
-           vertical-align: top;
-           height: 100px;
-       }
+             margin-left: auto;   /* Mendorong tabel ke kanan */
+             margin-top: 40px;
+             width: max-content;  /* Supaya tidak melebar ke seluruh halaman */
+         }
+         
+         .signature-table td {
+             text-align: center;
+             vertical-align: top;
+             height: 100px;
+         }
        .justify-text {
            text-align: justify;
            word-wrap: break-word;   /* Penting untuk memotong kata panjang */
@@ -375,25 +376,14 @@
             <h4>PEMERINTAH KABUPATEN BOGOR</h4>
             <h4>KECAMATAN BOJONG GEDE</h4>
             <h5>DESA BOJONG GEDE</h5>
-            {{-- <p>Telp/Hp. 085700157725 Website: http://sered-banjarnegara.desa.id</p> --}}
            </div>
            <p>Jl. Raya Bojonggede No. 250 Bojonggede-Kabupaten Bogor, Kode Pos 16922</p>
         <div style="clear: both;"></div>
         <div class="line"></div>
     </div>
 
-
-    {{-- <div class="no-surat">No. Kode Desa : 33.04.08.2010</div> --}}
-
    <h3 class="title">LAPORAN PROYEK DESA</h3>
    <div class="nomor">Nomor : 140/{{ $nomorUrutFormatted }}/LapPro/{{ $bulanRomawiFormatted }}/{{ $tahun }}</div>
-   {{-- @php
-   $bulanRomawi = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
-   $bulan = $bulanRomawi[date('n') - 1];
-   $tahun = date('Y');
-   @endphp
-   <div class="nomor">Nomor : 140/01/LapKeg/{{ $bulan }}/{{ $tahun }}</div> --}}
-
 
     <p class="intro-text">
         Yang bertanda tangan di bawah ini Kepala Desa Bojong Gede, Kecamatan Bojong Gede,
@@ -472,15 +462,6 @@
    </table>
    
    <p style="padding-top: 5px; border-top: 1px solid rgb(202, 202, 202)">Dokumentasi Proyek</p>
-   {{-- @forelse ($laporanProyek->dokumentasi as $dok)
-   @if ($dok->file_type == 'image')
-       <img src="{{ public_path('storage/' . $dok->file_path) }}" style="width: 200px; margin: 5px;" alt="Dokumentasi">
-   @else
-       <p><strong>Dokumentasi Video:</strong> {{ $dok->file_path }}</p>
-   @endif
-   @empty
-       <p><em>Tidak ada dokumentasi tersedia.</em></p>
-   @endforelse --}}
 
    @php
    $grupUploadAwal = $laporanProyek->dokumentasi->where('is_initial', false);
@@ -498,7 +479,7 @@
     <tr><td>Foto/Video</td><td>:</td><td></td></tr>
    </table>
    @endif
-   <div class="image-grid"> {{-- Ini adalah container utama untuk gambar agar ke samping --}}
+   <div class="image-grid"> 
        @forelse ($grupUploadAwal as $dok)
            <div class="image-container">
                @if ($dok->file_type == 'image')
@@ -523,10 +504,7 @@
     <tr><td>Progres</td><td>:</td><td>{{ $persen }}%</td></tr>
     <tr><td>Foto/Video</td><td>:</td><td></td></tr>
    </table>
-       {{-- <div class="info-line" style="border-top: 1px solid rgb(202, 202, 202); padding-top: 10px">Progress : {{ $persen }}%</div>
-       <div class="info-line">Keterangan : {{ $doks->first()->keterangan }}</div>
-       <div class="info-line">Foto/Video :</div> --}}
-       <div class="image-grid"> {{-- Ini adalah container utama untuk gambar agar ke samping --}}
+       <div class="image-grid"> 
            @foreach ($doks as $dok)
                <div class="image-container">
                    @if ($dok->file_type == 'image')
@@ -545,11 +523,9 @@
    <!-- TANDA TANGAN -->
    <table class="signature-table">
        <tr>
-           <td>Mengetahui,<br>Kepala Desa Bojong Gede</td>
            <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
        </tr>
        <tr>
-           <td style="padding-top: 70px;">{{ $nama_pejabat ?? 'Nama Pejabat' }}</td>
            <td style="padding-top: 70px;">Dede Malvina</td>
        </tr>
    </table>

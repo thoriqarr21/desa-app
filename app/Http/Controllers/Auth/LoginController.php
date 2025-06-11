@@ -30,7 +30,7 @@ class LoginController extends Controller
     if ($user->hasAnyRole(['Admin', 'Kades'])) {
         return '/home';
     } elseif ($user->hasRole('Pegawai')) {
-        return '/frontend/proyek/index';
+        return '/frontend/index';
     }
 }
     

@@ -46,18 +46,18 @@
     <div class="row">
         <div class="form-group">
             <div class="form-group">
-                <strong>Nama kegiatan:</strong>
+                <label class="form-label">Nama kegiatan:</label>
                 <input type="text" name="nama_kegiatan" class="form-control" placeholder="Nama Kegiatan">
             </div>
         </div>
         <div class="form-group">
             <div class="form-group">
-                <strong>Deskripsi Kegiatan:</strong>
-                <textarea class="form-control" style="height:150px" name="deskripsi_kegiatan" placeholder="Deskripsi Kegiatan"></textarea>
+                <label class="form-label">Deskripsi Kegiatan:</label>
+                <textarea class="form-control text-long" style="height:150px" name="deskripsi_kegiatan" placeholder="Deskripsi Kegiatan"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="kategori_id">Pilih Kategori</label>
+            <label class="form-label" for="kategori_id">Pilih Kategori</label>
             <select name="kategori_id" id="kategori_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($kategoriKegiatans as $kategoriKegiatan)
@@ -69,19 +69,19 @@
             @enderror
         </div>
         <div class="form-group">
-            <label>Tanggal Mulai</label>
+            <label class="form-label">Tanggal Mulai</label>
             <input type="date" name="tanggal_mulai" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label>Tanggal Selesai</label>
+            <label class="form-label">Tanggal Selesai</label>
             <input type="date" name="tanggal_selesai" class="form-control" required>
         </div>
         <div class="form-group">
             <label class="form-label fw-semibold">Waktu Mulai</label>
             <div class="time-picker-wrapper">
                 <span class="time-icon">
-                    <i class="fas fa-clock"></i> <!-- Requires FontAwesome -->
+                    <i class="fas fa-clock"></i>
                 </span>
                 <input type="text" id="waktuMulai" name="waktu_mulai" class="form-control custom-time-picker" placeholder="Pilih waktu" required>
             </div>
@@ -91,7 +91,7 @@
             <label class="form-label fw-semibold">Waktu Selesai</label>
             <div class="time-picker-wrapper">
                 <span class="time-icon">
-                    <i class="fas fa-clock"></i> <!-- Icon jam -->
+                    <i class="fas fa-clock"></i> 
                 </span>
                 <input type="text" id="waktuSelesai" name="waktu_selesai" class="form-control custom-time-picker" placeholder="Pilih waktu" required>
             </div>
@@ -99,7 +99,7 @@
         
 
         <div class="form-group">
-            <label>Status</label>
+            <label class="form-label">Status</label>
             <select name="status" class="form-control" required>
                 <option value="">Pilih Status</option>
                 <option value="perencanaan">Batal</option>
@@ -108,11 +108,11 @@
             </select>
         </div>
         <div class="form-group">
-            <label>Gambar</label>
+            <label class="form-label">Gambar</label>
             <input type="file" name="gambar" class="form-control">
         </div>
         <div class="form-group">
-            <label>Lokasi Kegiatan</label>
+            <label class="form-label">Lokasi Kegiatan</label>
             <input type="text" name="lokasi" id="lokasi" class="form-control" readonly required hidden>
             <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
             <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
@@ -132,19 +132,18 @@
 const timeOptions = {
     enableTime: true,
     noCalendar: true,
-    dateFormat: "H:i",   // 24-hour format
+    dateFormat: "H:i",   
     time_24hr: true,
     defaultHour: 12,
     defaultMinute: 0
   };
-  // Initialize waktuMulai
+
   flatpickr("#waktuMulai", timeOptions);
-  // Initialize waktuSelesai
   flatpickr("#waktuSelesai", timeOptions);
 
         // <! ---- >
 
-        var map = L.map('map').setView([-6.200000, 106.816666], 13); // Jakarta default
+        var map = L.map('map').setView([-6.200000, 106.816666], 13); 
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
@@ -154,18 +153,18 @@ var marker = L.marker([-6.200000, 106.816666], { draggable: true }).addTo(map);
 
 // Set koordinat awal
 document.getElementById("lokasi").value = '-6.200000,106.816666';
-getLocationName(-6.200000, 106.816666); // Ambil nama lokasi awal
+getLocationName(-6.200000, 106.816666); 
 
 marker.on('dragend', function (e) {
     var position = marker.getLatLng();
     document.getElementById("lokasi").value = position.lat + ',' + position.lng;
-    getLocationName(position.lat, position.lng); // Tampilkan nama tempat
+    getLocationName(position.lat, position.lng);
 });
 
 map.on('click', function (e) {
     marker.setLatLng(e.latlng);
     document.getElementById("lokasi").value = e.latlng.lat + ',' + e.latlng.lng;
-    getLocationName(e.latlng.lat, e.latlng.lng); // Tampilkan nama tempat
+    getLocationName(e.latlng.lat, e.latlng.lng);
 });
 
 function getLocationName(lat, lon) {

@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
+                        <h4 class="fw-bolder text-dark mb-0">
                             Edit Proyek
                         </h4>
                     </div>
@@ -39,7 +39,7 @@
         <!-- Input untuk deskripsi proyek -->
         <div class="form-group">
             <strong for="deskripsi_proyek">Deskripsi Proyek</strong>
-            <textarea name="deskripsi_proyek" id="deskripsi_proyek" class="form-control" required>{{ old('deskripsi_proyek', $proyek->deskripsi_proyek) }}</textarea>
+            <textarea name="deskripsi_proyek" id="deskripsi_proyek" class="form-control text-long" required>{{ old('deskripsi_proyek', $proyek->deskripsi_proyek) }}</textarea>
         </div>
 
         <!-- Input untuk jenis proyek -->
@@ -188,7 +188,7 @@
     
     <div id="map" style="height: 300px;"></div>
         <!-- Gambar proyek -->
-        <div class="form-group">
+        <div class="form-group mt-3">
             <strong for="gambar">Gambar Proyek</strong>
             <input type="file" name="gambar" id="gambar" class="form-control">
         </div>

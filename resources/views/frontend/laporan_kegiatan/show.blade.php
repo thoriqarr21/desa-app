@@ -41,7 +41,7 @@
                     <img src="{{ asset('storage/' . $laporanKegiatan->user->gambar) }}" alt="Profile Picture" class="profile-img">
                     <div>
                         <h6 class="mb-0" style="font-weight: 700; color: #333;">{{ ucfirst($laporanKegiatan->user->name) }}</h6>
-                        <small class="text-muted">Nama</small>
+                        <small class="text-label">Nama</small>
                     </div>
                 </div>
 
@@ -132,15 +132,7 @@
                                 <div class="text-muted">{{ $laporanKegiatan->evaluasi }}</div>
                             </div>
                             <p class="text-muted text-center m-0 p-3">Detail Laporan Kegiatan.</p>
-                            {{-- <strong class="lokasi-title"><i class="bi bi-geo-alt me-1"></i>Lokasi Kegiatan</strong>
-                            <div class="mr-2" hidden>{{ $laporanKegiatan->kegiatan->lokasi }}</div>
-                            <p class="mt-2 text-muted">
-                                <span id="alamat-lokasi">Sedang mengambil alamat...</span>
-                            </p>
-                            <a href="https://www.google.com/maps?q={{ $laporanKegiatan->kegiatan->lokasi }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3 mb-2">
-                                Lihat di Google Maps
-                            </a>
-                            <div id="map" style="height: 300px; width: 100%;"></div> --}}
+                           
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-deskripsi" role="tabpanel" aria-labelledby="pills-deskripsi-tab">
@@ -184,90 +176,6 @@
         </div>
     </div>
 </div>
-
-{{-- // ------ // --}}
-
-{{-- <div class="container-fluid py-2 mb-5">
-    <div class="d-flex justify-content-between align-items-center margin-tb">
-        <div class="d-flex align-items-center ms-3 ">
-            <a class="btn btn-primary btn-sm fs-6 " href="{{ route('frontend.laporan_kegiatan.index') }}"><i class="fa fa-arrow-left fs-6"></i> Kembali</a>
-            <a href="{{ route('frontend.laporan_kegiatan.cetak', $laporanKegiatan->id) }}" class="btn btn-sm btn-dark ms-2 fs-6" target="_blank">
-                Cetak PDF
-            </a>
-        </div>
-        <div class="card border-0 mb-4 w-40" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-center">
-                    <div class="d-flex align-items-center">
-                        <h4 class="fw-bold text-dark mb-0">
-                            Detail Laporan
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </div>
-        <div class="card shadow-sm border-0">
-            <h3>📄 Detail Laporan Kegiatan</h3>
-            <hr style="box-shadow: 0px 3px 3px 1px rgb(181, 148, 241);">
-<div class="card ps-5">
-    <p><strong>Nama Kegiatan :</strong> {{ $laporanKegiatan->kegiatan->nama_kegiatan }}</p>
-    <p><strong>Deskripsi Kegiatan :</strong> {{ $laporanKegiatan->kegiatan->deskripsi_kegiatan }}</p>
-    <p><strong>Tanggal Mulai :</strong> {{ $laporanKegiatan->kegiatan->tanggal_mulai }}</p>
-    <p><strong>Tanggal Berakhir :</strong> {{ $laporanKegiatan->kegiatan->tanggal_selesai }}</p>
-    <p><strong>Tanggal Berakhir :</strong> {{ $laporanKegiatan->kegiatan->lama_hari }}</p>
-    <p><strong>Waktu Mulai :</strong> {{ $laporanKegiatan->kegiatan->waktu_mulai }}</p>
-    <p><strong>Waktu Berakhir :</strong> {{ $laporanKegiatan->kegiatan->waktu_selesai }}</p>
-    <p><strong>Dibuat oleh :</strong> {{ $laporanKegiatan->user->name }}</p>
-    <p><strong>Status Laporan :</strong>
-        @if ($laporanKegiatan->is_approved == 1)
-            <span class="badge text-bg-success">Disetujui</span>
-        @elseif ($laporanKegiatan->is_approved === 0)
-            <span class="badge text-bg-danger">Ditolak</span>
-        @else 
-            <span class="badge text-bg-warning text-dark">Pending</span>
-        @endif
-    </>
-</p>
-
-@if ($laporanKegiatan->is_approved === 0)
-    <p><strong>Alasan Penolakan:</strong> {{ $laporanKegiatan->keterangan_tolak }}</p>
-@endif
-<hr>
-<p><strong>Keterangan Laporan Kegiatan :</strong> {{ $laporanKegiatan->keterangan }}</p>
-<p><strong>hasil Kegiatan :</strong> {{ $laporanKegiatan->hasil }}</p>
-<p><strong>Tujuan Kegiatan Kegiatan :</strong> {{ $laporanKegiatan->tujuan_kegiatan }}</p>
-<p><strong>Evaluasi Kegiatan :</strong> {{ $laporanKegiatan->evaluasi }}</p>
-        </div>
-        </div>
-
-        <hr>
-<div class="card shadow-sm border-0 p-4 mt-4">
-    <h4>📸 Dokumentasi Kegiatan</h4>
-    <div class="row mt-3">
-        @forelse ($laporanKegiatan->dokumentasi as $dok)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    @if ($dok->file_type == 'image')
-                        <img src="{{ asset('storage/' . $dok->file_path) }}" class="card-img-top" alt="Dokumentasi" style="max-height: 250px; object-fit: cover;">
-                    @else
-                        <video controls class="w-100" style="max-height: 250px; object-fit: cover;">
-                            <source src="{{ asset('storage/' . $dok->file_path) }}" type="{{ \File::mimeType(public_path('storage/' . $dok->file_path)) }}">
-                            Browser Anda tidak mendukung video.
-                        </video>
-                    @endif
-                </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <p class="text-muted">Tidak ada dokumentasi tersedia.</p>
-            </div>
-        @endforelse
-    </div>
-</div> --}}
-
-    {{-- </div> --}}
-
     <style>
         .card {
             border-radius: 15px;
@@ -322,7 +230,7 @@
         .text-laporan .text-muted {
             text-align: justify;
             font-size: 0.95rem;
-            color: #6c757d; /* warna gray ala Bootstrap */
+            color: #6c757d;
             line-height: 1.6;
         }
     
@@ -343,7 +251,7 @@
             font-weight: 600;
         }
         .btn-back {
-            background-color: #6ba1ff; /* Reddish color from image */
+            background-color: #6ba1ff;
             border-color: #6ba1ff;
             color: white;
             font-weight: 600;
@@ -418,8 +326,8 @@
             padding: 8px 20px;
         }
         .nav-pills .nav-link.active {
-            background-color: #e0f7e9; /* Light green background for active tab */
-            color: #28a745; /* Darker green text for active tab */
+            background-color: #e0f7e9; 
+            color: #28a745; 
             font-weight: 600;
         }
         .activity-card {
@@ -479,15 +387,15 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 13px;
-            margin-left: auto; /* Push badge to the right */
+            margin-left: auto; 
         }
         .status-pending {
-            background-color: #fff3cd; /* Light orange */
-            color: #ffc107; /* Orange text */
+            background-color: #fff3cd; 
+            color: #ffc107; 
         }
         .status-accepted {
-            background-color: #d4edda; /* Light green */
-            color: #28a745; /* Green text */
+            background-color: #d4edda; 
+            color: #28a745; 
         }
         .nominal-pengajuan {
             font-size: 14px;
@@ -497,7 +405,7 @@
         .nominal-value {
             font-size: 18px;
             font-weight: 700;
-            color: #ff6b81; /* Reddish color for nominal value */
+            color: #ff6b81; 
             margin-top: 5px;
         }
     .text-muted {

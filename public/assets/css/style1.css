@@ -237,6 +237,44 @@ form:hover .delete {
     transform: translateY(0);
 }
 
+.animated-hr {
+    border: 0;
+    height: 5px;
+    background: linear-gradient(270deg, #0be82c, #f21010, #0d6efd);
+    background-size: 600% 600%;
+    width: 100%;
+    margin-bottom: 35px;
+    /* margin: 2rem 0; */
+    animation: moveGradient 3s ease infinite, expandHr 1s ease-out forwards;
+    border-radius: 10px;
+}
+
+@keyframes expandHr {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes moveGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.text-label {
+    color: #407752;
+    font-weight: 500;
+    margin-bottom: 0;
+}
 
 .card-body-custom {
     display: flex;
@@ -329,6 +367,30 @@ form:hover .delete {
     padding: 8px;
     border-radius: 11px;
 }
+
+.fc-event {
+    font-size: 13px;
+    padding: 4px;
+    white-space: normal; /* biar nggak terpotong */
+    overflow-wrap: break-word; /* biar judul bisa wrap */
+  }
+  
+  /* Supaya kalender nggak overflow vertikal */
+  #calendar {
+    overflow-y: hidden !important;
+  }
+  
+  /* Meningkatkan tinggi sel kalender */
+  .fc-day-grid-event {
+    margin: 2px 0;
+  }
+  
+  /* Header kalender rapi */
+  .fc-toolbar h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+  }
 
 .container-fluid {
     width: 100%;

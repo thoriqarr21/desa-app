@@ -53,6 +53,19 @@
                         <div class="text-muted">{{ $kegiatan->lama_hari }}</div>
                     </div>
             
+            
+                    <div class="mb-2">
+                        <strong><i class="bi bi-diagram-3 me-1"></i>Periode Kegiatan :</strong>
+                        <div class="text-muted">{{ $kegiatan->tanggal_mulai }} sampai {{ $kegiatan->tanggal_selesai }}</div>
+                    </div>
+                </div>
+            
+                <!-- Deskripsi & Info Kanan -->
+                <div class="col-md-7">
+                    <div class="mb-3">
+                        <strong><i class="bi bi-pencil-square me-1"></i>Deskripsi Kegiatan :</strong>
+                        <div class="text-muted" style="text-align: justify;">{{ $kegiatan->deskripsi_kegiatan }}</div>
+                    </div> 
                     <div class="mb-2">
                         <strong><i class="bi bi-flag me-1"></i>Status :</strong>
                         <span class="badge text-bg-success">{{ ucfirst($kegiatan->status) }}</span>
@@ -65,30 +78,7 @@
                     <div class="mb-2">
                         <strong><i class="bi bi-diagram-3 me-1"></i>Kategori Kegiatan :</strong>
                         <div class="text-muted">{{ ucfirst($kegiatan->kategoriKegiatan->nama_kategori) }}</div>
-                    </div>
-                    <div class="mb-2">
-                        <strong><i class="bi bi-diagram-3 me-1"></i>Kategori Kegiatan :</strong>
-                        <div class="text-muted">{{ $kegiatan->tanggal_mulai }} sampai {{ $kegiatan->tanggal_selesai }}</div>
-                    </div>
-                </div>
-            
-                <!-- Deskripsi & Info Kanan -->
-                <div class="col-md-7">
-                    <div class="mb-3">
-                        <strong><i class="bi bi-pencil-square me-1"></i>Deskripsi Kegiatan :</strong>
-                        <div class="text-muted" style="text-align: justify;">{{ $kegiatan->deskripsi_kegiatan }}</div>
-                    </div>           
-                    <div class="periode-container">
-                        <div class="periode-header">
-                          <i class="bi bi-calendar-week"></i>
-                          <span>Periode Kegiatan :</span>
-                        </div>
-                        {{-- <div class="periode-dates">
-                          <span class="date-badge">{{ $kegiatan->tanggal_mulai }}</span>
-                          <span> sampai </span>
-                          <span class="date-badge">{{ $kegiatan->tanggal_selesai }}</span>
-                        </div> --}}
-                    </div>
+                    </div>          
                 </div>
                 <hr>
                 <div class="mb-3">

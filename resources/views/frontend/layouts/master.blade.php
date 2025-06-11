@@ -85,7 +85,7 @@
         if (alert) {
             alert.style.transition = 'opacity 0.5s ease';
             alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 500); // hapus dari DOM setelah hilang
+            setTimeout(() => alert.remove(), 500); 
         }
     }, 3000); // 3000ms = 3 detik
 
@@ -95,9 +95,9 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate'); // Tambahkan class
+        entry.target.classList.add('animate');
       } else {
-        entry.target.classList.remove('animate'); // Hapus class saat keluar
+        entry.target.classList.remove('animate'); 
       }
     });
   }, {
