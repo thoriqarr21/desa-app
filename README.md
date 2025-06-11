@@ -92,7 +92,7 @@ Install storage
 
 Install website
 ```bash
-  php artisan storage:link 
+  composer require spatie/laravel-permission
   php artisan migrate --seed
 ```
 
