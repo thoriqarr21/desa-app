@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-35" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -59,23 +59,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-    
-        <div class="form-group">
-            <label class="form-label" for="hasil">Hasil Kegiatan</label>
-            <textarea
-                name="hasil"
-                id="hasil"
-                class="form-control text-long @error('hasil') is-invalid @enderror"
-                maxlength="255"
-                required
-                rows="3"
-            >{{ old('hasil', $laporanKegiatan->hasil) }}</textarea>
-            <small id="hasil-count" class="text-muted">0 / 255 karakter</small>
-            @error('hasil')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    
+        
         <div class="form-group">
             <label class="form-label" for="tujuan_kegiatan">Tujuan Kegiatan</label>
             <textarea
@@ -88,6 +72,22 @@
             >{{ old('tujuan_kegiatan', $laporanKegiatan->tujuan_kegiatan) }}</textarea>
             <small id="tujuan_kegiatan-count" class="text-muted">0 / 255 karakter</small>
             @error('tujuan_kegiatan')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="hasil">Hasil Kegiatan</label>
+            <textarea
+                name="hasil"
+                id="hasil"
+                class="form-control text-long @error('hasil') is-invalid @enderror"
+                maxlength="255"
+                required
+                rows="3"
+            >{{ old('hasil', $laporanKegiatan->hasil) }}</textarea>
+            <small id="hasil-count" class="text-muted">0 / 255 karakter</small>
+            @error('hasil')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>

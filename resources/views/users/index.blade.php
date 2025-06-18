@@ -23,14 +23,14 @@
                 <div class="card-header border-bottom pb-0">
                     <div class="d-sm-flex align-items-center">
                         <div>
-                            <h6 class="font-weight-semibold text-lg mb-0">Members list</h6>
-                            <p class="text-sm">See information about all members</p>
+                            <h6 class="font-weight-semibold text-lg mb-0">Users list</h6>
+                            <p class="text-sm">See information about all users</p>
                         </div>
                         <div class="ms-auto d-flex">
                             <div class="text-end">
                                 @can('user-create')               
                                 <a href="{{ route('users.create') }}" class="btn btn-dark btn-primary">
-                                     <i class="fas fa-user-plus me-2"></i> Add Member
+                                     <i class="fas fa-user-plus me-2"></i> Add Users
                                  </a>
                                 @endcan
                             </div> 

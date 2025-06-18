@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-45" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong>Jenis Permukaan:</strong>
-                                <div class="text-muted">{{ $proyek->proyekJalan->jenis_permukaan ?? '-' }}</div>
+                                <div class="text-muted">{{ ucfirst($proyek->proyekJalan->jenis_permukaan ?? '-') }}</div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <strong>Kondisi:</strong>
@@ -163,7 +163,6 @@
     </div>
 </div>
     
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         @php
@@ -188,35 +187,41 @@
         var geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
     
         fetch(geocodeUrl)
-    .then(response => response.json())
-    .then(data => {
-        let lokasiElement = document.getElementById('alamat-lokasi');
-        if (data && data.address) {
-            let parts = [
-                data.address.amenity,
-                data.address.building,
-                data.address.road,
-                data.address.suburb,
-                data.address.village || data.address.city,
-                data.address.state,
-                data.address.country
-            ];
-            let address = parts.filter(Boolean).join(', ');
-            marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
-            if (lokasiElement) lokasiElement.innerText = address;
-        } else {
-            marker.setPopupContent('Alamat tidak ditemukan').openPopup();
-            if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
-        }
-    })
-    .catch(error => {
-        console.error('Gagal ambil alamat:', error);
-        marker.setPopupContent('Gagal mengambil alamat').openPopup();
-        let lokasiElement = document.getElementById('alamat-lokasi');
-        if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
-    });
+            .then(response => response.json())
+            .then(data => {
+                let lokasiElement = document.getElementById('alamat-lokasi');
+                if (data && data.address) {
+                    let address = [
+                        data.address.house_number,              
+                        data.address.road,                      
+                        data.address.neighbourhood,              
+                        data.address.suburb,                     
+                        data.address.village,                    
+                        data.address.town,                   
+                        data.address.city_district || data.address.city,
+                        data.address.county,             
+                        data.address.state,               
+                        data.address.postcode,               
+                        data.address.country                     
+                    ].filter(Boolean).join(', ');
+    
+                    marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
+                    if (lokasiElement) lokasiElement.innerText = address;
+                } else {
+                    marker.setPopupContent('Alamat tidak ditemukan').openPopup();
+                    if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
+                }
+            })
+            .catch(error => {
+                console.error('Gagal ambil alamat:', error);
+                marker.setPopupContent('Gagal mengambil alamat').openPopup();
+                let lokasiElement = document.getElementById('alamat-lokasi');
+                if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
+            });
     });
     </script>
+    
+
     
 
 @endsection

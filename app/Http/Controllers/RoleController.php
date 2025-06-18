@@ -71,7 +71,7 @@ class RoleController extends Controller
         $role->syncPermissions($permissionsID);
     
         return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+                        ->with('success','Role berhasil di tambahkan');
     }
     /**
      * Display the specified resource.
@@ -132,7 +132,7 @@ class RoleController extends Controller
         $role->syncPermissions($permissionsID);
     
         return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+                        ->with('primary','Role berhasil di update');
     }
     /**
      * Remove the specified resource from storage.
@@ -144,6 +144,6 @@ class RoleController extends Controller
     {
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+                        ->with('danger','Role berhasil dihapus');
     }
 }

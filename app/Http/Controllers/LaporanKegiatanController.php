@@ -118,7 +118,7 @@ class LaporanKegiatanController extends Controller
      */
     public function show(LaporanKegiatan $laporanKegiatan): View
     {
-        $laporanKegiatan->load('dokumentasi');
+        $laporanKegiatan->load(['dokumentasi', 'kegiatan.kategoriKegiatan']); // eager load
         return view('laporan_kegiatan.show', compact('laporanKegiatan'));
     }
     
@@ -181,7 +181,7 @@ public function update(Request $request, string $id): RedirectResponse
             ]);
         }
     }
-    return redirect()->route('laporan_kegiatan.index')->with('success', 'Laporan berhasil diperbarui.');
+    return redirect()->route('laporan_kegiatan.index')->with('primary', 'Laporan berhasil di update.');
 }
 
     /**
@@ -203,7 +203,7 @@ public function update(Request $request, string $id): RedirectResponse
     $laporan->delete();
 
     return redirect()->route('laporan_kegiatan.index')
-                     ->with('success', 'Laporan dan dokumentasinya berhasil dihapus.');
+                     ->with('danger', 'Laporan dan dokumentasinya berhasil dihapus.');
 }
 
 public function approve(LaporanKegiatan $laporanKegiatan): View

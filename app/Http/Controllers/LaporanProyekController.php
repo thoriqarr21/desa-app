@@ -188,7 +188,7 @@ private function tentukanFileType($ext)
 }
 public function createTambahan($laporanId)
 {
-    $semuaPersen = [50, 80, 100];
+    $semuaPersen = [50, 100];
 
     $persenTerpakai = ProgresPembangunan::where('laporan_id', $laporanId)
         ->pluck('persentase')
@@ -210,11 +210,11 @@ public function createTambahan($laporanId)
     {
         $persentaseList = $laporanProyek->dokumentasi->pluck('persentase')->unique()->sort()->values();
         $laporanProyek->load('proyek', 'user');
-        $semuaPersen = [50, 80, 100];
+        $semuaPersen = [50, 100];
 
     // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 30%)
     $persentaseTerpakai = $laporanProyek->dokumentasi
-        ->where('persentase', '>', 30)
+        ->where('persentase', '>', 0)
         ->pluck('persentase')
         ->unique()
         ->toArray();
@@ -341,7 +341,7 @@ public function createTambahan($laporanId)
         }
     }
 
-    return redirect()->route('laporan_proyek.index')->with('success', 'Laporan berhasil diperbarui.');
+    return redirect()->route('laporan_proyek.index')->with('primary', 'Laporan berhasil di update.');
 }
 
 public function cetak($id)
@@ -375,7 +375,7 @@ public function cetak($id)
     public function destroy(LaporanProyek $laporanProyek): RedirectResponse
     {
         $laporanProyek->delete();
-        return redirect()->route('laporan_proyek.index')->with('success', 'Laporan berhasil dihapus.');
+        return redirect()->route('laporan_proyek.index')->with('danger', 'Laporan berhasil dihapus.');
     }
     public function exportPdfPerTahun($tahun)   
     {

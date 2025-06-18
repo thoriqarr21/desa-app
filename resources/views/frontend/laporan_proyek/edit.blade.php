@@ -385,7 +385,7 @@
                             <i class="bi bi-pencil-square position-absolute top-50 start-0 translate-middle-y ms-3 text-success"></i>
                             <select name="persentase" id="persentase" class="form-select ps-5 rounded-3 border border-success" required>
                                 <option value="">-- Pilih --</option>
-                                @foreach ([30, 50, 80, 100] as $value)
+                                @foreach ([0, 50, 100] as $value)
                                     <option value="{{ $value }}"
                                         {{ isset($laporanProyek->latestProgres) && $laporanProyek->latestProgres->persentase == $value ? 'selected' : '' }}>
                                         {{ $value }}%

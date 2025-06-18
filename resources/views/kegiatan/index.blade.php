@@ -64,7 +64,7 @@
                                     {{-- <th class="text-secondary font-weight-semibold opacity-7">Deskripsi Kegiatan</th> --}}
                                     <th class="text-secondary font-weight-semibold opacity-7">Status</th>
                                     <th class="text-secondary font-weight-semibold opacity-7">Lama Kegiatan</th>
-                                    <th class="text-center text-secondary font-weight-semibold opacity-7">Action</th>
+                                    <th class="text-secondary font-weight-semibold opacity-7">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
@@ -80,15 +80,19 @@
                                         <td>
                                             <p class="fs-6 font-weight-normal mb-0 justify-items-center">{{ $kegiatan->nama_kegiatan }}</p>
                                         </td>
-                                        {{-- <td>
-                                            <span class="fs-6 font-weight-normal">{{ $kegiatan->deskripsi_kegiatan }}</span>
-                                        </td> --}}
-                                        <td class="align-middle" style="justify-items: center">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <p class="mb-0 badge border border-success text-success bg-success fs-6">{{  ucfirst($kegiatan->status) }}</p>     
-                                                </div>
-                                            </div>
+                                        @php
+                                            $status = strtolower($kegiatan->status);
+                                            $class = match($status) {
+                                                'batal'    => 'badge border border-danger text-danger bg-danger',
+                                                'selesai'  => 'badge border border-success text-success bg-success',
+                                                'berjalan' => 'badge border border-primary text-primary bg-primary',
+                                            default    => 'badge border border-warning text-warning bg-warning',
+                                            };
+                                        @endphp
+                                        <td class="align-middle text-center">
+                                            <span class="badge fs-6 border {{ $class }}">
+                                                {{ ucfirst($kegiatan->status) }}
+                                            </span>
                                         </td>
                                         <td >
                                             <span class="fs-6 font-weight-normal">{{ $kegiatan->lama_hari }}</span>

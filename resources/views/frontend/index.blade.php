@@ -2,43 +2,19 @@
 
 @section('title', 'Archive Page')
 
-{{-- @section('page-script')
-@vite('resources/assets/js/dashboards-analytics.js')
-@endsection
-
-@section('vendor-style')
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-o9N1j7k2v3xbZz5GyWzxMaLwM4O1aU9aQ+U+pG6P5tM="
-    crossorigin=""
-  />
-  @vite('resources/assets/vendor/libs/apex-charts/apex-charts.scss')
-@endsection
-
-@section('vendor-script')
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-o9N1j7k2v3xbZz5GyWzxMaLwM4O1aU9aQ+U+pG6P5tM="
-    crossorigin=""
-  ></script>
-  @vite('resources/assets/vendor/libs/apex-charts/apexcharts.js')
-@endsection --}}
-
-
 @section('content')
 
 <div class="container-fluid py-4 px-5">
   <div class="d-flex">
     <div class="card-body">
       {{-- <h2>Dashboard</h2> --}}
-      <h2>Hello, {{ Auth::user()->name }}</h2>
+      <h2>RKTL Desa Bojong Gede</h2>
       @if (session('status'))
         <div class="alert alert-success" role="alert">
           {{ session('status') }}
         </div>
       @endif
-      {{ __('You are logged in!') }}
+      Halo, {{ Auth::user()->name }}
     </div>
   
     <div class="d-flex align-items-end me-5">
@@ -226,31 +202,42 @@
   <!-- Grafik Rasio Kegiatan Disetujui vs Ditolak -->
   <div class="row mt-5">
     <div class="col-md-6 mb-xl-0">
-    <div class="card shadow-xs border ">
-      <div class="card-header pb-0">
-        <h4 class="font-weight-bold text-md mt-3">Rasio Laporan Kegiatan</h4>
-      </div>
-      <div class="card-body py-3">
-        <div id="rasioChart"></div>
-        <h6 class="font-weight-bold text-md ms-3 mt-3">Berikut di atas adalah rasio laporan kegiatan disetujui, pending dan ditolak.</h6>
+      <div class="card shadow-xs border ">
+        <div class="card-header pb-0">
+          <h4 class="font-weight-bold text-md mt-3">Rasio Laporan Kegiatan</h4>
+        </div>
+        <div class="card-body py-3">
+          <div id="rasioChartKegiatan"></div>
+          <h6 class="font-weight-bold text-md ms-3 mt-3">Berikut di atas adalah rasio laporan kegiatan disetujui, pending dan ditolak.</h6>
+        </div>
       </div>
     </div>
-  </div>
-<!-- Kalender Kegiatan -->
-<div class="col-md-6 mb-xl-0">
-  <div class="card shadow-xs border">
-      <div class="card-header pb-0">
-          <h4 class="font-weight-bold text-md mt-3">Kalender Kegiatan & Proyek</h4>
+    <div class="col-md-6 mb-xl-0">
+      <div class="card shadow-xs border ">
+        <div class="card-header pb-0">
+          <h4 class="font-weight-bold text-md mt-3">Rasio Laporan Kegiatan</h4>
+        </div>
+        <div class="card-body py-3">
+          <div id="rasioChartProyek"></div>
+          <h6 class="font-weight-bold text-md ms-3 mt-3">Berikut di atas adalah rasio laporan kegiatan disetujui, pending dan ditolak.</h6>
+        </div>
       </div>
-      <div class="card-body py-3">
-          <div id="calendar"></div> <!-- Kalender akan ditampilkan di sini -->
-          <div class="mt-1 ms-4">
-            <span style="background-color: #007bff; width: 15px; height: 15px; display: inline-block;"></span> Kegiatan
-            <span style="background-color: #28a745; width: 15px; height: 15px; display: inline-block; margin-left: 10px;"></span> Proyek
+    </div>
+    <!-- Kalender Kegiatan -->
+    <div class="col">
+      <div class="card shadow-xs border">
+          <div class="card-header pb-0">
+              <h4 class="font-weight-bold text-md mt-3">Kalender Kegiatan & Proyek</h4>
+          </div>
+          <div class="card-body py-3">
+              <div id="calendar" ></div> <!-- Kalender akan ditampilkan di sini -->
+              <div class="mt-1 ms-4">
+                <span style="background-color: #007bff; width: 15px; height: 15px; display: inline-block;"></span> Kegiatan
+                <span style="background-color: #28a745; width: 15px; height: 15px; display: inline-block; margin-left: 10px;"></span> Proyek
+              </div>
           </div>
       </div>
-  </div>
-</div>
+    </div>
 </div>
 <div class="col mt-4">
   <div class="card shadow-sm rounded">
@@ -418,33 +405,48 @@
     const chart = new ApexCharts(document.querySelector("#kegiatanBarChart"), options);
     chart.render();
 
+    // rasio ///
     document.addEventListener("DOMContentLoaded", function () {
-    var options = {
-      chart: {
-        type: 'donut'
-      },
-      series: [{{ $rasioDisetujui }}, {{ $rasioPending }}, {{ $rasioDitolak }}],
-      labels: ['Disetujui', 'Pending', 'Ditolak'],
-      colors: ['#28a745', '#ffc107', '#dc3545'],
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 300
-          },
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }]
-    };
+  // Chart untuk Laporan Kegiatan
+  var optionsKegiatan = {
+    chart: { type: 'donut' },
+    series: [{{ $rasioDisetujui }}, {{ $rasioPending }}, {{ $rasioDitolak }}],
+    labels: ['Disetujui', 'Pending', 'Ditolak'],
+    colors: ['#28a745', '#ffc107', '#dc3545'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: { width: 300 },
+        legend: { position: 'bottom' }
+      }
+    }]
+  };
 
-    var chart = new ApexCharts(document.querySelector("#rasioChart"), options);
-    chart.render();
-  });
+  var chartKegiatan = new ApexCharts(document.querySelector("#rasioChartKegiatan"), optionsKegiatan);
+  chartKegiatan.render();
+
+  // Chart untuk Laporan Proyek
+  var optionsProyek = {
+    chart: { type: 'donut' },
+    series: [{{ $rasioDisetujuiProyek }}, {{ $rasioPendingProyek }}, {{ $rasioDitolakProyek }}],
+    labels: ['Disetujui', 'Pending', 'Ditolak'],
+    colors: ['#28a745', '#ffc107', '#dc3545'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: { width: 300 },
+        legend: { position: 'bottom' }
+      }
+    }]
+  };
+
+  var chartProyek = new ApexCharts(document.querySelector("#rasioChartProyek"), optionsProyek);
+  chartProyek.render();
+});
 
 
-  $(document).ready(function () {
+
+$(document).ready(function () {
   $('#calendar').fullCalendar({
     events: [
       // Data Kegiatan

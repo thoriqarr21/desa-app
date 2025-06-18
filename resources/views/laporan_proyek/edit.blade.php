@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-35" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -64,7 +64,7 @@
             <label class="form-label" for="persentase">Persentase Proyek</label>
             <select name="persentase" id="persentase" class="form-control" required>
                 <option value="">-- Pilih --</option>
-                @foreach ([30, 50, 80, 100] as $value)
+                @foreach ([0, 50, 100] as $value)
                     <option value="{{ $value }}"
                         {{ $value == old('persentase', optional($laporanProyek->latestProgres)->persentase) ? 'selected' : '' }}>
                         {{ $value }}%

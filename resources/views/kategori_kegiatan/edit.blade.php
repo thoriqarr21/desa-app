@@ -12,7 +12,7 @@
                  <span>Kembali</span>
              </a>                       
             </div>
-            <div class="card border-0 mb-4 w-40" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+            <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="d-flex align-items-center">
@@ -59,7 +59,7 @@
         </div>
         <div class="form-group">
             <label class="form-label">Deskripsi Kategori Kegiatan</label>
-            <textarea name="deskripsi_kategori" id="deskripsi_kategori" class="form-control" required>{{ $kategoriKegiatan->deskripsi_kategori }}</textarea>
+            <textarea name="deskripsi_kategori" id="deskripsi_kategori" class="form-control text-long" required>{{ $kategoriKegiatan->deskripsi_kategori }}</textarea>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <button type="submit" class="btn btn-primary btn-sm mt-2 fs-6 mb-3"><i class="fa-solid fa-floppy-disk me-1" style="font-size: 15px"></i>Update</button>

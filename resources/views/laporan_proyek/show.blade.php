@@ -9,7 +9,7 @@
                 Cetak PDF
             </a>
         </div>
-        <div class="card border-0 mb-4 w-40" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -167,7 +167,7 @@
                                     </button>                                    
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <form method="POST" action="{{ route('dokumentasi.destroy', $dok->id) }}" onsubmit="return confirm('Yakin ingin menghapus dokumentasi ini?')">
+                                            <form method="POST" action="{{ route('dokumentasi.destroy', $dok->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="dropdown-item text-danger fw-bold" type="submit">

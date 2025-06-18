@@ -83,7 +83,7 @@
                             </a>
                         </li>
                         <li>
-                            <form method="POST" action="{{ route('frontend.laporan_proyek.destroy', $item->id) }}" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
+                            <form method="POST" action="{{ route('frontend.laporan_proyek.destroy', $item->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="dropdown-item text-danger fw-bold" type="submit">

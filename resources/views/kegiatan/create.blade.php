@@ -12,7 +12,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-40" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -97,8 +97,7 @@
             </div>
         </div>
         
-
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label class="form-label">Status</label>
             <select name="status" class="form-control" required>
                 <option value="">Pilih Status</option>
@@ -106,7 +105,7 @@
                 <option value="berjalan">Berjalan</option>
                 <option value="selesai">Selesai</option>
             </select>
-        </div>
+        </div> --}}
         <div class="form-group">
             <label class="form-label">Gambar</label>
             <input type="file" name="gambar" class="form-control">
@@ -117,7 +116,7 @@
             <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
             <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
         </div>
-        <div id="map" style="height: 300px;"></div>   
+        <div id="map" style="height: 400px;"></div>   
 
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary btn-sm mt-2 mb-3"><i class="fa-solid fa-floppy-disk me-1" style="font-size: 12px"></i> Submit</button>
@@ -168,14 +167,37 @@ map.on('click', function (e) {
 });
 
 function getLocationName(lat, lon) {
-    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1&accept-language=id`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
             let lokasiDiv = document.getElementById('alamat-lokasi');
-            if (data && data.display_name) {
-                lokasiDiv.innerText = data.display_name;
+
+            if (data && data.address) {
+                const a = data.address;
+
+                const parts = [
+                    a.building,                     // Nama gedung atau bangunan
+                    a.amenity,                      // Fasilitas umum (kantor, sekolah, dll)
+                    a.road || a.footway || a.path,  // Nama jalan atau jalur
+                    a.house_number ? 'No. ' + a.house_number : null, // Nomor rumah
+                    a.bridge,                       // Nama jembatan (jika ada)
+                    a.railway,                      // Jalur kereta (jika ada)
+                    a.tunnel,                       // Terowongan (jika ada)
+                    a.neighbourhood,                // Lingkungan kecil / RW
+                    a.suburb,                       // Sub-kawasan
+                    a.hamlet,                       // Dusun atau kampung
+                    a.village || a.town || a.city,  // Desa atau kota
+                    a.city_district || a.district || a.county, // Kecamatan / kabupaten
+                    a.state_district,               // Wilayah administratif
+                    a.state,                        // Provinsi
+                    a.postcode,                     // Kode pos
+                    a.country                       // Negara
+                ];
+
+                let fullAddress = parts.filter(Boolean).join(', ');
+                lokasiDiv.innerText = fullAddress;
             } else {
                 lokasiDiv.innerText = "Alamat tidak ditemukan";
             }
@@ -185,5 +207,6 @@ function getLocationName(lat, lon) {
             document.getElementById('alamat-lokasi').innerText = "Gagal mengambil alamat";
         });
 }
+
 </script>
 @endsection

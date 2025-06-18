@@ -33,9 +33,8 @@ class HomeController extends Controller
     {
         $laporan = LaporanProyek::with('progresTerbaru')->get();
 
-$persentase30 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 30)->count();
+$persentase0 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 0)->count();
 $persentase50 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 50)->count();
-$persentase80 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 80)->count();
 $persentase100 = $laporan->filter(fn ($item) => $item->progresTerbaru?->persentase == 100)->count();
 
 $kegiatan = DesaKegiatan::selectRaw('YEAR(tanggal_mulai) as tahun, COUNT(*) as jumlah')
@@ -54,6 +53,10 @@ $kegiatan = DesaKegiatan::selectRaw('YEAR(tanggal_mulai) as tahun, COUNT(*) as j
 $rasioDisetujui = LaporanKegiatan::where('is_approved', true)->count();
 $rasioDitolak = LaporanKegiatan::where('is_approved', false)->count();
 $rasioPending = LaporanKegiatan::whereNull('is_approved')->count();
+
+$rasioDisetujuiProyek = LaporanProyek::where('is_approved', true)->count();
+$rasioDitolakProyek = LaporanProyek::where('is_approved', false)->count();
+$rasioPendingProyek = LaporanProyek::whereNull('is_approved')->count();
 
     $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
     $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')->get();
@@ -83,23 +86,23 @@ return view('home', [
     'proyekBerjalan' => PembangunanProyek::where('status', 'berjalan')->count(),
     'proyekSelesai' => PembangunanProyek::where('status', 'selesai')->count(),
 
-    'persentase30' => $persentase30,
+    'persentase0' => $persentase0,
     'persentase50' => $persentase50,
-    'persentase80' => $persentase80,
     'persentase100' => $persentase100,
 
     'kegiatan' => $kegiatan,
 
     'dataKegiatan' => $dataKegiatan,
     'dataProyek' => $dataProyek,
+    'lokasiGabungan' => $lokasiGabungan,
+
         'rasioDisetujui' => $rasioDisetujui,
         'rasioDitolak' => $rasioDitolak,
         'rasioPending' => $rasioPending, 
-        'lokasiGabungan' => $lokasiGabungan,
+        'rasioDisetujuiProyek' => $rasioDisetujuiProyek,
+        'rasioDitolakProyek' => $rasioDitolakProyek,
+        'rasioPendingProyek' => $rasioPendingProyek, 
 
 ]);
-
     }
-
-    
 }

@@ -56,7 +56,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('laporan_proyek/{laporanProyek}/approveaction', [LaporanProyekController::class, 'approveaction'])->name('laporan_proyek.approveaction');
     Route::post('laporan_proyek/storeTambahan', [LaporanProyekController::class, 'storeTambahan'])->name('laporan_proyek.storeTambahan');
     Route::delete('/dokumentasi/{id}', [DokumentasiProyekController::class, 'destroy'])->name('dokumentasi.destroy');
-    Route::delete('/dokumentasi/{id}', [DokumentasiKegiatanController::class, 'destroy'])->name('dokumentasi.destroy');
     Route::get('/profile', [UserController::class, 'profile'])->name('users.profile');
     Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::get('/laporan-proyek/{laporanProyek}/cetak', [LaporanProyekController::class, 'cetak'])->name('laporan_proyek.cetak');

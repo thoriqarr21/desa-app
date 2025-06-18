@@ -108,7 +108,7 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex">
-                                        <div class="ms-2">
+                                        <div class="status-index">
                                             @if ($item->is_approved == 1)
                                                 <span class="badge text-bg-success"">Disetujui</span>
                                             @elseif ($item->is_approved === 0)

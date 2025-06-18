@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-30" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -64,10 +64,18 @@
                 <strong for="lebar_jalan">Lebar Jalan</strong>
                 <input type="number" name="lebar_jalan" id="lebar_jalan" class="form-control" value="{{ old('lebar_jalan', $proyek->proyekJalan->lebar_jalan ?? '') }}">
             </div>
-            <div class="form-group">
-                <strong for="jenis_permukaan">Jenis Permukaan</strong>
-                <input type="text" name="jenis_permukaan" id="jenis_permukaan" class="form-control" value="{{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') }}">
+            <div class="mb-3">
+                <strong>Jenis Permukaan</strong>
+                <select name="jenis_permukaan" class="form-control">
+                    <option value="">Pilih Jenis Permukaan</option>
+                    <option value="aspal" {{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') == 'aspal' ? 'selected' : '' }}>Aspal</option>
+                    <option value="cor beton" {{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') == 'cor beton' ? 'selected' : '' }}>Cor Beton</option>
+                    <option value="batu kerikil" {{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') == 'batu kerikil' ? 'selected' : '' }}>Batu Kerikil</option>
+                    <option value="kayu/papan" {{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') == 'kayu/papan' ? 'selected' : '' }}>Kayu/Papan</option>
+                    <option value="tanah" {{ old('jenis_permukaan', $proyek->proyekJalan->jenis_permukaan ?? '') == 'tanah' ? 'selected' : '' }}>Tanah</option>
+                </select>
             </div>
+            
             {{-- @if($proyek->proyekJalan) --}}
             <div class="form-group">
                 <strong for="kondisi_jalan">Kondisi Jalan</strong>
@@ -141,7 +149,7 @@
         <div class="form-group">
             <strong for="status">Status</strong>
             <select name="status" id="status" class="form-control" required>
-                <option value="perencanaan" {{ $proyek->status === 'perencanaan' ? 'selected' : '' }}>Perencanaan</option>
+                <option value="batal" {{ $proyek->status === 'batal' ? 'selected' : '' }}>Batal</option>
                 <option value="berjalan" {{ $proyek->status === 'berjalan' ? 'selected' : '' }}>Berjalan</option>
                 <option value="selesai" {{ $proyek->status === 'selesai' ? 'selected' : '' }}>Selesai</option>
             </select>
@@ -186,7 +194,7 @@
         <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
     </div>
     
-    <div id="map" style="height: 300px;"></div>
+    <div id="map" style="height: 400px;"></div>
         <!-- Gambar proyek -->
         <div class="form-group mt-3">
             <strong for="gambar">Gambar Proyek</strong>
@@ -242,26 +250,39 @@
         updateAlamat(lat, lng);
     }
 
-    function updateAlamat(lat, lng) {
-        let url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
+function updateAlamat(lat, lng) {
+    let url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1&accept-language=id`;
 
-        fetch(url)
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             let lokasiElement = document.getElementById('alamat-lokasi');
             if (data && data.address) {
-                let parts = [
-                    data.address.amenity,
-                    data.address.building,
-                    data.address.road,
-                    data.address.suburb,
-                    data.address.village || data.address.city,
-                    data.address.state,
-                    data.address.country
+                const a = data.address;
+
+                const parts = [
+                    a.building,                     
+                    a.amenity,                      
+                    a.road || a.footway || a.path, 
+                    a.house_number ? 'No. ' + a.house_number : null, 
+                    a.bridge,                      
+                    a.railway,                      
+                    a.tunnel,                   
+                    a.neighbourhood,               
+                    a.suburb,                       
+                    a.hamlet,                      
+                    a.village || a.town || a.city,  
+                    a.city_district || a.district || a.county, 
+                    a.state_district,              
+                    a.state,                        
+                    a.postcode,                     
+                    a.country                       
                 ];
-                let address = parts.filter(Boolean).join(', ');
-                marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
-                if (lokasiElement) lokasiElement.innerText = address;
+
+                let fullAddress = parts.filter(Boolean).join(', ');
+                
+                marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${fullAddress}`).openPopup();
+                if (lokasiElement) lokasiElement.innerText = fullAddress;
             } else {
                 marker.setPopupContent('Alamat tidak ditemukan').openPopup();
                 if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
@@ -273,7 +294,8 @@
             let lokasiElement = document.getElementById('alamat-lokasi');
             if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
         });
-    }
+}
+
 
 </script>
 @endsection

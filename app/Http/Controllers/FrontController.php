@@ -91,11 +91,11 @@ public function laporanIndex(Request $request)
     {
         $persentaseList = $laporanProyek->dokumentasi->pluck('persentase')->unique()->sort()->values();
         $laporanProyek->load('proyek', 'user');
-        $semuaPersen = [50, 80, 100];
+        $semuaPersen = [50, 100];
 
-    // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 30%)
+    // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 0%)
     $persentaseTerpakai = $laporanProyek->dokumentasi
-        ->where('persentase', '>', 30)
+        ->where('persentase', '>', 0)
         ->pluck('persentase')
         ->unique()
         ->toArray();
@@ -238,7 +238,7 @@ public function laporanIndex(Request $request)
                 ]);
             }
         }
-        return redirect()->route('frontend.laporan_proyek.index')->with('success', 'Laporan berhasil dikirim.');
+        return redirect()->route('frontend.laporan_proyek.index')->with('success', 'Laporan berhasil ditambahkan.');
     }
 
 
@@ -444,7 +444,7 @@ public function cetakProyek($id)
             }
         }
      
-         return redirect()->route('frontend.laporan_kegiatan.index')->with('success', 'Laporan berhasil dikirim.');
+         return redirect()->route('frontend.laporan_kegiatan.index')->with('success', 'Laporan berhasil ditambahkan.');
      }
 
      public function showLaporanKegiatan(LaporanKegiatan $laporanKegiatan): View
@@ -612,7 +612,7 @@ public function cetakProyek($id)
 
     $user->save();
 
-    return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
+    return redirect()->back()->with('success', 'Profil berhasil di update.');
 }
 // ------------------------------
 

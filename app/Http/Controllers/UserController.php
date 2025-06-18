@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success', 'User berhasil dibuat.');
+                        ->with('success', 'User berhasil di tambahkan.');
     }
     
     /**
@@ -134,33 +134,35 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => 'required|unique:users,username,'.$id,
+            'username' => 'required|unique:users,username,' . $id,
             'password' => 'same:confirm-password',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'roles' => 'required'
         ]);
     
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = \Illuminate\Support\Facades\Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
+    
+        if (!empty($input['password'])) {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            $input = Arr::except($input, ['password']);
         }
     
-        
+        // ✅ Ini perbaikannya
         if ($request->hasFile('gambar')) {
-            $input = $request->file('gambar')->store('users', 'public');
+            $input['gambar'] = $request->file('gambar')->store('users', 'public');
         }
-
+    
         $user = User::find($id);
         $user->update($input);
-        \Illuminate\Support\Facades\DB::table('model_has_roles')->where('model_id',$id)->delete();
     
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
+                        ->with('success', 'User berhasil di update');
     }
+    
     
     /**
      * Remove the specified resource from storage.
@@ -172,7 +174,7 @@ class UserController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+                        ->with('danger','User berhasil dihapus');
     }
 
     public function profile(): View

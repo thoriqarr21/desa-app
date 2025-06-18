@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-35" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -31,7 +31,7 @@
         @csrf
 
         <div class="form-group">
-            <label class="form-label" for="kegiatan_id">Pilih Proyek</label>
+            <label class="form-label" for="kegiatan_id">Pilih Kegiatan</label>
             <select name="kegiatan_id" id="kegiatan_id" class="form-control" required>
                 <option value="">-- Pilih --</option>
                 @foreach ($kegiatans as $kegiatan)
@@ -48,15 +48,16 @@
             <small id="keterangan-count" class="text-muted">0 / 255 karakter</small>
         </div>
         <div class="form-group">
-            <label class="form-label">Hasil</label>
-            <textarea name="hasil" id="hasil" class="form-control text-long" maxlength="255" placeholder="Masukkan Hasil" rows="3"></textarea>
-            <small id="hasil-count" class="text-muted">0 / 255 karakter</small>
-        </div>
-        <div class="form-group">
             <label class="form-label">Tujuan Kegiatan</label>
             <textarea name="tujuan_kegiatan" id="tujuan_kegiatan" class="form-control text-long" maxlength="255" placeholder="Masukkan Tujuan Kegiatan" rows="3"></textarea>
             <small id="tujuan_kegiatan-count" class="text-muted">0 / 255 karakter</small>
         </div>
+        <div class="form-group">
+            <label class="form-label">Hasil</label>
+            <textarea name="hasil" id="hasil" class="form-control text-long" maxlength="255" placeholder="Masukkan Hasil" rows="3"></textarea>
+            <small id="hasil-count" class="text-muted">0 / 255 karakter</small>
+        </div>
+
         <div class="form-group">
             <label class="form-label">Evaluasi</label>
             <textarea name="evaluasi" id="evaluasi" class="form-control text-long" maxlength="255" placeholder="Masukkan Evaluasi" rows="3"></textarea>

@@ -8,13 +8,13 @@
   <div class="d-flex">
     <div class="card-body">
       {{-- <h2>Dashboard</h2> --}}
-      <h2>Hello, {{ Auth::user()->name }}</h2>
+      <h2>RKTL Desa Bojong Gede</h2>
       @if (session('status'))
         <div class="alert alert-success" role="alert">
           {{ session('status') }}
         </div>
       @endif
-      {{ __('You are logged in!') }}
+      Halo, {{ Auth::user()->name }}
     </div>
   
     <div class="d-flex align-items-end me-5">
@@ -138,27 +138,36 @@
         </div>
     </div>
     </div>
+    
     <div class="row">
-    <div class="col-md-8 mb-4">
-    <div class="card shadow-xs border h-100">
-      <div class="card-header pb-0">
-        <h4 class="font-weight-bold text-md mb-0">Statistik Progres Proyek</h4>
-        <p class="text-sm text-muted">Jumlah proyek per progres (%)</p>
+      <div class="col-md-4 mb-xl-0 mb-4">
+        <div class="card shadow-xs border h-100">
+          <div class="card-header pb-0">
+            <h4 class="font-weight-bold text-md mb-0">Rasio Laporan Kegiatan</h4>
+          </div>
+          <div class="card-body py-3 mt-1">
+            <div id="rasioChartKegiatan"></div>
+          </div>
+          <h6 class="font-weight-bold text-md ms-3 mb-5">Berikut di atas adalah rasio laporan kegiatan disetujui, pending dan ditolak.</h6>
+        </div>
       </div>
-      <div class="card-body py-3">
-        <canvas id="progresChart" height="160" style="width: 100%;"></canvas>
+      <div class="col-md-4 mb-xl-0 mb-4">
+        <div class="card shadow-xs border h-100">
+          <div class="card-header pb-0">
+            <h4 class="font-weight-bold text-md mb-0">Rasio Laporan Proyek</h4>
+          </div>
+          <div class="card-body py-3 mt-1">
+            <div id="rasioChartProyek"></div>
+          </div>
+          <h6 class="font-weight-bold text-md ms-3 mb-5">Berikut di atas adalah rasio Laporan Proyek disetujui, pending dan ditolak.</h6>
+        </div>
       </div>
-    </div>
-    </div>
-
-
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-header text-white">
             <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>Status Proyek</h5>
           </div>
           <div class="card-body">
-    
             <div class="card mb-3 border-start status">
               <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
@@ -189,7 +198,36 @@
     
           </div>
         </div>
+      </div>
+    </div>
+    
+  <div class="row mt-4">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-xs border h-100">
+        <div class="card-header pb-0">
+          <h4 class="font-weight-bold text-md mb-0">Statistik Progres Proyek</h4>
+          <p class="text-sm text-muted">Jumlah proyek per progres (%)</p>
         </div>
+        <div class="card-body py-3">
+          <canvas id="progresChart" height="160" style="width: 100%;"></canvas>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-xs border h-100">
+        <div class="card-header pb-0">
+            <h4 class="font-weight-bold text-md mb-0">Kalender Kegiatan & Proyek</h4>
+        </div>
+        <div class="card-body py-3">
+            <div id="calendar"></div>
+        </div>
+        <div class="mt-2 mb-2 ms-4">
+          <span style="background-color: #007bff; width: 15px; height: 15px; display: inline-block;"></span> Kegiatan
+          <span style="background-color: #28a745; width: 15px; height: 15px; display: inline-block; margin-left: 10px;"></span> Proyek
+        </div>
+      </div>
     </div>
     <div class="col">
       <div class="card shadow-sm rounded">
@@ -199,34 +237,6 @@
           </div>
       </div>
     </div>
-  <!-- Grafik Rasio Kegiatan Disetujui vs Ditolak -->
-  <div class="row mt-5">
-    <div class="col-md-6 mb-xl-0">
-    <div class="card shadow-xs border h-100">
-      <div class="card-header pb-0">
-        <h4 class="font-weight-bold text-md mb-0">Rasio Laporan Kegiatan</h4>
-      </div>
-      <div class="card-body py-3 mt-1">
-        <div id="rasioChart"></div>
-      </div>
-      <h6 class="font-weight-bold text-md ms-3 mb-5">Berikut di atas adalah rasio laporan kegiatan disetujui, pending dan ditolak.</h6>
-    </div>
-  </div>
-<!-- Kalender Kegiatan -->
-<div class="col-md-6 mb-xl-0 mt-2 mt-lg-0">
-  <div class="card shadow-xs border h-100">
-      <div class="card-header pb-0">
-          <h4 class="font-weight-bold text-md mb-0">Kalender Kegiatan & Proyek</h4>
-      </div>
-      <div class="card-body py-3">
-          <div id="calendar"></div> <!-- Kalender akan ditampilkan di sini -->
-      </div>
-      <div class="mt-2 mb-2 ms-4">
-        <span style="background-color: #007bff; width: 15px; height: 15px; display: inline-block;"></span> Kegiatan
-        <span style="background-color: #28a745; width: 15px; height: 15px; display: inline-block; margin-left: 10px;"></span> Proyek
-      </div>
-  </div>
-</div>
 </div>
 <div class="col mt-4">
   <div class="card shadow-sm rounded" style="border: 2px solid rgb(240, 240, 240)">
@@ -278,13 +288,12 @@
   const progresChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['30%', '50%', '80%', '100%'],
+      labels: ['0%', '50%', '100%'],
       datasets: [{
         label: 'Jumlah Proyek',
         data: [
-          {{ $persentase30 }},
+          {{ $persentase0 }},
           {{ $persentase50 }},
-          {{ $persentase80 }},
           {{ $persentase100 }}
         ],
         backgroundColor: ['#f1c40f', '#3498db', '#9b59b6', '#2ecc71'],
@@ -393,29 +402,42 @@
     chart.render();
     // rasio ///
     document.addEventListener("DOMContentLoaded", function () {
-    var options = {
-      chart: {
-        type: 'donut'
-      },
-      series: [{{ $rasioDisetujui }}, {{ $rasioPending }}, {{ $rasioDitolak }}],
-      labels: ['Disetujui', 'Pending', 'Ditolak'],
-      colors: ['#28a745', '#ffc107', '#dc3545'],
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 300
-          },
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }]
-    };
+  // Chart untuk Laporan Kegiatan
+  var optionsKegiatan = {
+    chart: { type: 'donut' },
+    series: [{{ $rasioDisetujui }}, {{ $rasioPending }}, {{ $rasioDitolak }}],
+    labels: ['Disetujui', 'Pending', 'Ditolak'],
+    colors: ['#28a745', '#ffc107', '#dc3545'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: { width: 300 },
+        legend: { position: 'bottom' }
+      }
+    }]
+  };
 
-    var chart = new ApexCharts(document.querySelector("#rasioChart"), options);
-    chart.render();
-  });
+  var chartKegiatan = new ApexCharts(document.querySelector("#rasioChartKegiatan"), optionsKegiatan);
+  chartKegiatan.render();
+
+  // Chart untuk Laporan Proyek
+  var optionsProyek = {
+    chart: { type: 'donut' },
+    series: [{{ $rasioDisetujuiProyek }}, {{ $rasioPendingProyek }}, {{ $rasioDitolakProyek }}],
+    labels: ['Disetujui', 'Pending', 'Ditolak'],
+    colors: ['#28a745', '#ffc107', '#dc3545'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: { width: 300 },
+        legend: { position: 'bottom' }
+      }
+    }]
+  };
+
+  var chartProyek = new ApexCharts(document.querySelector("#rasioChartProyek"), optionsProyek);
+  chartProyek.render();
+});
 
   $(document).ready(function () {
   $('#calendar').fullCalendar({

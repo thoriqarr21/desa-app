@@ -71,6 +71,13 @@
                     </div>
                 </div>
                 <div class="info-item">
+                    <i class="fas fa-calendar-day icon"></i>
+                    <div>
+                        <p class="text-value mb-0">{{ $laporanKegiatan->kegiatan->kategoriKegiatan->nama_kategori ?? '-' }}</p>
+                        <p class="text-label">Kategori Kegiatan</p>
+                    </div>
+                </div>
+                <div class="info-item">
                     <i class="fas fa-clock icon"></i>
                     <div>
                         <div class="periode-dates">

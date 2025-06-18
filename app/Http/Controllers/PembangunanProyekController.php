@@ -242,7 +242,7 @@ class PembangunanProyekController extends Controller
             ]);
         }
     
-        return redirect()->route('proyek.index')->with('primary', 'Proyek berhasil diperbarui');
+        return redirect()->route('proyek.index')->with('primary', 'Proyek berhasil di update');
     }
 
     /**
@@ -252,6 +252,6 @@ class PembangunanProyekController extends Controller
     {
         $proyek->delete();
 
-        return redirect()->route('proyek.index')->with('danger', 'Proyek berhasil didelete');
+        return redirect()->route('proyek.index')->with('danger', 'Proyek berhasil dihapus');
     }
 }

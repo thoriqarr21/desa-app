@@ -90,8 +90,14 @@
     box-sizing: border-box;
 }
 body {
-    background-image: url('{{ asset('assets/img/desa.jpg') }}');
+    background-image: url('{{ asset('assets/img/desa-bg.jpeg') }}');
+    background-size: cover;          /* Nutupin seluruh layar */
+    background-repeat: no-repeat;    /* Gak diulang */
+    background-position: center;     /* Di tengah */
+    min-height: 100vh;               /* Minimal setinggi layar */
+    margin: 0;                       /* Hilangin margin bawaan */
 }
+
 
 .background{
     width: 430px;

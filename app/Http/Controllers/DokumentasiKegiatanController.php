@@ -109,18 +109,18 @@ class DokumentasiKegiatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        $dokumentasi = DokumentasiKegiatan::findOrFail($id);
+    // public function destroy(string $id)
+    // {
+    //     $dokumentasi = DokumentasiKegiatan::findOrFail($id);
     
-        // Hapus file dari penyimpanan
-        if (Storage::disk('public')->exists($dokumentasi->file_path)) {
-            Storage::disk('public')->delete($dokumentasi->file_path);
-        }
+    //     // Hapus file dari penyimpanan
+    //     if (Storage::disk('public')->exists($dokumentasi->file_path)) {
+    //         Storage::disk('public')->delete($dokumentasi->file_path);
+    //     }
     
-        // Hapus data dari database
-        $dokumentasi->delete();
+    //     // Hapus data dari database
+    //     $dokumentasi->delete();
     
-        return back()->with('success', 'Dokumentasi berhasil dihapus.');
-    }
+    //     return back()->with('success', 'Dokumentasi berhasil dihapus.');
+    // }
     }

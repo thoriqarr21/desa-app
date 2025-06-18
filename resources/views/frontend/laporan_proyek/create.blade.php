@@ -379,9 +379,8 @@
                             <i class="bi bi-pencil-square position-absolute top-50 start-0 translate-middle-y ms-3 text-success"></i>
                             <select name="persentase" id="persentase" class="form-select ps-5 rounded-3 border border-success" required>
                                 <option value="">Pilih Persentase Progres Awal</option>
-                                <option value="30">30%</option>
+                                <option value="0">0%</option>
                                 <option value="50">50%</option>
-                                <option value="80">80%</option>
                                 <option value="100">100%</option>
                             </select>
                         </div>

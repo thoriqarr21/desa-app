@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Bulan Mei 2025 pada 05.59
+-- Waktu pembuatan: 18 Jun 2025 pada 10.54
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel_cache_spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:31:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:9:\"user-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:20:\"laporankegiatan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:22:\"laporankegiatan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:20:\"laporankegiatan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:22:\"laporankegiatan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:23:\"laporankegiatan-approve\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:11:\"proyek-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:13:\"proyek-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:11:\"proyek-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"proyek-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:13:\"kategori-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:15:\"kategori-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:13:\"kategori-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"kategori-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:12:\"laporan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:14:\"laporan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:12:\"laporan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:15:\"laporan-approve\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:14:\"laporan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:13:\"kegiatan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:15:\"kegiatan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:13:\"kegiatan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:15:\"kegiatan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}}s:5:\"roles\";a:3:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:5:\"Kades\";s:1:\"c\";s:3:\"web\";}i:2;a:3:{s:1:\"a\";i:3;s:1:\"b\";s:7:\"Pegawai\";s:1:\"c\";s:3:\"web\";}}}', 1748328916);
+('laravel_cache_spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:31:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:9:\"user-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:11:\"user-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:9:\"user-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"user-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:9:\"user-show\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:9:\"role-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:11:\"role-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:9:\"role-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:11:\"role-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:20:\"laporankegiatan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:22:\"laporankegiatan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:20:\"laporankegiatan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:22:\"laporankegiatan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:23:\"laporankegiatan-approve\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:11:\"proyek-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:13:\"proyek-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:11:\"proyek-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:13:\"proyek-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:13:\"kategori-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:15:\"kategori-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:13:\"kategori-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:15:\"kategori-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:12:\"laporan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:14:\"laporan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:12:\"laporan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:15:\"laporan-approve\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:14:\"laporan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:13:\"kegiatan-list\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:15:\"kegiatan-create\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:13:\"kegiatan-edit\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:15:\"kegiatan-delete\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}}s:5:\"roles\";a:3:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"Admin\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:5:\"Kades\";s:1:\"c\";s:3:\"web\";}i:2;a:3:{s:1:\"a\";i:3;s:1:\"b\";s:7:\"Pegawai\";s:1:\"c\";s:3:\"web\";}}}', 1750299680);
 
 -- --------------------------------------------------------
 
@@ -81,12 +81,8 @@ CREATE TABLE `desa_kegiatans` (
 --
 
 INSERT INTO `desa_kegiatans` (`id`, `nama_kegiatan`, `kategori_id`, `user_id`, `deskripsi_kegiatan`, `tanggal_mulai`, `tanggal_selesai`, `lama_hari`, `waktu_mulai`, `waktu_selesai`, `status`, `gambar`, `lokasi`, `created_at`, `updated_at`) VALUES
-(2, 'Pembangunan SD 06 Desa Bojong Gede', 1, 1, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', '2025-05-26', '2025-05-28', '3 hari', '13:00:00', '14:00:00', 'berjalan', 'gambar_kegiatan/tm7vWJTEgBz9IZmVL1NYU7o7ifbUkdggZ2FTAprh.png', '-6.200000,106.816666', '2025-05-26 08:42:15', '2025-05-26 08:42:15'),
-(3, 'Pembangunan SD 07 Desa Bojong Gede', 1, 1, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', '2025-05-26', '2025-05-28', '3 hari', '12:00:00', '13:00:00', 'perencanaan', 'gambar_kegiatan/JvSYBu9BYMHCt8S5PU5iS5pcm4evX8l8igvURyRt.png', '-6.202229407097723,106.88117980957033', '2025-05-26 09:24:01', '2025-05-26 09:24:01'),
-(4, 'Pembangunan SD 08 Desa Bojong Gede', 1, 1, 'fvdfvdfv', '2025-05-31', '2025-06-04', '5 hari', '10:00:00', '13:00:00', 'perencanaan', 'gambar_kegiatan/rTwzkWguQ2vQMalVnE0uefe3nzVmsqLdJe5y56BT.png', '-6.214681858859003,106.84890747070314', '2025-05-26 09:24:43', '2025-05-26 09:24:43'),
-(5, 'Pembangunan SD 09 Desa Bojong Gede', 1, 1, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', '2025-06-05', '2025-06-07', '3 hari', '12:00:00', '15:00:00', 'berjalan', 'gambar_kegiatan/ioKOjrSFYUZyfFDSfkObZ2B4g5RuhVGGZHMOB9DR.png', '-6.217246974005148,106.69990539550783', '2025-05-26 09:25:27', '2025-05-26 09:25:27'),
-(6, 'Pembangunan SD 02 Desa Bojong Gede', 1, 1, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', '2025-06-10', '2025-06-11', '2 hari', '12:00:00', '17:00:00', 'berjalan', 'gambar_kegiatan/fNDzDoyNsZwQo4MMas2IzRKLcve53OH5p9vCdEUk.png', '-6.21007421937677,106.75775527954103', '2025-05-26 09:26:07', '2025-05-26 09:26:07'),
-(7, 'Pembangunan SD 01 Desa Bojong Gede', 1, 1, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', '2025-06-12', '2025-06-13', '2 hari', '12:00:00', '15:00:00', 'berjalan', 'gambar_kegiatan/AU6jezqblbDb4KVNKbXxbnZH7jFYIvN7zsH6Fq8l.png', '-6.257519238213283,106.9182586669922', '2025-05-26 09:26:46', '2025-05-26 09:26:46');
+(1, 'Bansos', 2, 1, 'Bansos', '2025-06-18', '2025-06-20', '3 hari', '12:00:00', '14:00:00', 'selesai', 'gambar_kegiatan/VvfXQlAy7LL8EPVw8fljHwEADGmYIWWLTzhb3ayM.jpg', '-6.489492468981,106.7945176363', '2025-06-17 19:28:13', '2025-06-18 01:06:28'),
+(2, 'Kerja bakti bersama di rt.06', 2, 1, 'vsvsdv', '2025-06-18', '2025-06-20', '3 hari', '12:00:00', '14:00:00', 'batal', 'gambar_kegiatan/1opgHjfzBeYq0ollOrmWruIFUuglLghvKW5moINy.jpg', '-6.2070973547877,106.82749545253', '2025-06-18 01:00:19', '2025-06-18 01:02:50');
 
 -- --------------------------------------------------------
 
@@ -108,20 +104,9 @@ CREATE TABLE `dokumentasi_kegiatans` (
 --
 
 INSERT INTO `dokumentasi_kegiatans` (`id`, `laporan_id`, `file_path`, `file_type`, `created_at`, `updated_at`) VALUES
-(2, 2, 'dokumentasi/vqntv5FXHMl2XK7z2mkOgvU0zQ9K2za291dRHOhT.png', 'image', '2025-05-26 10:39:14', '2025-05-26 10:39:14'),
-(3, 3, 'dokumentasi/0yXUddd8Q6u4nLOd82u3J8DILrK2pzlOab4YXMkE.jpg', 'image', '2025-05-26 10:42:35', '2025-05-26 10:42:35'),
-(4, 4, 'dokumentasi/O5VzvmzqKxMNpyuxIsQsS6BWbgfAK9rT3gxNl37S.jpg', 'image', '2025-05-26 19:57:56', '2025-05-26 19:57:56'),
-(5, 4, 'dokumentasi/3QT7DIZ2PP5QqmdL2Fm1R96qBmJAG5omekhWwSJK.png', 'image', '2025-05-26 19:57:56', '2025-05-26 19:57:56'),
-(6, 4, 'dokumentasi/i8J7t4SAyNIXYtOYZ4gREqLPflEIEdzD5ucO0mZJ.png', 'image', '2025-05-26 19:57:56', '2025-05-26 19:57:56'),
-(7, 5, 'dokumentasi/kdRQEp1SN5gx1g1cWi7bG6MWF7seXyPkmzB2aYdg.jpg', 'image', '2025-05-26 20:00:34', '2025-05-26 20:00:34'),
-(8, 5, 'dokumentasi/8fPNME1XD36r4lKZHTpWCNEExW8xo9SXwSQD4VjC.jpg', 'image', '2025-05-26 20:00:34', '2025-05-26 20:00:34'),
-(9, 5, 'dokumentasi/53e0KDUQE35F443HZVa7c8ouatnJn9gUtrzcjJcc.jpg', 'image', '2025-05-26 20:00:34', '2025-05-26 20:00:34'),
-(10, 6, 'dokumentasi/uvzlW58JkARcbGVxDqXWneEs1slEsPXGL6mbHNwP.jpg', 'image', '2025-05-26 20:06:53', '2025-05-26 20:06:53'),
-(11, 6, 'dokumentasi/gaAmVNnZ3CnofqXJ5uxGnaQa021LFPzrAAzP8ibU.png', 'image', '2025-05-26 20:06:53', '2025-05-26 20:06:53'),
-(12, 6, 'dokumentasi/oSLVQnMOXu4MlWkqVJbzO9W7LuG5FelYOx57Tnrd.jpg', 'image', '2025-05-26 20:06:53', '2025-05-26 20:06:53'),
-(13, 7, 'dokumentasi/bCgNpcl8ae81YgahErQb2J2wekgoK9KjnNovNO8n.png', 'image', '2025-05-26 20:08:34', '2025-05-26 20:08:34'),
-(14, 7, 'dokumentasi/Rp5u4y7eQ7kJX2mcxmrd1EIUZrMpDNdh4GWc1rFh.jpg', 'image', '2025-05-26 20:08:34', '2025-05-26 20:08:34'),
-(15, 7, 'dokumentasi/R87pdPBom4ygPBrGQ456OowbBbgTJSJ1Ndx7RD1E.jpg', 'image', '2025-05-26 20:08:34', '2025-05-26 20:08:34');
+(1, 1, 'dokumentasi/7Vm73dAckhwszI207xB9ZtB26pBd6nPUnvNpyHNe.jpg', 'image', '2025-06-17 19:47:50', '2025-06-17 19:47:50'),
+(2, 1, 'dokumentasi/pCFnoBKXXz2ANaKGDcGXRF7JXqPbQ4ZlmFWMvxrF.jpg', 'image', '2025-06-17 19:47:50', '2025-06-17 19:47:50'),
+(3, 1, 'dokumentasi/XMvHkAw9RrythXYupVmOqavEMiZT16wvH5IDhxeN.jpg', 'image', '2025-06-17 19:47:50', '2025-06-17 19:47:50');
 
 -- --------------------------------------------------------
 
@@ -147,9 +132,7 @@ CREATE TABLE `dokumentasi_proyeks` (
 --
 
 INSERT INTO `dokumentasi_proyeks` (`id`, `progres_id`, `laporan_id`, `file_path`, `file_type`, `persentase`, `keterangan`, `is_initial`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'dokumentasi/fAHopgBa2XOtvMmcLulcUP8jjWXrMnaMjBF96EaB.png', 'image', 30, 'Upload awal', 0, '2025-05-25 23:58:53', '2025-05-25 23:58:53'),
-(2, 2, 2, 'dokumentasi/GZMlXry2FxpRi94WCbo8WrLFkCKCPkpOSMxWcvmB.png', 'image', 30, 'Upload awal', 0, '2025-05-26 12:07:52', '2025-05-26 12:07:52'),
-(3, 3, 1, 'dokumentasi/BGlfVcChhUrqtwya1jaTVkeHCWfIYSHSSSkB0UHi.png', 'image', 50, 'dvsvvsvds', 1, '2025-05-26 12:09:32', '2025-05-26 12:09:32');
+(7, 5, 3, 'dokumentasi/IKjpIGCAoMU0kAQH03p27ZqlhgvrDy4XPABPbwnD.jpg', 'image', 0, 'Upload awal', 0, '2025-06-18 01:25:50', '2025-06-18 01:25:50');
 
 -- --------------------------------------------------------
 
@@ -221,7 +204,10 @@ CREATE TABLE `kategori_kegiatans` (
 --
 
 INSERT INTO `kategori_kegiatans` (`id`, `nama_kategori`, `deskripsi_kategori`, `created_at`, `updated_at`) VALUES
-(1, 'Sosial', 'bfbdbdfbdbd', '2025-05-25 23:56:25', '2025-05-25 23:56:25');
+(1, 'Pemerintahan', 'Kegiatan yang berkenaan dengan pemerintahan di desa bojonggede', '2025-06-17 19:24:41', '2025-06-17 19:24:41'),
+(2, 'Sosial', 'Kegiatan yang berkenaan dengan kegiatan sosial di desa bojonggede', '2025-06-17 19:25:26', '2025-06-17 19:25:26'),
+(3, 'Kesehatan', 'Kegiatan yang berkenaan dengan kesehatan di desa bojonggede', '2025-06-17 19:26:52', '2025-06-17 19:26:52'),
+(4, 'Seni Budaya', 'Kegiatan yang berkenaan dengan seni budaya di desa bojonggede', '2025-06-18 01:53:53', '2025-06-18 01:53:53');
 
 -- --------------------------------------------------------
 
@@ -249,12 +235,7 @@ CREATE TABLE `laporan_kegiatans` (
 --
 
 INSERT INTO `laporan_kegiatans` (`id`, `kegiatan_id`, `user_id`, `kode_kegiatan`, `tujuan_kegiatan`, `hasil`, `evaluasi`, `keterangan`, `is_approved`, `keterangan_tolak`, `created_at`, `updated_at`) VALUES
-(2, 3, 1, '20250526-KGT3-GBBR', 'fgfdggdfgd', 'fdgffgdg', 'fdgdggdg', 'gdfgfdg', NULL, NULL, '2025-05-26 10:39:14', '2025-05-26 10:39:14'),
-(3, 7, 3, '20250526-KGT7-X3WL', 'trhrrrrrrrrrrrrrrrrrghhfhgfhghfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', 'thtrhrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'sdvvdsfgfffregggtgfgdgdfgrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'dvdsv', NULL, NULL, '2025-05-26 10:42:35', '2025-05-26 19:30:15'),
-(4, 6, 3, '20250527-KGT6-ALCP', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', NULL, NULL, '2025-05-26 19:57:55', '2025-05-26 19:57:55'),
-(5, 4, 3, '20250527-KGT4-LR1O', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', NULL, NULL, '2025-05-26 20:00:34', '2025-05-26 20:00:34'),
-(6, 2, 3, '20250527-KGT2-F5XQ', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', NULL, NULL, '2025-05-26 20:06:53', '2025-05-26 20:06:53'),
-(7, 5, 3, '20250527-KGT5-MBNY', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', 'Lorem dcscjdcsbchbsucbhsbchsbchdsbchjsbdcsbhbchjdbcshbchjsbcshbcshcbhscbhsbcshbchjcsjcsjbchsbchsbchjsdcb\\sbhsbchsbcjsjcbhjscbscsdcscscscdscscs', NULL, NULL, '2025-05-26 20:08:34', '2025-05-26 20:08:34');
+(1, 1, 1, '20250618-KGT1-QY9P', 'dvdsvv', 'dvsd', 'vdsvds', 'dsvsvdv', 1, NULL, '2025-06-17 19:47:50', '2025-06-18 01:07:02');
 
 -- --------------------------------------------------------
 
@@ -281,8 +262,7 @@ CREATE TABLE `laporan_proyeks` (
 --
 
 INSERT INTO `laporan_proyeks` (`id`, `proyek_id`, `user_id`, `kode_laporan`, `keterangan`, `kendala`, `evaluasi`, `is_approved`, `keterangan_tolak`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '20250526-PRY1-36H2', 'ngn', 'gfnfgn', 'gfgn', NULL, NULL, '2025-05-25 23:58:53', '2025-05-25 23:58:53'),
-(2, 2, 3, '20250526-PRY2-9LPP', 'bfbfgfbfb', 'bgfbbfgb', 'gbgfbfgbf', NULL, NULL, '2025-05-26 12:07:52', '2025-05-26 12:07:52');
+(3, 1, 1, '20250618-PRY1-RKYG', 'ccx  xc', 'x c x', 'c xc', NULL, NULL, '2025-06-18 01:25:50', '2025-06-18 01:25:50');
 
 -- --------------------------------------------------------
 
@@ -392,8 +372,7 @@ CREATE TABLE `pembangunan_proyeks` (
 --
 
 INSERT INTO `pembangunan_proyeks` (`id`, `nama_proyek`, `jenis_proyek`, `deskripsi_proyek`, `anggaran`, `tanggal_mulai`, `tanggal_selesai`, `masa_kontrak`, `sumber_dana`, `kontraktor`, `penanggung_jawab`, `status`, `lokasi`, `gambar`, `created_at`, `updated_at`) VALUES
-(1, 'Jalan Desa', 'jalan', 'sdsd', 20000000.00, '2025-05-26', '2025-05-31', '6 hari', 'APBD Daerah', 'PT. PP', 'Sudarsono', 'berjalan', '-6.200000,106.816666', 'gambar_proyek/dB3UABe2zC55INj8WSAjXoCeKdsDfoX98iXGafm0.png', '2025-05-25 23:58:28', '2025-05-25 23:58:28'),
-(2, 'Pembangunan SD', 'bangunan', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum rem tempore id? Deleniti voluptate est corrupti explicabo tenetur porro minus unde quis expedita eveniet, asperiores, aut saepe in exercitationem odit. Voluptatibus porro quibusdam alias tenetur enim, minus magnam doloremque praesentium sint earum? Illo illum labore, doloremque dignissimos et optio! Nam incidunt ex natus excepturi ipsam illum aspernatur voluptatem provident corrupti molestiae. Porro, sint a maiores nobis nam nesciunt vero vel libero excepturi sit impedit, quia esse ipsam illum. Iste, aperiam unde sit ipsam cupiditate enim adipisci sed eum nihil excepturi asperiores perspiciatis sunt repudiandae animi aut iusto ipsa similique harum!', 20000000.00, '2025-07-17', '2025-12-27', '164 hari', 'APBD Daerah', 'PT. PP', 'Sudarsono', 'berjalan', '-6.212218056653312,106.85302734375001', 'gambar_proyek/lM5YLhXoVnA20JAbPtvT0wViedHV1bk8bLl161SK.png', '2025-05-26 12:06:24', '2025-05-26 12:06:24');
+(1, 'Pembangunan Jalan efwfwfw', 'jalan', 'sdvsvsdv', 150000000.00, '2025-05-01', '2025-05-25', '25 hari', 'Dana Desa', 'PT. Waskita', 'Beni Setiawan', 'berjalan', '-6.280424125646783,106.94085891972323', 'gambar_proyek/HiHExC9rjHafCHy7FFcj3EHyk4CHJhtfbBDm5EK5.jpg', '2025-06-17 20:02:43', '2025-06-17 20:19:36');
 
 -- --------------------------------------------------------
 
@@ -414,37 +393,37 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'user-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(2, 'user-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(3, 'user-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(4, 'user-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(5, 'user-show', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(6, 'role-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(7, 'role-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(8, 'role-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(9, 'role-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(10, 'laporankegiatan-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(11, 'laporankegiatan-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(12, 'laporankegiatan-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(13, 'laporankegiatan-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(14, 'laporankegiatan-approve', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(15, 'proyek-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(16, 'proyek-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(17, 'proyek-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(18, 'proyek-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(19, 'kategori-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(20, 'kategori-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(21, 'kategori-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(22, 'kategori-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(23, 'laporan-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(24, 'laporan-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(25, 'laporan-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(26, 'laporan-approve', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(27, 'laporan-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(28, 'kegiatan-list', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(29, 'kegiatan-create', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(30, 'kegiatan-edit', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09'),
-(31, 'kegiatan-delete', 'web', '2025-05-25 23:52:09', '2025-05-25 23:52:09');
+(1, 'user-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(2, 'user-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(3, 'user-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(4, 'user-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(5, 'user-show', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(6, 'role-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(7, 'role-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(8, 'role-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(9, 'role-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(10, 'laporankegiatan-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(11, 'laporankegiatan-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(12, 'laporankegiatan-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(13, 'laporankegiatan-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(14, 'laporankegiatan-approve', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(15, 'proyek-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(16, 'proyek-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(17, 'proyek-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(18, 'proyek-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(19, 'kategori-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(20, 'kategori-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(21, 'kategori-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(22, 'kategori-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(23, 'laporan-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(24, 'laporan-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(25, 'laporan-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(26, 'laporan-approve', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(27, 'laporan-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(28, 'kegiatan-list', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(29, 'kegiatan-create', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(30, 'kegiatan-edit', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40'),
+(31, 'kegiatan-delete', 'web', '2025-06-17 19:20:40', '2025-06-17 19:20:40');
 
 -- --------------------------------------------------------
 
@@ -465,9 +444,7 @@ CREATE TABLE `progres_pembangunans` (
 --
 
 INSERT INTO `progres_pembangunans` (`id`, `laporan_id`, `persentase`, `created_at`, `updated_at`) VALUES
-(1, 1, 30, '2025-05-25 23:58:53', '2025-05-25 23:58:53'),
-(2, 2, 30, '2025-05-26 12:07:52', '2025-05-26 12:07:52'),
-(3, 1, 50, '2025-05-26 12:09:32', '2025-05-26 12:09:32');
+(5, 3, 0, '2025-06-18 01:25:50', '2025-06-18 01:25:50');
 
 -- --------------------------------------------------------
 
@@ -485,13 +462,6 @@ CREATE TABLE `proyek_bangunans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `proyek_bangunans`
---
-
-INSERT INTO `proyek_bangunans` (`id`, `proyek_id`, `nama_bangunan`, `jumlah_lantai`, `luas_bangunan`, `fungsi`, `created_at`, `updated_at`) VALUES
-(1, 2, 'SDN 05 Bojonggede', '3', '400', 'Sekolah', '2025-05-26 12:06:24', '2025-05-26 12:06:24');
 
 -- --------------------------------------------------------
 
@@ -515,7 +485,10 @@ CREATE TABLE `proyek_jalans` (
 --
 
 INSERT INTO `proyek_jalans` (`id`, `proyek_id`, `panjang_jalan`, `lebar_jalan`, `jenis_permukaan`, `kondisi_jalan`, `created_at`, `updated_at`) VALUES
-(1, 1, '80', '10', 'aspal', 'rusak parah', '2025-05-25 23:58:28', '2025-05-25 23:58:28');
+(1, 1, '34', '4', 'cor beton', 'rusak ringan', '2025-06-17 20:02:43', '2025-06-17 20:02:43'),
+(2, 1, '34', '4', 'cor beton', 'rusak ringan', '2025-06-17 20:04:50', '2025-06-17 20:04:50'),
+(3, 1, '34', '4', 'cor beton', 'rusak ringan', '2025-06-17 20:08:45', '2025-06-17 20:08:45'),
+(4, 1, '34', '4', 'cor beton', 'rusak ringan', '2025-06-17 20:19:36', '2025-06-17 20:19:36');
 
 -- --------------------------------------------------------
 
@@ -553,9 +526,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'web', '2025-05-25 23:52:10', '2025-05-25 23:52:10'),
-(2, 'Kades', 'web', '2025-05-25 23:52:10', '2025-05-25 23:52:10'),
-(3, 'Pegawai', 'web', '2025-05-25 23:52:11', '2025-05-25 23:52:11');
+(1, 'Admin', 'web', '2025-06-17 19:20:41', '2025-06-17 19:20:41'),
+(2, 'Kades', 'web', '2025-06-17 19:20:41', '2025-06-17 19:20:41'),
+(3, 'Pegawai', 'web', '2025-06-17 19:20:42', '2025-06-17 19:20:42');
 
 -- --------------------------------------------------------
 
@@ -658,7 +631,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('doTIXF0lHbVJInNje9BkWpHCUEmf3PxSYnY7cinU', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoieHpXaURRenRIa0pMdUJDT0IxZXZld1BXaHpLRENPbGV0RVlEZUtBUiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fX0=', 1748318330);
+('5hUJreWdS4hIrgA7bbZJepRf85tUDNwQYf4QiAQE', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoib3U3YU5vTGI5SjhxcTFlNnU2eXdoOUVkMTg1blNxcE1jWUJabzFQeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9rYXRlZ29yaV9rZWdpYXRhbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzUwMjMyNjY0O319', 1750236833);
 
 -- --------------------------------------------------------
 
@@ -682,10 +655,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `gambar`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Desa Bojong Gede', 'admin12345', '$2y$12$2upbSlg6SU6wGU.m655hWuwmrAFGWBlOPZRd9ZmS1WGuYqYI.j.aa', 'logo_pemkab_bogor.jpg', NULL, '2025-05-25 23:52:10', '2025-05-25 23:52:10'),
-(2, 'Kades User', 'kades12345', '$2y$12$taNBRuzH8tfBITeGdeIGVOdVPvtE3ZhnO/l/dYbQLL6yHlGBv6dUS', 'logo_pemkab_bogor.jpg', NULL, '2025-05-25 23:52:11', '2025-05-25 23:52:11'),
-(3, 'Pegawai User', 'pegawai12345', '$2y$12$PoH60tYkW12CdH.ns5km4uuJadaP39UWroaLSU.Lm8DdAY3OmC6QO', 'logo_pemkab_bogor.jpg', NULL, '2025-05-25 23:52:11', '2025-05-25 23:52:11'),
-(4, 'Test User', 'test12345', '$2y$12$yYtbHTiiqIa1byYqNBJCgedkjzrFpaeI0qlk4MP8xfLGY2T6sLnHq', 'logo_pemkab_bogor.jpg', 'z9g2R4acl3', '2025-05-25 23:52:12', '2025-05-25 23:52:12');
+(1, 'Desa Bojong Gede', 'admin12345', '$2y$12$sUAz2kOj5Wk/vLHamyKTXOw2G7HeKOhsUH8AO9zYZoEGteHcuS23m', 'http://localhost/assets/img/logo_pemkab_bogor.jpg', NULL, '2025-06-17 19:20:41', '2025-06-17 19:20:41'),
+(2, 'Kades User', 'kades12345', '$2y$12$erCFHO1kRnN2GYBDysoMEuM4sO.idvrHyjdXzjvyF0Md8F1hGAVsG', 'http://localhost/assets/img/logo_pemkab_bogor.jpg', NULL, '2025-06-17 19:20:42', '2025-06-17 19:20:42'),
+(3, 'Pegawai User', 'pegawai12345', '$2y$12$pj35Aj1arlGa0sSOZ.7Xj.3beH/dJvy912bRT/J3urHy1sScfof..', 'http://localhost/assets/img/logo_pemkab_bogor.jpg', NULL, '2025-06-17 19:20:42', '2025-06-17 19:20:42'),
+(4, 'Test User', 'test12345', '$2y$12$ekpGLTt7HBxo1H4Wc5P73uk1Kc4Z2cZ7w3AVPhEOBZiMZhs5uUaP2', 'http://localhost/assets/img/logo_pemkab_bogor.jpg', '0YBBIld1iG', '2025-06-17 19:20:43', '2025-06-17 19:20:43');
 
 --
 -- Indexes for dumped tables
@@ -872,19 +845,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `desa_kegiatans`
 --
 ALTER TABLE `desa_kegiatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `dokumentasi_kegiatans`
 --
 ALTER TABLE `dokumentasi_kegiatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `dokumentasi_proyeks`
 --
 ALTER TABLE `dokumentasi_proyeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -902,19 +875,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT untuk tabel `kategori_kegiatans`
 --
 ALTER TABLE `kategori_kegiatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `laporan_kegiatans`
 --
 ALTER TABLE `laporan_kegiatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `laporan_proyeks`
 --
 ALTER TABLE `laporan_proyeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -926,7 +899,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pembangunan_proyeks`
 --
 ALTER TABLE `pembangunan_proyeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `permissions`
@@ -938,19 +911,19 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT untuk tabel `progres_pembangunans`
 --
 ALTER TABLE `progres_pembangunans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `proyek_bangunans`
 --
 ALTER TABLE `proyek_bangunans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `proyek_jalans`
 --
 ALTER TABLE `proyek_jalans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `proyek_jembatans`

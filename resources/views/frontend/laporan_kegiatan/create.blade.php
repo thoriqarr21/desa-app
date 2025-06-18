@@ -368,19 +368,19 @@
 
                 <div class="row mb-4 form-section">
                     <div class="col-md-3">
-                        <label for="hasil" class="form-label-custom">Hasil Kegiatan</label>
+                        <label for="tujuan_kegiatan" class="form-label-custom">Tujuan Kegiatan</label>
                     </div>
                     <div class="col-md-9">
-                        <textarea name="hasil" class="form-control form-control-custom" rows="3" placeholder="Masukkan Hasil Kegiatan"></textarea>
+                        <textarea name="tujuan_kegiatan" class="form-control form-control-custom" rows="3" placeholder="Masukkan Tujuan Kegiatan"></textarea>
                     </div>
                 </div>
 
                 <div class="row mb-4 form-section">
                     <div class="col-md-3">
-                        <label for="tujuan_kegiatan" class="form-label-custom">Tujuan Kegiatan</label>
+                        <label for="hasil" class="form-label-custom">Hasil Kegiatan</label>
                     </div>
                     <div class="col-md-9">
-                        <textarea name="tujuan_kegiatan" class="form-control form-control-custom" rows="3" placeholder="Masukkan Tujuan Kegiatan"></textarea>
+                        <textarea name="hasil" class="form-control form-control-custom" rows="3" placeholder="Masukkan Hasil Kegiatan"></textarea>
                     </div>
                 </div>
 

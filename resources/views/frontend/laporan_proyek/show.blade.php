@@ -278,7 +278,7 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li>
-                                                                    <form method="POST" action="{{ route('dokumentasi.destroy', $dok->id) }}" onsubmit="return confirm('Yakin ingin menghapus dokumentasi ini?')">
+                                                                    <form method="POST" action="{{ route('dokumentasi.destroy', $dok->id) }}">
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button class="dropdown-item text-danger fw-bold" type="submit">

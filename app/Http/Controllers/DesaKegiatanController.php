@@ -52,57 +52,53 @@ class DesaKegiatanController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'nama_kegiatan' => 'required',
-            'deskripsi_kegiatan' => 'required',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required',
-            'status' => 'required',
-            'lokasi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+{
+    $request->validate([
+        'nama_kegiatan' => 'required',
+        'deskripsi_kegiatan' => 'required',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+        'waktu_mulai' => 'required',
+        'waktu_selesai' => 'required',
+        'lokasi' => 'required',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
 
-        $existingKegiatan = DesaKegiatan::where('nama_kegiatan', $request->nama_kegiatan)->first();
+    $existingKegiatan = DesaKegiatan::where('nama_kegiatan', $request->nama_kegiatan)->first();
     
-        // Jika sudah ada Kegiatan, redirect dengan pesan
-        if ($existingKegiatan) {
-            return redirect()->route('kegiatan.index')->with('error', 'Kegiatan ini sudah di buat.');
-        }
-
-        $tanggalMulai = \Carbon\Carbon::parse($request->tanggal_mulai);
-        $tanggalSelesai = \Carbon\Carbon::parse($request->tanggal_selesai);
-        // $lamaHari = $tanggalMulai->diffInDays($tanggalSelesai) . ' hari';
-        $lamaHari = $tanggalMulai->diffInDays($tanggalSelesai) + 1 . ' hari';
-
-
-        $data = $request->only([
-            'nama_kegiatan',
-            'deskripsi_kegiatan',
-            'kategori_id',           
-            'tanggal_mulai',
-            'tanggal_selesai',  
-            'waktu_mulai',
-            'waktu_selesai', 
-            'waktu_selesai',
-            'lokasi',  
-            'status',  
-        ]);
-
-        $data['user_id'] = Auth::id();
-        $data['lama_hari'] = $lamaHari;
-
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('gambar_kegiatan', 'public');
-        }
-    
-        DesaKegiatan::create($data);
-
-        return redirect()->route('kegiatan.index')
-        ->with('success','Kegiatan created successfully.');
+    if ($existingKegiatan) {
+        return redirect()->route('kegiatan.index')->with('error', 'Kegiatan ini sudah dibuat.');
     }
+
+    $tanggalMulai = \Carbon\Carbon::parse($request->tanggal_mulai);
+    $tanggalSelesai = \Carbon\Carbon::parse($request->tanggal_selesai);
+    $lamaHari = $tanggalMulai->diffInDays($tanggalSelesai) + 1 . ' hari';
+
+    $data = $request->only([
+        'nama_kegiatan',
+        'deskripsi_kegiatan',
+        'kategori_id',           
+        'tanggal_mulai',
+        'tanggal_selesai',  
+        'waktu_mulai',
+        'waktu_selesai',
+        'lokasi',
+    ]);
+
+    $data['user_id'] = Auth::id();
+    $data['lama_hari'] = $lamaHari;
+    $data['status'] = 'Berjalan'; // ✅ Set status otomatis
+
+    if ($request->hasFile('gambar')) {
+        $data['gambar'] = $request->file('gambar')->store('gambar_kegiatan', 'public');
+    }
+
+    DesaKegiatan::create($data);
+
+    return redirect()->route('kegiatan.index')
+        ->with('success', 'Kegiatan berhasil ditambahkan.');
+}
+
 
     /**
      * Display the specified resource.
@@ -153,9 +149,9 @@ class DesaKegiatanController extends Controller
             'tanggal_selesai',  
             'waktu_mulai',
             'waktu_selesai', 
-            'waktu_selesai',
-            'lokasi',  
-        ]);
+            'lokasi',
+            'status', 
+        ]);        
 
         $data['lama_hari'] = $lamaHari;
 
@@ -166,7 +162,7 @@ class DesaKegiatanController extends Controller
         $kegiatan = DesaKegiatan::findOrFail($id);
         $kegiatan->update($data);
 
-        return redirect()->route('kegiatan.index')->with('primary', 'Kegiatan berhasil diperbarui');
+        return redirect()->route('kegiatan.index')->with('primary', 'Kegiatan berhasil di update');
     }
 
     /**
@@ -176,6 +172,6 @@ class DesaKegiatanController extends Controller
     {
         $kegiatan->delete();
 
-        return redirect()->route('kegiatan.index')->with('danger', 'Kegiatan berhasil didelete');
+        return redirect()->route('kegiatan.index')->with('danger', 'Kegiatan berhasil dihapus');
     }
 }

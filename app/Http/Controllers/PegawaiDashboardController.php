@@ -60,6 +60,10 @@ class PegawaiDashboardController extends Controller
             $rasioDisetujui = LaporanKegiatan::where('is_approved', true)->count();
             $rasioDitolak = LaporanKegiatan::where('is_approved', false)->count();
             $rasioPending = LaporanKegiatan::whereNull('is_approved')->count();
+
+            $rasioDisetujuiProyek = LaporanProyek::where('is_approved', true)->count();
+            $rasioDitolakProyek = LaporanProyek::where('is_approved', false)->count();
+            $rasioPendingProyek = LaporanProyek::whereNull('is_approved')->count();
             
             $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
             $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')->get();
@@ -91,9 +95,13 @@ return view('frontend.index', [
 
     'dataKegiatan' => $dataKegiatan,
     'dataProyek' => $dataProyek,
-        'rasioDisetujui' => $rasioDisetujui,
-        'rasioPending' => $rasioPending, 
-        'rasioDitolak' => $rasioDitolak,
-        'lokasiGabungan' => $lokasiGabungan,]);
+    'lokasiGabungan' => $lokasiGabungan,
+    'rasioDisetujuiProyek' => $rasioDisetujuiProyek,
+    'rasioDitolakProyek' => $rasioDitolakProyek,
+    'rasioPendingProyek' => $rasioPendingProyek, 
+    'rasioDisetujui' => $rasioDisetujui,
+    'rasioPending' => $rasioPending, 
+    'rasioDitolak' => $rasioDitolak,
+    ]);
     }
 }

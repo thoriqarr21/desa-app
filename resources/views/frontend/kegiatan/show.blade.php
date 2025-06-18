@@ -26,7 +26,18 @@
                     <div>
                         <h5 class="title-kegiatan">Kegiatan {{ $kegiatan->nama_kegiatan }}</h5>
                     </div>
-                    <span class="badge badge-single ms-3">{{ ucfirst($kegiatan->status) }}</span>
+                    @php
+                    $status = strtolower($kegiatan->status);
+                    $class = match($status) {
+                        'batal'    => 'stats-danger',
+                        'selesai'  => 'stats-success',
+                        'berjalan' => 'stats-primary',
+                        default    => 'stats-warning',
+                    };
+                    @endphp
+                
+                    <span class="stats {{ $class }} ms-3">{{ ucfirst($kegiatan->status) }}</span>
+                
                 </div>
                 <div class="d-flex align-items-center mb-4">
                     <img src="{{ asset('storage/' . $kegiatan->user->gambar) }}" alt="Profile Picture" class="profile-img">
@@ -248,18 +259,7 @@
         font-weight: 500;
         margin-bottom: 0;
     }
-    .badge-single {
-        padding: 6px;
-        border-radius: 10px; 
-        font-size: 0.80rem; 
-        font-weight: 600; 
-        white-space: nowrap; 
-        background-color: #63dc7f;
-        line-height: 1.1; 
-        display: inline-flex; 
-        align-items: center; 
-        justify-content: center;
-    }
+
     .nav-pills .nav-link {
         border-radius: 10px;
         color: #6c757d;

@@ -106,13 +106,22 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle" style="justify-items: center">
-                                    <div class="d-flex">
-                                        <div class="ms-2">
-                                            <p class="mb-0 badge border border-success text-success bg-success fs-6">{{ ucfirst($proyek->status) }}</p>     
-                                        </div>
-                                    </div>
-                                </td>
+                                @php
+                                $status = strtolower($proyek->status);
+                                $class = match($status) {
+                                    'batal'    => 'badge border border-danger text-danger bg-danger',
+                                    'selesai'  => 'badge border border-success text-success bg-success',
+                                    'berjalan' => 'badge border border-primary text-primary bg-primary',
+                                    default    => 'badge border border-warning text-warning bg-warning',
+                                };
+                            @endphp
+                            
+                            <td class="align-middle text-center">
+                                <span class="badge fs-6 border {{ $class }}">
+                                    {{ ucfirst($proyek->status) }}
+                                </span>
+                            </td>
+                            
                                 <td class="align-middle">
                                     <a href="{{ route('proyek.show',$proyek->id) }}"><i class="show fas fa-list-ul" aria-hidden="true"></i></a>
                                         <a href="{{ route('proyek.edit',$proyek->id) }}"><i class="edit fas fa-edit ms-1" aria-hidden="true"></i></a>

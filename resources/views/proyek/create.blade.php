@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-60" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -72,7 +72,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <strong>Kondisi Jalan</strong>
+                <strong>Kondisi Awal Jalan</strong>
                 <select name="kondisi_jalan" class="form-control">
                     <option value="">Pilih Kondisi Jalan</option>
                     <option value="rusak parah">Rusak Parah</option>
@@ -167,19 +167,19 @@
             <strong>Status</strong>
             <select name="status" class="form-control" required>
                 <option value="">Pilih Status</option>
-                <option value="perencanaan">Perencanaan</option>
+                {{-- <option value="perencanaan">Perencanaan</option> --}}
                 <option value="berjalan">Berjalan</option>
-                <option value="selesai">Selesai</option>
+                {{-- <option value="selesai">Selesai</option> --}}
             </select>
         </div>
 
         <div class="form-group">
             <strong>Lokasi Proyek</strong>
             <input type="text" name="lokasi" id="lokasi" class="form-control" readonly required hidden>
-            <div id="alamat-lokasi" class="form-control bg-light" readonly>Tunggu lokasi...</div>
+            <div id="alamat-lokasi" class="form-control bg-light" readonly style="height: 50px; align-content: center">Tunggu lokasi...</div>
             <small class="form-text text-muted">Klik pada peta untuk memilih titik koordinat.</small>
         </div>
-        <div id="map" style="height: 300px;"></div>   
+        <div id="map" style="height: 400px;"></div>   
             
         <div class="form-group mt-3">
             <strong>Gambar</strong>
@@ -239,14 +239,39 @@ map.on('click', function (e) {
 });
 
 function getLocationName(lat, lon) {
-    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1&accept-language=id`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            let lokasiDiv = document.getElementById('alamat-lokasi');
-            if (data && data.display_name) {
-                lokasiDiv.innerText = data.display_name;
+            const lokasiDiv = document.getElementById('alamat-lokasi');
+
+            if (data && data.address) {
+                const a = data.address;
+
+                // Ambil komponen alamat selengkap mungkin
+                const parts = [
+                    a.building,                     // Nama bangunan (jika ada)
+                    a.amenity,                      // Fasilitas umum (halte, masjid, dll)
+                    a.road || a.footway || a.path,  // Nama jalan/jalur
+                    a.house_number ? 'No. ' + a.house_number : null, // No rumah
+                    a.bridge,                       // Nama jembatan
+                    a.railway,                      // Rel kereta
+                    a.tunnel,                       // Terowongan
+                    a.neighbourhood,                // Lingkungan/RW
+                    a.suburb,                       // Suburban
+                    a.hamlet,                       // Kampung/dusun
+                    a.village || a.town || a.city,  // Desa/Kota
+                    a.municipality || a.city_district || a.district || a.county, // Kecamatan/Kabupaten
+                    a.state_district,               // Wilayah administratif tingkat II
+                    a.state,                        // Provinsi
+                    a.postcode,                     // Kode pos
+                    a.country                       // Negara
+                ];
+
+                // Gabungkan dan hilangkan nilai kosong
+                const fullAddress = parts.filter(Boolean).join(', ');
+                lokasiDiv.innerText = fullAddress;
             } else {
                 lokasiDiv.innerText = "Alamat tidak ditemukan";
             }
@@ -256,6 +281,7 @@ function getLocationName(lat, lon) {
             document.getElementById('alamat-lokasi').innerText = "Gagal mengambil alamat";
         });
 }
+
 
 </script>
 

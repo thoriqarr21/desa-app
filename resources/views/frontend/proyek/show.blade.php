@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="col-md-6 mb-2 sub-detail-item">
                                         <p class="text-label mb-0">Jenis Permukaan</p>
-                                        <p class="text-value">{{ $proyek->proyekJalan->jenis_permukaan ?? '-' }}</p>
+                                        <p class="text-value">{{ ucfirst($proyek->proyekJalan->jenis_permukaan ?? '-') }}</p>
                                     </div>
                                     <div class="col-md-6 mb-2 sub-detail-item">
                                         <p class="text-label mb-0">Kondisi</p>

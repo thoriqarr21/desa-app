@@ -66,7 +66,12 @@
                                     <td class="text-center align-middle bg-transparent border-bottom">
                                         <a href="{{ route('roles.show',$role->id) }}"><i class="fas fa-list-ul" aria-hidden="true"></i></a>
                                         <a href="{{ route('roles.edit',$role->id) }}"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></a>
-                                        <a href="{{ route('roles.destroy',$role->id) }}"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                        <form method="POST" action="{{ route('roles.destroy',$role->id) }}" style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                          
+                                            <button type="submit"><i class="fa-solid fa-trash ms-1"></i></button>
+                                        </form>
                                     </td>
                                 </tr>
 

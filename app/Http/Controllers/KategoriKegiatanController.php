@@ -104,6 +104,6 @@ class KategoriKegiatanController extends Controller
         $kategoriKegiatan->delete();
     
         return redirect()->route('kategori_kegiatan.index')
-                        ->with('success','Kategori Kegiatan deleted successfully');
+                        ->with('danger','Kategori Kegiatan berhasil dihapus');
     }
 }

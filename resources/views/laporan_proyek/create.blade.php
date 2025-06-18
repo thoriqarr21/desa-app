@@ -11,7 +11,7 @@
              <span>Kembali</span>
          </a>                       
         </div>
-        <div class="card border-0 mb-4 w-35" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
+        <div class="card border-0 rounded-5 mb-4 w-full sm:w-2/3 md:w-1/2 lg:w-1/3" style="box-shadow: 3px 3px 5px 1px rgb(181, 148, 241);">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
@@ -61,9 +61,8 @@
             <strong>Persentase Awal</strong>
             <select name="persentase" class="form-control" required>
                 <option value="">Pilih Berapa Persen Progres</option>
-                <option value="30">30%</option>
+                <option value="0">0%</option>
                 <option value="50">50%</option>
-                <option value="80">80%</option>
                 <option value="100">100%</option>
             </select>
         </div>

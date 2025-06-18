@@ -34,20 +34,4 @@ class LoginController extends Controller
     }
 }
     
-    
-    /**
-     * Redirect user based on role after login
-     */
-    // protected function authenticated(Request $request, $user)
-    // {
-    //     if ($user->hasRole('admin')) {
-    //         return redirect()->route('home');
-    //     } elseif ($user->hasRole('kades')) {
-    //         return redirect()->route('kades.dashboard');
-    //     } elseif ($user->hasRole('pegawai')) {
-    //         return redirect()->route('frontend.dashboard');
-    //     }
-
-    //     return redirect('/home'); // fallback
-    // }
 }
