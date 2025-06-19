@@ -109,7 +109,7 @@
     @php
     // Group dokumentasi based on the 'is_initial' flag
     $grupUploadAwal = $laporanProyek->dokumentasi->where('is_initial', false);
-    $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase');
+    $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase')->sortKeys();
     @endphp
      {{-- Upload Awal --}}
      @php
@@ -120,8 +120,10 @@
     
         <h5 class="mt-3 mb-2">📌 Upload Awal</h5>
         @if ($dokAwalPertama)
-            <div class="text-muted"><strong>Keterangan:</strong> {{ $dokAwalPertama->keterangan }}</div>
-            <div class="text-muted"><strong>Progress:</strong> {{ $dokAwalPertama->progres?->persentase ?? '-' }}%</div>
+        <div class="card-header bg-light rounded-top-2">
+               <div class="text-muted"><strong>Keterangan:</strong> {{ $dokAwalPertama->keterangan }}</div>
+               <div class="text-muted"><strong>Progress:</strong> {{ $dokAwalPertama->progres?->persentase ?? '-' }}%</div> 
+        </div>
         @endif
         <div class="row mt-2">
             @forelse ($grupUploadAwal as $dok)
@@ -135,9 +137,6 @@
                                 Browser Anda tidak mendukung video.
                             </video>
                         @endif
-                        {{-- <p class="mt-2"><strong>Keterangan:</strong> {{ $dok->keterangan }}</p>
-                        <p><strong>Progress:</strong> {{ $dok->progres?->persentase ?? '-' }}%</p> --}}
-                        {{-- <p><strong>Upload Awal:</strong> Ya</p> --}}
                     </div>
                 </div>
             @empty
@@ -151,9 +150,110 @@
         @forelse ($grupUploadTambahan as $persen => $doks)
         <div class="card mb-4 shadow-sm border">
             <div class="card-header bg-light">
-                <strong>Progress: {{ $persen }}%</strong>
-                <p class="mt-2"><strong>Keterangan:</strong> {{ $doks->first()->keterangan ?? '-' }}</p>
+                <div class="card-header bg-light d-flex justify-content-between align-items-center px-4 py-3">
+                    <!-- Kiri: Progress dan Keterangan -->
+                    <div>
+                        <p class="mb-1 text-muted fw-bold lg">
+                            <i class="fas fa-chart-line me-1"></i> Progress :
+                            <span class="badge bg-primary bg-opacity-75" style="font-size: 15px;">{{ $persen }}%</span>
+                        </p>
+                        <p class="mb-0 text-muted lg">
+                            <i class="fas fa-comment-dots me-1"></i>
+                            <strong>Keterangan :</strong> {{ $doks->first()->keterangan ?? '-' }}
+                        </p>
+                    </div>
+                    
+                    <!-- Kanan: Tombol Edit & Hapus -->
+                    <div class="d-flex gap-2 align-items-center">
+                        <!-- Tombol Edit -->
+                        <button class="btn btn-outline-primary rounded-2 px-3 shadow-sm"
+                                data-bs-toggle="modal" data-bs-target="#modalEditPersen{{ $persen }}">
+                            <i class="fas fa-pen-to-square me-1"></i> Edit
+                        </button>
+                    
+                        <button type="button"
+                        class="btn btn-outline-danger rounded-2 px-3 shadow-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalHapusPersen{{ $persen }}">
+                        <i class="fas fa-trash-alt me-1"></i> Hapus
+                        </button>
+                        
+                        <!-- Modal Konfirmasi Hapus -->
+                        <div class="modal fade" id="modalHapusPersen{{ $persen }}" tabindex="-1" aria-labelledby="modalHapusLabel{{ $persen }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content border-0 shadow">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="modalHapusLabel{{ $persen }}">
+                                            <i class="fas fa-trash-alt me-1"></i> Konfirmasi Hapus
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                
+                                    <div class="modal-body">
+                                        <p>Apakah kamu yakin ingin <strong>menghapus seluruh dokumentasi pada progres {{ $persen }}%</strong>?</p>
+                                        <p class="text-muted mb-0">Tindakan ini tidak dapat dibatalkan.</p>
+                                    </div>
+                                
+                                    <div class="modal-footer">
+                                        <form method="POST" action="{{ route('dokumentasi.destroy_by_progress') }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="laporan_id" value="{{ $laporanProyek->id }}">
+                                            <input type="hidden" name="persentase" value="{{ $persen }}">
+                                
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt me-1"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="modal fade" id="modalEditPersen{{ $persen }}" tabindex="-1" aria-labelledby="editPersenLabel{{ $persen }}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content border-0 shadow">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title text-white" id="editPersenLabel{{ $persen }}">✏️ Edit Dokumentasi {{ $persen }}%</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                    
+                                <form action="{{ route('dokumentasi.update_by_progress') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="laporan_id" value="{{ $laporanProyek->id }}">
+                                    <input type="hidden" name="persentase" value="{{ $persen }}">
+                    
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <!-- Upload File Baru -->
+                                            <div class="col-md-12">
+                                                <label class="form-label">Ganti File (opsional)</label>
+                                                <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple>
+                                            </div>
+                    
+                                            <!-- Keterangan -->
+                                            <div class="col-12">
+                                                <label for="keterangan" class="form-label">Keterangan</label>
+                                                <textarea name="keterangan" class="form-control  text-long" rows="3" required>{{ $doks->first()->keterangan }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save me-1"></i> Update Perubahan</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+            
             <div class="card-body">
                 <div class="row">
                     @foreach ($doks as $dok)
@@ -206,10 +306,21 @@
         </div>
     @endforelse    
             <!-- Tombol Trigger -->
-            <button type="button" class="btn btn-primary w-auto w-sm-100 d-block mx-auto" data-bs-toggle="modal" data-bs-target="#modalUploadDokumentasi">
-                <i class="fa fa-upload me-1"></i> Tambah Dokumentasi Tambahan
-            </button>
+            @php
+            $statusProyek = optional($laporanProyek->proyek)->status;
+            @endphp
             
+            @if($statusProyek === 'batal' || $statusProyek === 'selesai')
+                <button type="button" class="btn btn-secondary w-auto w-sm-100 d-block mx-auto fs-6" disabled>
+                    <i class="fa fa-ban me-1"></i> Proyek {{ ucfirst($statusProyek) }}
+                </button>
+            @else
+                <button type="button" class="btn btn-primary w-auto w-sm-100 d-block mx-auto"
+                    data-bs-toggle="modal" data-bs-target="#modalUploadDokumentasi">
+                    <i class="fa fa-upload me-1"></i> Tambah Dokumentasi Tambahan
+                </button>
+            @endif
+        
             <!-- Modal -->
             <div class="modal fade" id="modalUploadDokumentasi" tabindex="-1" aria-labelledby="uploadDokumentasiLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -218,7 +329,7 @@
                             <h5 class="modal-title" id="uploadDokumentasiLabel">📸 Upload Dokumentasi Tambahan</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-            
+
                         <form action="{{ route('laporan_proyek.storeTambahan') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="laporan_id" value="{{ $laporanProyek->id }}">

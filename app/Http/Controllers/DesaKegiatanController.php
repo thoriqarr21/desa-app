@@ -87,7 +87,7 @@ class DesaKegiatanController extends Controller
 
     $data['user_id'] = Auth::id();
     $data['lama_hari'] = $lamaHari;
-    $data['status'] = 'Berjalan'; // ✅ Set status otomatis
+    $data['status'] = 'Berjalan'; 
 
     if ($request->hasFile('gambar')) {
         $data['gambar'] = $request->file('gambar')->store('gambar_kegiatan', 'public');

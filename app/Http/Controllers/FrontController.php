@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DesaKegiatan;
+use App\Models\DokumentasiProyek;
 use App\Models\KategoriKegiatan;
 use App\Models\LaporanKegiatan;
 use App\Models\LaporanProyek;
@@ -278,11 +279,54 @@ public function laporanIndex(Request $request)
             'file_type' => $fileType, // ← tambahkan ini
         ]);
     }
-    
-
-
     return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
 }
+
+public function updateTambahanBerdasarkanPersen(Request $request)
+{
+    $request->validate([
+        'laporan_id' => 'required|exists:laporan_proyeks,id',
+        'persentase' => 'required|numeric',
+        'dokumentasi' => 'required|array|max:3',
+        'dokumentasi.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
+        'keterangan' => 'required|string',
+    ]);
+
+    // Ambil semua dokumentasi yang sesuai
+    $dokumentasiList = DokumentasiProyek::where('laporan_id', $request->laporan_id)
+        ->where('persentase', $request->persentase)
+        ->get();
+
+    // Hapus semua file lama dan record-nya
+    foreach ($dokumentasiList as $dokumentasi) {
+        if (Storage::disk('public')->exists($dokumentasi->file_path)) {
+            Storage::disk('public')->delete($dokumentasi->file_path);
+        }
+        $dokumentasi->delete();
+    }
+
+    // Cari progres_id jika perlu disimpan ulang
+    $progresId = $dokumentasiList->first()->progres_id ?? null;
+
+    // Upload file baru dan simpan
+    foreach ($request->file('dokumentasi') as $file) {
+        $path = $file->store('dokumentasi', 'public');
+        $fileType = $this->tentukanFileType($file->getClientOriginalExtension());
+
+        DokumentasiProyek::create([
+            'laporan_id' => $request->laporan_id,
+            'progres_id' => $progresId,
+            'file_path' => $path,
+            'file_type' => $fileType,
+            'keterangan' => $request->keterangan,
+            'persentase' => $request->persentase,
+            'is_initial' => true,
+        ]);
+    }
+
+    return back()->with('success', 'Dokumentasi progres ' . $request->persentase . '% berhasil diperbarui dan diganti total.');
+}
+
 private function tentukanFileType($ext)
 {
     $imageExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];

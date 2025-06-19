@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('laporan_kegiatan/{laporanKegiatan}/approveaction', [LaporanKegiatanController::class, 'approveaction'])->name('laporan_kegiatan.approveaction');
     
     Route::resource('laporan_proyek', LaporanProyekController::class);
+    Route::post('/dokumentasi/update-by-progress', [LaporanProyekController::class, 'updateTambahanBerdasarkanPersen'])->name('dokumentasi.update_by_progress');
+    Route::delete('/dokumentasi/hapus-by-persen', [DokumentasiProyekController::class, 'destroyTambahanBerdasarkanPersen'])->name('dokumentasi.destroy_by_progress');
     Route::get('laporan_proyek/{laporanProyek}/approve', [LaporanProyekController::class, 'approve'])->name('laporan_proyek.approve');
     Route::put('laporan_proyek/{laporanProyek}/approveaction', [LaporanProyekController::class, 'approveaction'])->name('laporan_proyek.approveaction');
     Route::post('laporan_proyek/storeTambahan', [LaporanProyekController::class, 'storeTambahan'])->name('laporan_proyek.storeTambahan');
@@ -81,6 +83,8 @@ Route::middleware(['auth', 'role:Pegawai'])->name('frontend.')->group(function (
     Route::delete('/frontend/laporan_proyek/{id}', [FrontController::class, 'laporanDestroy'])->name('laporan_proyek.destroy');
     Route::post('frontend.laporan_proyek/storeTambahan', [LaporanProyekController::class, 'storeTambahan'])->name('laporan_proyek.storeTambahan');
     Route::get('/frontend/laporan_proyek/{id}/cetak', [FrontController::class, 'cetakProyek'])->name('laporan_proyek.cetak');
+    Route::post('/frontend/dokumentasi/update-by-progress', [FrontController::class, 'updateTambahanBerdasarkanPersen'])->name('dokumentasi.update_by_progress');
+    Route::delete('/frontend/dokumentasi/hapus-by-persen', [DokumentasiProyekController::class, 'destroyTambahanBerdasarkanPersen'])->name('dokumentasi.destroy_by_progress');
     /// Space ///
     Route::get('/frontend/kegiatan/index', [FrontController::class, 'kegiatanIndex'])->name('kegiatan.index');
     Route::get('/frontend/kegiatan/{kegiatan}', [FrontController::class, 'kegiatanShow'])->name('kegiatan.show');

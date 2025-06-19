@@ -163,15 +163,15 @@
             <input type="text" name="penanggung_jawab" class="form-control" required placeholder="Penanggung Jawab">
         </div>
 
-        <div class="form-group">
+        {{-- <div class="form-group">
             <strong>Status</strong>
             <select name="status" class="form-control" required>
                 <option value="">Pilih Status</option>
-                {{-- <option value="perencanaan">Perencanaan</option> --}}
+                <option value="perencanaan">Perencanaan</option>
                 <option value="berjalan">Berjalan</option>
-                {{-- <option value="selesai">Selesai</option> --}}
+                <option value="selesai">Selesai</option>
             </select>
-        </div>
+        </div> --}}
 
         <div class="form-group">
             <strong>Lokasi Proyek</strong>

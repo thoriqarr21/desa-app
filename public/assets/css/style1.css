@@ -83,6 +83,11 @@ form:hover .delete {
     color: #ffffff !important;    
     font-weight: 700;          
 }
+.custom-dropdown-tom .dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: #393939 !important;    
+    font-weight: 700;          
+}
 .logo-link-wrapper {
     display: flex;
     align-items: center;
@@ -689,6 +694,34 @@ margin-left: 5px;
     color: #333;
     text-decoration: none;
 }
+.card-data {
+    background-color: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 20px var(--shadow-light);
+      transition: all 0.3s ease-in-out;
+      border: 2px solid transparent; /* Awalnya transparan */
+  }
+  
+  /* Hover: efek menyala seperti border glowing */
+  .card-data:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px 3px rgba(140, 140, 140, 0.6); /* Efek glow merah */
+      border: 2px solid rgb(135, 135, 135); /* Border merah aktif */
+  }
+.dash-pegawai {
+    background-color: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 20px var(--shadow-light);
+      transition: all 0.3s ease-in-out;
+      border: 2px solid transparent; /* Awalnya transparan */
+  }
+  
+  /* Hover: efek menyala seperti border glowing */
+  .dash-pegawai:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px 3px rgba(140, 140, 140, 0.6); /* Efek glow merah */
+      border: 2px solid rgb(135, 135, 135); /* Border merah aktif */
+  }
 
 .mobile-nav-link:hover {
     background-color: #f8f9fa;

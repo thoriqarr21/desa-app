@@ -377,33 +377,36 @@
         var geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`;
     
         fetch(geocodeUrl)
-    .then(response => response.json())
-    .then(data => {
-        let lokasiElement = document.getElementById('alamat-lokasi');
-        if (data && data.address) {
-            let parts = [
-                data.address.amenity,
-                data.address.building,
-                data.address.road,
-                data.address.suburb,
-                data.address.village || data.address.city,
-                data.address.state,
-                data.address.country
-            ];
-            let address = parts.filter(Boolean).join(', ');
-            marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
-            if (lokasiElement) lokasiElement.innerText = address;
-        } else {
-            marker.setPopupContent('Alamat tidak ditemukan').openPopup();
-            if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
-        }
-    })
-    .catch(error => {
-        console.error('Gagal ambil alamat:', error);
-        marker.setPopupContent('Gagal mengambil alamat').openPopup();
-        let lokasiElement = document.getElementById('alamat-lokasi');
-        if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
-    });
+            .then(response => response.json())
+            .then(data => {
+                let lokasiElement = document.getElementById('alamat-lokasi');
+                if (data && data.address) {
+                    let parts = [
+                        data.address.house_number,
+                        data.address.road,
+                        data.address.neighbourhood,
+                        data.address.suburb,
+                        data.address.village || data.address.town || data.address.city,
+                        data.address.municipality,
+                        data.address.county,
+                        data.address.state,
+                        data.address.postcode,
+                        data.address.country
+                    ];
+                    let address = parts.filter(Boolean).join(', ');
+                    marker.setPopupContent(`<strong>Alamat Proyek:</strong><br>${address}`).openPopup();
+                    if (lokasiElement) lokasiElement.innerText = address;
+                } else {
+                    marker.setPopupContent('Alamat tidak ditemukan').openPopup();
+                    if (lokasiElement) lokasiElement.innerText = 'Alamat tidak ditemukan';
+                }
+            })
+            .catch(error => {
+                console.error('Gagal ambil alamat:', error);
+                marker.setPopupContent('Gagal mengambil alamat').openPopup();
+                let lokasiElement = document.getElementById('alamat-lokasi');
+                if (lokasiElement) lokasiElement.innerText = 'Gagal mengambil alamat';
+            });
     });
     </script>
 

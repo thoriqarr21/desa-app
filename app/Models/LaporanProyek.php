@@ -29,8 +29,9 @@ class LaporanProyek extends Model
     
     public function progresTerbaru()
     {
-        return $this->hasOne(ProgresPembangunan::class, 'laporan_id')->latestOfMany();
+        return $this->hasOne(ProgresPembangunan::class, 'laporan_id')->orderByDesc('persentase');
     }
+    
     public function dokumentasi()
     {
         return $this->hasManyThrough(DokumentasiProyek::class, ProgresPembangunan::class, 'laporan_id', 'progres_id');

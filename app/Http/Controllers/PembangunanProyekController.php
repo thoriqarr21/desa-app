@@ -26,7 +26,29 @@ class PembangunanProyekController extends Controller
      public function index(Request $request): View
      {
          $search = $request->input('search');
-         $proyeks = PembangunanProyek::with('progresTerbaru') // Eager load
+     
+         $semuaProyek = PembangunanProyek::with(['semuaProgres'])->get();
+     
+         foreach ($semuaProyek as $proyek) {
+            // Lewati proyek yang dibatalkan
+            if ($proyek->status === 'batal') {
+                continue;
+            }
+        
+            $maxPersentase = $proyek->semuaProgres->max('persentase');
+        
+            if ($maxPersentase === 100 && $proyek->status !== 'selesai') {
+                $proyek->status = 'selesai';
+                $proyek->save();
+            } elseif ($maxPersentase < 100 && $proyek->status !== 'berjalan') {
+                $proyek->status = 'berjalan';
+                $proyek->save();
+            }
+        }
+        
+     
+         // Ambil data dengan progres terbaru hanya untuk tampilan
+         $proyeks = PembangunanProyek::with('progresTerbaru')
              ->when($search, function ($query, $search) {
                  return $query->where('nama_proyek', 'like', "%{$search}%")
                               ->orWhere('deskripsi_proyek', 'like', "%{$search}%");
@@ -34,17 +56,9 @@ class PembangunanProyekController extends Controller
              ->latest()
              ->paginate(5);
      
-         // Log untuk memeriksa data progres
-         foreach ($proyeks as $proyek) {
-             \Log::info('Proyek: ' . $proyek->nama_proyek . ' - Progres: ' . ($proyek->progresTerbaru ? $proyek->progresTerbaru->persentase : 'No Progress'));
-         }
-     
          return view('proyek.index', compact('proyeks'));
      }
      
-     
-     
-
     /**
      * Show the form for creating a new resource.
      */
@@ -63,7 +77,6 @@ class PembangunanProyekController extends Controller
             'nama_proyek' => 'required',
             'deskripsi_proyek' => 'required',
             'anggaran' => 'required|numeric',
-            'status' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'sumber_dana' => 'required',
@@ -90,7 +103,6 @@ class PembangunanProyekController extends Controller
             'nama_proyek',
             'deskripsi_proyek',
             'anggaran',
-            'status',
             'tanggal_mulai',
             'tanggal_selesai',
             'sumber_dana',
@@ -101,6 +113,7 @@ class PembangunanProyekController extends Controller
     
         $data['jenis_proyek'] = $request->jenis_proyek;
         $data['masa_kontrak'] = $masaKontrak;
+        $data['status'] = 'Berjalan';
         
         // Simpan gambar jika ada
         if ($request->hasFile('gambar')) {

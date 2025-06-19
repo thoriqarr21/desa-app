@@ -149,4 +149,43 @@ class DokumentasiProyekController extends Controller
     
         return back()->with('success', 'Dokumentasi berhasil dihapus.');
     }
+    public function destroyTambahanBerdasarkanPersen(Request $request)
+{
+    $request->validate([
+        'laporan_id' => 'required|exists:laporan_proyeks,id',
+        'persentase' => 'required|numeric|min:0|max:100',
+    ]);
+
+    // Ambil semua dokumentasi berdasarkan laporan dan persentase
+    $dokumentasiList = DokumentasiProyek::where('laporan_id', $request->laporan_id)
+        ->where('persentase', $request->persentase)
+        ->get();
+
+    if ($dokumentasiList->isEmpty()) {
+        return back()->with('error', 'Tidak ditemukan dokumentasi pada progres ' . $request->persentase . '%.');
+    }
+
+    // Hapus semua file dan data dokumentasi
+    foreach ($dokumentasiList as $dokumentasi) {
+        if (Storage::disk('public')->exists($dokumentasi->file_path)) {
+            Storage::disk('public')->delete($dokumentasi->file_path);
+        }
+        $dokumentasi->delete();
+    }
+
+    // Cari dan hapus progres jika tidak digunakan lagi
+    $progres = ProgresPembangunan::where('laporan_id', $request->laporan_id)
+        ->where('persentase', $request->persentase)
+        ->first();
+
+    if ($progres) {
+        $masihDigunakan = DokumentasiProyek::where('progres_id', $progres->id)->exists();
+        if (!$masihDigunakan) {
+            $progres->delete();
+        }
+    }
+
+    return back()->with('success', 'Semua dokumentasi pada progres ' . $request->persentase . '% berhasil dihapus.');
+}
+
 }

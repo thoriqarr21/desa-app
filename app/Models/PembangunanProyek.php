@@ -25,8 +25,27 @@ class PembangunanProyek extends Model
     }
     public function progresTerbaru()
     {
-        return $this->hasOne(ProgresPembangunan::class, 'laporan_id')->latestOfMany();
+        return $this->hasOneThrough(
+            \App\Models\ProgresPembangunan::class,
+            \App\Models\LaporanProyek::class,
+            'proyek_id',      
+            'laporan_id',    
+            'id',             
+            'id'              
+        )->latestOfMany();
     }
+    public function semuaProgres()
+{
+    return $this->hasManyThrough(
+        \App\Models\ProgresPembangunan::class,
+        \App\Models\LaporanProyek::class,
+        'proyek_id',    
+        'laporan_id',   
+        'id',           
+        'id'            
+    );
+}
+
 
     public function laporanProyek()
 {

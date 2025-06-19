@@ -65,8 +65,19 @@ class PegawaiDashboardController extends Controller
             $rasioDitolakProyek = LaporanProyek::where('is_approved', false)->count();
             $rasioPendingProyek = LaporanProyek::whereNull('is_approved')->count();
             
-            $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')->get();
-            $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')->get();
+            $lokasiKegiatan = DesaKegiatan::select('nama_kegiatan as nama', 'lokasi')
+            ->get()
+            ->map(function ($item) {
+                $item->jenis = 'kegiatan';
+                return $item;
+            });
+        
+            $lokasiProyek = PembangunanProyek::select('nama_proyek as nama', 'lokasi')
+            ->get()
+            ->map(function ($item) {
+                $item->jenis = 'proyek';
+                return $item;
+            });
             
             // Gabungkan menjadi satu koleksi
             $lokasiGabungan = $lokasiKegiatan->concat($lokasiProyek);
@@ -82,7 +93,7 @@ return view('frontend.index', [
     'laporanDitolak' => LaporanProyek::where('is_approved', 'tidak_setuju')->count(),
     'laporanDipending' => LaporanProyek::where('is_approved', 'pending')->count(),
 
-    'proyekPerencanaan' => PembangunanProyek::where('status', 'perencanaan')->count(),
+    'proyekBatal' => PembangunanProyek::where('status', 'batal')->count(),
     'proyekBerjalan' => PembangunanProyek::where('status', 'berjalan')->count(),
     'proyekSelesai' => PembangunanProyek::where('status', 'selesai')->count(),
 

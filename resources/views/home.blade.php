@@ -171,10 +171,10 @@
             <div class="card mb-3 border-start status">
               <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
-                  <h5 class="mb-1">Perencanaan</h5>
-                  <h6 class="text-muted">Jumlah: {{ $proyekPerencanaan }}</h6>
+                  <h5 class="mb-1">Batal</h5>
+                  <h6 class="text-muted">Jumlah: {{ $proyekBatal }}</h6>
                 </div>
-                <i class="fas fa-pencil-alt text-primary fa-lg"></i>
+                <i class="fas fa-times-circle text-danger fa-lg"></i>
               </div>
             </div>
             <div class="card mb-3 border-start status">
@@ -243,9 +243,25 @@
     <h5 class="mt-2 ms-3">Peta Seluruh Lokasi Kegiatan & Proyek</h5>
     <div class="card-body">
       <div id="map" style="height: 400px; width: 100%"></div>
+
+      <!-- Keterangan Warna Marker -->
+      <div class="mt-3 d-flex align-items-center gap-4 flex-wrap">
+        <div class="d-flex align-items-center">
+          <div class="text-ket text-secondary fw-bold">Keterangan :</div>
+        </div>
+        <div class="d-flex align-items-center">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png" width="12" class="me-2">
+          <span class="fw-semibold text-secondary">Kegiatan</span>
+        </div>
+        <div class="d-flex align-items-center">
+          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" width="12" class="me-2">
+          <span class="fw-semibold text-secondary">Proyek</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 
     </div>
   </div>
@@ -256,23 +272,44 @@
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  const proyekIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  // Icon kegiatan (biru - default)
+  const kegiatanIcon = new L.Icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
   let lokasiData = @json($lokasiGabungan);
 
   lokasiData.forEach(item => {
     if (item.lokasi) {
       let koordinat = item.lokasi.split(',').map(parseFloat);
       if (koordinat.length === 2) {
-        let marker = L.marker(koordinat).addTo(map)
-          .bindPopup(item.nama);
+        let icon = item.jenis === 'proyek' ? proyekIcon : kegiatanIcon;
+
+        let marker = L.marker(koordinat, { icon }).addTo(map)
+          .bindPopup(`<strong>${item.nama}</strong><br><span class="text-muted">${item.jenis}</span>`);
 
         marker.on('mouseover', function () {
           fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${koordinat[0]}&lon=${koordinat[1]}&zoom=18&addressdetails=1`)
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
               let alamat = data.display_name || 'Alamat tidak ditemukan';
               marker.bindTooltip(alamat).openTooltip();
             })
-            .catch(err => {
+            .catch(() => {
               marker.bindTooltip('Gagal mengambil alamat').openTooltip();
             });
         });

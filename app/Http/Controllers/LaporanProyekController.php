@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -175,6 +176,54 @@ class LaporanProyekController extends Controller
 
     return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
 }
+
+public function updateTambahanBerdasarkanPersen(Request $request)
+{
+    $request->validate([
+        'laporan_id' => 'required|exists:laporan_proyeks,id',
+        'persentase' => 'required|numeric',
+        'dokumentasi' => 'required|array|max:3',
+        'dokumentasi.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
+        'keterangan' => 'required|string',
+    ]);
+
+    // Ambil semua dokumentasi yang sesuai
+    $dokumentasiList = DokumentasiProyek::where('laporan_id', $request->laporan_id)
+        ->where('persentase', $request->persentase)
+        ->get();
+
+    // Hapus semua file lama dan record-nya
+    foreach ($dokumentasiList as $dokumentasi) {
+        if (Storage::disk('public')->exists($dokumentasi->file_path)) {
+            Storage::disk('public')->delete($dokumentasi->file_path);
+        }
+        $dokumentasi->delete();
+    }
+
+    // Cari progres_id jika perlu disimpan ulang
+    $progresId = $dokumentasiList->first()->progres_id ?? null;
+
+    // Upload file baru dan simpan
+    foreach ($request->file('dokumentasi') as $file) {
+        $path = $file->store('dokumentasi', 'public');
+        $fileType = $this->tentukanFileType($file->getClientOriginalExtension());
+
+        DokumentasiProyek::create([
+            'laporan_id' => $request->laporan_id,
+            'progres_id' => $progresId,
+            'file_path' => $path,
+            'file_type' => $fileType,
+            'keterangan' => $request->keterangan,
+            'persentase' => $request->persentase,
+            'is_initial' => true,
+        ]);
+    }
+
+    return back()->with('success', 'Dokumentasi progres ' . $request->persentase . '% berhasil diperbarui dan diganti total.');
+}
+
+
+
 private function tentukanFileType($ext)
 {
     $imageExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -221,7 +270,8 @@ public function createTambahan($laporanId)
         
         $laporanProyek->load('dokumentasi'); // Pastikan dokumentasi sudah dimuat
         $grupUploadTambahan = $laporanProyek->dokumentasi
-            ->groupBy('persentase'); 
+            ->groupBy('persentase')
+            ->sortKeys();; 
 
     // Hitung persentase yang belum dipakai
     $persenTersisa = array_values(array_diff($semuaPersen, $persentaseTerpakai));
@@ -377,6 +427,8 @@ public function cetak($id)
         $laporanProyek->delete();
         return redirect()->route('laporan_proyek.index')->with('danger', 'Laporan berhasil dihapus.');
     }
+
+    
     public function exportPdfPerTahun($tahun)   
     {
     $bulan = date('n'); // nomor bulan (1-12)
