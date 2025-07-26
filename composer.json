@@ -60,9 +60,6 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ],
-        "post-install-cmd": [
-            "cp -r storage/app/public public/storage"
         ]
     },
     "extra": {
