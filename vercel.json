@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "functions": {
+    "api/main.php": {
+      "runtime": "vercel-php@0.7.4"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(assets|build|storage)/(.*)",
+      "dest": "/public/$1/$2"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/main.php"
+    }
+  ],
+  "buildCommand": "php artisan storage:link || cp -r storage/app/public public/storage",
+  "outputDirectory": "public",
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "true",
+    "APP_URL": "https://desa-app-nine.vercel.app",
+    "APP_KEY": "base64:TGaVaXwhWgjn9akhE4SCSIjGG/cQqvICUQ+PgLA3Bs0=",
+
+    "APP_CONFIG_CACHE": "/tmp/config.php",
+    "APP_EVENTS_CACHE": "/tmp/events.php",
+    "APP_PACKAGES_CACHE": "/tmp/packages.php",
+    "APP_ROUTES_CACHE": "/tmp/routes.php",
+    "APP_SERVICES_CACHE": "/tmp/services.php",
+    "VIEW_COMPILED_PATH": "/tmp",
+
+    "CACHE_DRIVER": "array",
+    "SESSION_DRIVER": "cookie",
+    "LOG_CHANNEL": "stderr",
+
+    "DB_CONNECTION": "mysql",
+    "DB_HOST": "ba8q4xfa9a2vhcpum7d1-mysql.services.clever-cloud.com",
+    "DB_PORT": "3306",
+    "DB_DATABASE": "ba8q4xfa9a2vhcpum7d1",
+    "DB_USERNAME": "umuceheft9fqdbhw",
+    "DB_PASSWORD": "tRADXM849eaz1vQrysHv",
+
+    "CLOUDINARY_CLOUD_NAME": "deavts5ya",
+    "CLOUDINARY_API_KEY": "717287438274684",
+    "CLOUDINARY_API_SECRET": "DbuLaIIFTynyQyoUUtIaUgp4UK8",
+
+    "CLOUDINARY_URL": "cloudinary://717287438274684:DbuLaIIFTynyQyoUUtIaUgp4UK8@deavts5ya"
+  }
+}
