@@ -15,7 +15,7 @@
       "dest": "/api/main.php"
     }
   ],
-  "buildCommand": "php artisan storage:link || cp -r storage/app/public public/storage",
+
   "outputDirectory": "public",
   "env": {
     "APP_ENV": "production",
