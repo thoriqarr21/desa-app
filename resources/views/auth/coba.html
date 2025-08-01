@@ -1,0 +1,104 @@
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam iste incidunt assumenda sapiente, consectetur vitae, non ratione saepe aut odit reprehenderit sit amet, dolores laborum aliquid natus ducimus! Quidem reprehenderit illum dolorum, veritatis repudiandae assumenda?
+
+
+
+public function index(Request $request): View
+{
+    $search = $request->input('search');
+    $bulan = $request->input('bulan');
+    $collection = LaporanKegiatan::with('kegiatan')
+    ->when($search, function ($query, $search) {
+        return $query->where(function ($q) use ($search) {
+            $q->where('nama_kegiatan', 'like', "%{$search}%")
+              ->orWhere('deskripsi_kegiatan', 'like', "%{$search}%");
+        });
+    })
+    ->when($bulan, function ($query) use ($bulan) {
+        return $query->whereHas('kegiatan', function ($q) use ($bulan) {
+            $q->whereMonth('tanggal_mulai', $bulan);
+        });
+    })
+    ->get()
+    ->sortByDesc(function ($item) {
+        return optional($item->kegiatan)->tanggal_mulai;
+    })
+    ->values();
+
+    // Manual pagination
+    $page = $request->get('page', 1);
+    $perPage = 10;
+    $laporan = new LengthAwarePaginator(
+        $collection->forPage($page, $perPage),
+        $collection->count(),
+        $perPage,
+        $page,
+        ['path' => $request->url(), 'query' => $request->query()]
+    );
+
+
+    $tahunList = DesaKegiatan::selectRaw('YEAR(tanggal_mulai) as tahun')
+    ->groupBy(DB::raw('YEAR(tanggal_mulai)'))
+    ->orderBy('tahun', 'desc')
+    ->pluck('tahun');
+
+    // Mengirimkan data ke view
+    return view('laporan_kegiatan.index', compact('laporan', 'tahunList', 'bulan'));
+}
+
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
+import compression from 'vite-plugin-compression';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: [
+                'resources/sass/app.scss',
+                'resources/js/app.js',
+            ],
+            refresh: true,
+        }),
+        tailwindcss(),
+        compression({
+            algorithm: 'brotliCompress', // or 'gzip'
+            ext: '.br',
+            threshold: 1024, // Only compress files above 1KB
+            deleteOriginFile: false, // Keep original files
+        }),
+    ],
+    build: {
+        minify: 'esbuild', // Fast & modern JS minifier
+    },
+});

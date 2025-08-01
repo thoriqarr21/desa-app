@@ -1,0 +1,33 @@
+{
+  "resources/assets/vendor/fonts/remixicon/remixicon.eot": {
+    "file": "assets/remixicon-DUK49BtM.eot",
+    "src": "resources/assets/vendor/fonts/remixicon/remixicon.eot"
+  },
+  "resources/assets/vendor/fonts/remixicon/remixicon.svg": {
+    "file": "assets/remixicon-ncU_JTfY.svg",
+    "src": "resources/assets/vendor/fonts/remixicon/remixicon.svg"
+  },
+  "resources/assets/vendor/fonts/remixicon/remixicon.ttf": {
+    "file": "assets/remixicon-D9ZyeRwQ.ttf",
+    "src": "resources/assets/vendor/fonts/remixicon/remixicon.ttf"
+  },
+  "resources/assets/vendor/fonts/remixicon/remixicon.woff": {
+    "file": "assets/remixicon-DfzPQSMi.woff",
+    "src": "resources/assets/vendor/fonts/remixicon/remixicon.woff"
+  },
+  "resources/assets/vendor/fonts/remixicon/remixicon.woff2": {
+    "file": "assets/remixicon-BVOYbT3K.woff2",
+    "src": "resources/assets/vendor/fonts/remixicon/remixicon.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-De4R3s3M.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-BBTSTVKC.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}
