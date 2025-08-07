@@ -180,10 +180,10 @@ h5:hover::before {
 .animasi-hr {
     padding: 0;
     border: 0;
-    height: 5px;
+    height: 3px;
     background: linear-gradient(270deg, #0be82c, #f21010, #0d6efd);
     background-size: 600% 600%;
-    width: 100%;
+    width: 80%;
     animation: moveGradient 3s ease infinite, expandHr 1s ease-out forwards;
     border-radius: 10px;
 }
@@ -276,7 +276,16 @@ h5.animated-title i {
 h5.animated-title:hover i {
   transform: rotate(20deg) scale(1.2);
 }
-
+.btn-profile {
+    border: 2px solid #3aa83c;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+}
+.btn-profile:hover {
+    background-color: #3aa83c;
+    color: white;
+    font-weight: 500;
+}
 /* KEYFRAME */
 @keyframes slideFadeInLeft {
   from {
@@ -308,9 +317,13 @@ h5.animated-title:hover i {
                         <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
                     @endif
                     @endforeach
-                    @if(session('error'))
-                    <div class="alert alert-danger" role="alert" id="alert-message">
-                        {{ session('error') }}
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
 
@@ -325,7 +338,7 @@ h5.animated-title:hover i {
                         <div class="ms-3">
                             <h4 class="mb-0" style="color: #303030; font-weight: bold;">{{ $user->name }}</h4>
                             <small class="text-muted">{{ $user->username }}</small><br>
-                            <button class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <button class="btn btn-sm btn-profile mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 Ubah Profil
                             </button>
                         </div>

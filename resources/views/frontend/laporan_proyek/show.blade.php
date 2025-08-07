@@ -1,17 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-@session('success')
-    <div class="alert alert-success" role="alert" id="alert-message"> 
-        {{ $value }}
-    </div>
-@endsession
 
-@if(session('error'))
-    <div class="alert alert-danger" role="alert" id="alert-message">
-        {{ session('error') }}
-    </div>
-@endif
 <div class="container-fluid">
     <div class="header-section">
         <div class="page-breadcrumb d-flex align-items-center gap-2">
@@ -30,7 +20,17 @@
             <button class="btn btn-back">Kembali</button>
         </a>
     </div>
-
+    @foreach (['success', 'primary', 'danger'] as $type)
+        @if(session($type))
+            <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+        @endif
+    @endforeach
+    
+    @if(session('error'))
+        <div class="alert alert-danger" role="alert" id="alert-message">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col-lg-5 col-md-5">
             <div class="card p-4">
@@ -108,7 +108,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                             <li>
-                                <a class="dropdown-item text-primary fw-bold" href="{{ route('frontend.laporan_proyek.cetak', $laporanProyek->id) }}">
+                                <a class="dropdown-item text-success fw-bold" href="{{ route('frontend.laporan_proyek.cetak', $laporanProyek->id) }}">
                                     <i class="fas fa-edit me-2"></i>Cetak PDF
                                 </a>
                             </li>
@@ -165,7 +165,7 @@
                                 <h5>Dokumentasi Laporan Proyek Awal & Tambahan</h5>
                                 @php
                                 $grupUploadAwal = $laporanProyek->dokumentasi->where('is_initial', false);
-                                $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase');
+                                $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase')->sortKeys();
                                 @endphp
                                 {{-- Upload Awal --}}
                                 @php

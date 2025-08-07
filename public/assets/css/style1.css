@@ -117,7 +117,7 @@ form:hover .delete {
     /* display: block; */ /* Pastikan display bukan inline atau flex yang mencegah wrap jika tidak diatur */
 }
 .custom-dropdown .dropdown-item:hover {
-    background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%); 
+    background: linear-gradient(90deg,rgb(16, 94, 20) 0%, rgb(31, 133, 45) 50%, rgb(137, 201, 140) 100%); 
     color: #ffffff !important;    
     font-weight: 700;          
 }
@@ -364,7 +364,7 @@ form:hover .delete {
     color: #fff;
 }
 .view-cetak-btn {
-    background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgb(83, 237, 175) 100%); 
+    background: linear-gradient(90deg,rgb(16, 94, 20) 0%, rgb(31, 133, 45) 50%, rgb(137, 201, 140) 100%); 
     color: #fff;
     font-weight: 600;
     border: none;
@@ -834,6 +834,13 @@ margin-left: 5px;
     }
     .btn-back {
         margin-top: 5px;
+    }
+    .detail-text {
+        align-items: start;
+        margin-left: 10px;
+    }
+    .text-muted {
+        margin-left: 0;
     }
 }
 

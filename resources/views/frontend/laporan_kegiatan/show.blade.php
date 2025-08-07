@@ -13,7 +13,7 @@
             </h5>
             <span class="text-muted" id="detail-slash">/</span> <h5 class="page-text fw-semibold text-dark" id="detail-text">Detail</h5>
         </div>
-        <a href="{{ route('frontend.kegiatan.index') }}">
+        <a href="{{ route('frontend.laporan_kegiatan.index') }}">
             <button class="btn btn-back">Kembali</button>
         </a>
     </div>
@@ -99,7 +99,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                             <li>
-                                <a class="dropdown-item text-primary fw-bold" href="{{ route('frontend.laporan_kegiatan.cetak', $laporanKegiatan->id) }}">
+                                <a class="dropdown-item text-success fw-bold" href="{{ route('frontend.laporan_kegiatan.cetak', $laporanKegiatan->id) }}">
                                     <i class="fas fa-edit me-2"></i>Cetak PDF
                                 </a>
                             </li>

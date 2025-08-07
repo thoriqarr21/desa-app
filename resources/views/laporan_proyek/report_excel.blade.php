@@ -22,9 +22,9 @@
         <th>Lokasi</th>
         <th>Status Proyek</th>
         <th>Sumber Dana</th>
-        <th>jenis Proyek</th>
-        <th>Keterangan</th>
+        <th>Jenis Proyek</th>
         <th>Kendala</th>
+        <th>Keterangan</th>
         <th>Evaluasi</th>
         <th>Status Laporan</th>
     </tr>
@@ -34,9 +34,9 @@
         <td style="text-align: center">{{ $index + 1 }}</td>
         <td>{{ ucfirst($item->proyek->nama_proyek ?? '-') }}</td>
         <td style="text-align: center;">
-            {{ $item->proyek->tanggal_mulai ? \Carbon\Carbon::parse($item->proyek->tanggal_mulai)->format('d-m-Y') : '-' }}
+            {{ $item->proyek->tanggal_mulai ? \Carbon\Carbon::parse($item->proyek->tanggal_mulai)->translatedFormat('l, d F Y') : '-' }}
             s/d
-            {{ $item->proyek->tanggal_selesai ? \Carbon\Carbon::parse($item->proyek->tanggal_selesai)->format('d-m-Y') : '-' }}
+            {{ $item->proyek->tanggal_selesai ? \Carbon\Carbon::parse($item->proyek->tanggal_selesai)->translatedFormat('l, d F Y') : '-' }}
         </td>
         <td  style="text-align: center">{{ $item->proyek->masa_kontrak ?? '-' }}</td>
         <td style="text-align: center">Rp. {{ number_format($item->proyek->anggaran, 0, ',', '.') }}</td>
@@ -44,8 +44,8 @@
         <td style="text-align: center">{{ ucfirst($item->proyek->status ?? '-') }}</td>
         <td style="text-align: center">{{ ucfirst($item->proyek->sumber_dana ?? '-') }}</td>
         <td style="text-align: center">{{ ucfirst($item->proyek->jenis_proyek ?? '-') }}</td>
-        <td>{{ $item->keterangan ?? '-' }}</td>
         <td>{{ $item->kendala ?? '-' }}</td>
+        <td>{{ $item->keterangan ?? '-' }}</td>
         <td>{{ $item->evaluasi ?? '-' }}</td>        
         <td style="text-align: center"> 
         @if ($item->is_approved == 1)

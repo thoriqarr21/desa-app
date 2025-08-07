@@ -13,38 +13,16 @@
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
-                    @php
-                        // Field khusus per jenis proyek
-                        $jenis = old('jenis_proyek');
-                
-                        $fieldPerJenis = match($jenis) {
-                            'jalan' => ['panjang_jalan', 'lebar_jalan', 'kondisi_jalan'],
-                            'bangunan' => ['luas_bangunan', 'jumlah_lantai', 'fungsi_bangunan'],
-                            'jembatan' => ['panjang_jembatan', 'lebar_jembatan', 'kapasitas_beban', 'tipe_struktur'],
-                            default => [],
-                        };
-                
-                        // Pisahkan error umum (semua field yang tidak termasuk fieldPerJenis)
-                        $filtered = collect($errors->getMessages())
-                            ->filter(function($value, $key) use ($fieldPerJenis) {
-                                return !in_array($key, ['panjang_jalan', 'lebar_jalan', 'kondisi_jalan', 'luas_bangunan', 'jumlah_lantai', 'fungsi_bangunan', 'panjang_jembatan', 'lebar_jembatan', 'kapasitas_beban', 'tipe_struktur']) // semua field khusus
-                                    || in_array($key, $fieldPerJenis); // hanya tampilkan yang sesuai jenis
-                            });
-                
-                        $finalErrors = $filtered->flatten(); // gabung array nested
-                    @endphp
-                
-                    @if ($finalErrors->isNotEmpty())
-                        <div class="alert alert-danger" id="alertError">
-                            <strong>Terjadi kesalahan!</strong> Silakan periksa inputan Anda:
-                            <ul class="mb-0 mt-2">
-                                @foreach ($finalErrors as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
+                        <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
+                        <ul class="mt-2 mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
                     @endif
-                @endif
                 
 
                     <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
@@ -63,7 +41,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label"><strong>Name:</strong></label>
-                            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
+                            <input type="text" name="name" class="form-control" value="{{ $user->name }}">
                         </div>
 
                         <div class="mb-3">

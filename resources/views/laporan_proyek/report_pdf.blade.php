@@ -173,7 +173,11 @@
             <tr>
                 <td>{{ $i + 1 }}</td>
                 <td class="name-text">{{ ucfirst($item->proyek->nama_proyek ?? '-') }}</td>
-                <td class="tanggal-text" style="text-align: center;">{{ $item->proyek->tanggal_mulai ?? '-' }} s/d {{ $item->proyek->tanggal_mulai ?? '-' }}</td>
+                <td class="tanggal-text" style="text-align: center;">
+                    {{ $item->proyek->tanggal_mulai ? \Carbon\Carbon::parse($item->proyek->tanggal_mulai)->translatedFormat('l, d F Y') : '-' }}
+                    s/d
+                    {{ $item->proyek->tanggal_selesai ? \Carbon\Carbon::parse($item->proyek->tanggal_selesai)->translatedFormat('l, d F Y') : '-' }}
+                </td>                
                 <td class="justify-text">Rp. {{ number_format($item->proyek->anggaran, 0, ',', '.') }}</td>
                 <td>{{ ucfirst($item->proyek->jenis_proyek ?? '-') }}</td>
                 <td>{{ $item->proyek->lokasi_nama ?? '-' }}</td>
@@ -186,7 +190,7 @@
        <!-- TANDA TANGAN -->
    <table class="signature-table">
     <tr>
-        <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
+        <td>Bojong Gede, {{ \Carbon\Carbon::now()->translatedFormat('d F Y')  }}<br>Kepala Desa Bojong Gede</td>
     </tr>
     <tr>
         <td style="padding-top: 70px;">Dede Malvina</td>

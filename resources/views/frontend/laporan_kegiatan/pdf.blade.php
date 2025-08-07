@@ -110,7 +110,19 @@
              margin-top: 40px;
              width: max-content; 
          }
-         
+         .video {
+            display: block;
+            width: 100%;
+            max-width: 500px;            /* Batasi agar tidak melebar */
+            word-break: break-word;
+            overflow-wrap: break-word;
+            text-align: justify;
+            line-height: 1.3;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: black;
+        }
          .signature-table td {
              border: none;
              text-align: center;
@@ -122,6 +134,25 @@
            word-wrap: break-word;   
            overflow-wrap: break-word; 
        }
+       .image-grid {
+            text-align: start; 
+        }
+
+        .image-container {
+            width: 200px; /* Set fixed width for images, adjust as needed */
+            height: auto; /* Biarkan tinggi menyesuaikan proporsi */
+            margin: 5px;
+            display: inline-block; /* Membuat elemen berdampingan */
+            vertical-align: top; /* Penting untuk meratakan bagian atas gambar yang berbeda tinggi */
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 3px;
+            display: block; /* Agar gambar tidak memiliki spasi ekstra di bawah */
+        }
     </style>
 </head>
 <body>
@@ -158,7 +189,8 @@
 
     <table class="detail">
        <tr><td>1. Nama Kegiatan</td><td>:</td><td>{{ $laporanKegiatan->kegiatan->nama_kegiatan }}</td></tr>
-       <tr><td>2. Tanggal</td><td>:</td><td>{{ $laporanKegiatan->kegiatan->tanggal_mulai }} s/d {{ $laporanKegiatan->kegiatan->tanggal_selesai }}</td></tr>
+       <tr><td>2. Tanggal</td><td>:</td><td>{{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }} s/d 
+        {{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_selesai)->translatedFormat('l, d F Y') }}</td></tr>
        <tr><td>3. Waktu</td><td>:</td><td>{{ $laporanKegiatan->kegiatan->waktu_mulai }} Wib s/d {{ $laporanKegiatan->kegiatan->waktu_selesai }} Wib</td></tr>
        <tr><td>4. Deskripsi Kegiatan</td><td>:</td><td class="justify-text">{{ $laporanKegiatan->kegiatan->deskripsi_kegiatan }}</td></tr>
        <tr><td>5. Dibuat Oleh</td><td>:</td><td>{{ $laporanKegiatan->user->name }}</td></tr>
@@ -232,20 +264,26 @@
    </table>
    
    <p style="padding-top: 5px; border-top: 1px solid rgb(202, 202, 202)">Dokumentasi Kegiatan</p>
+   <div class="image-grid"> 
    @forelse ($laporanKegiatan->dokumentasi as $dok)
    @if ($dok->file_type == 'image')
+   <div class="image-container">
        <img src="{{ public_path('storage/' . $dok->file_path) }}" style="width: 200px; margin: 5px;" alt="Dokumentasi">
-   @else
-       <p><p>Dokumentasi Video:</p> {{ $dok->file_path }}</p>
+    </div>
+       @else
+   <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="video">
+    {{ asset('storage/' . $dok->file_path) }}
+    </a>
    @endif
    @empty
        <p><em>Tidak ada dokumentasi tersedia.</em></p>
    @endforelse
+</div>
    <!-- Dokumentasi -->
    <!-- TANDA TANGAN -->
    <table class="signature-table">
        <tr>
-           <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
+           <td>Bojong Gede, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>Kepala Desa Bojong Gede</td>
        </tr>
        <tr>
            <td style="padding-top: 70px;">Dede Malvina</td>

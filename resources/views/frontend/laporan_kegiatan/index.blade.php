@@ -57,7 +57,7 @@
         <div class="card-body card-body-custom ms-3 me-3">
             <div class="card-content mt-2">
                 <h5 class="card-title d-flex align-items-center">
-                    <span style="color: #2e9744; font-weight: bold">Laporan&nbsp;</span>{{ $item->kegiatan->nama_kegiatan }}
+                    <span><span style="color: #2e9744; font-weight: bold">Laporan&nbsp;</span>{{ $item->kegiatan->nama_kegiatan }}</span>
                 </h5>
                 <p class="card-subtitle d-flex align-items-center" style="font-weight: 600">
                     <i class="fas fa-user me-1"></i>{{ ucfirst($item->user->name) }}

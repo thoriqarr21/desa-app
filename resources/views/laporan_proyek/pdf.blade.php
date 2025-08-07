@@ -135,7 +135,19 @@
             font-weight: bold;
             font-size: 12pt;
         }
-
+        .video {
+            display: block;
+            width: 100%;
+            max-width: 500px;            /* Batasi agar tidak melebar */
+            word-break: break-word;
+            overflow-wrap: break-word;
+            text-align: justify;
+            line-height: 1.3;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: black;
+        }
         /* --- Perubahan untuk gambar ke samping --- */
         .image-grid {
             text-align: start; /* Memastikan container gambar rata tengah */
@@ -194,8 +206,9 @@
     </p>
 
     <table class="detail">
-       <tr><td>1. Nama Proyek</td><td>:</td><td>{{ $laporanProyek->proyek->nama_proyek }}</td></tr>
-       <tr><td>2. Tanggal</td><td>:</td><td>{{ $laporanProyek->proyek->tanggal_mulai }} s/d {{ $laporanProyek->proyek->tanggal_selesai }}</td></tr>
+       <tr><td>1. Nama Proyek</td><td>:</td><td>{{ ucfirst($laporanProyek->proyek->nama_proyek) }}</td></tr>
+       <tr><td>2. Tanggal</td><td>:</td><td>{{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_mulai)->translatedFormat('l, d F Y') }}
+         s/d {{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_selesai)->translatedFormat('l, d F Y')  }}</td></tr>
        <tr><td>3. Anggaran</td><td>:</td><td>Rp. {{ number_format($laporanProyek->proyek->anggaran, 0, ',', '.') }}</td></tr>
        <tr><td>4. Masa Kontrak</td><td>:</td><td>{{ $laporanProyek->proyek->masa_kontrak }}</td></tr>
        <tr><td>5. Deskripsi Proyek</td><td>:</td><td class="justify-text">{{ $laporanProyek->proyek->deskripsi_proyek }}</td></tr>
@@ -259,38 +272,37 @@
            <td>:</td>
            <td class="justify-text">{{ $laporanProyek->evaluasi }}</td>
        </tr>
-       <tr><td>9. Surat bukti diri</td><td>:</td><td></td></tr>
-       <tr><td style="padding-left: 30px;">KTP</td><td></td><td>3304080102030003</td></tr>
-       <tr><td style="padding-left: 30px;">KK</td><td></td><td>3304080060708224</td></tr>
    </table>
    
    <p style="padding-top: 5px; border-top: 1px solid rgb(202, 202, 202)">Dokumentasi Proyek</p>
 
    @php
    $grupUploadAwal = $laporanProyek->dokumentasi->where('is_initial', false);
-   $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase');
+   $grupUploadTambahan = $laporanProyek->dokumentasi->where('is_initial', true)->groupBy('persentase')->sortKeys();
 @endphp
 
 <div class="dokumentasi-detail">
-   <p class="sub-section-heading">Upload Awal</p>
-   @if ($grupUploadAwal->count() > 0)
-   <table class="detail">
-    <td style="width: 45%;">Keterangan</td>
-    <td style="width: 2%;">:</td>
-    <td class="justify-text" style="width: 78%;">{{ $grupUploadAwal->first()->keterangan }}</td></tr>
-    <tr><td>Progres</td><td>:</td><td>{{ $grupUploadAwal->first()->progres?->persentase ?? '-' }}%</td></tr>
-    <tr><td>Foto/Video</td><td>:</td><td></td></tr>
-   </table>
-   @endif
-   <div class="image-grid"> 
-       @forelse ($grupUploadAwal as $dok)
-           <div class="image-container">
-               @if ($dok->file_type == 'image')
+    <p class="sub-section-heading">Upload Awal</p>
+    @if ($grupUploadAwal->count() > 0)
+    <table class="detail">
+        <td style="width: 45%;">Keterangan</td>
+        <td style="width: 2%;">:</td>
+        <td class="justify-text" style="width: 78%;">{{ $grupUploadAwal->first()->keterangan }}</td></tr>
+        <tr><td>Progres</td><td>:</td><td>{{ $grupUploadAwal->first()->progres?->persentase ?? '-' }}%</td></tr>
+        <tr><td>Foto/Video</td><td>:</td><td></td></tr>
+    </table>
+    @endif
+    <div class="image-grid"> 
+        @forelse ($grupUploadAwal as $dok)
+        @if ($dok->file_type == 'image')
+        <div class="image-container">
                    <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Awal">
-               @else
-                   <p class="mb-0">Video: {{ $dok->file_path }}</p>
-               @endif
-           </div>
+                </div>
+                @else
+                    <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="video">
+                        {{ asset('storage/' . $dok->file_path) }}
+                    </a>
+                @endif
        @empty
            <p class="mb-0">Tidak ada dokumentasi awal.</p>
        @endforelse
@@ -298,35 +310,37 @@
 </div>
 
 <div class="dokumentasi-detail ">
-   <p class="sub-section-heading">Upload Tambahan</p>
-   @forelse ($grupUploadTambahan as $persen => $doks)
-   <table class="detail" style="border-top: 1px solid rgb(202, 202, 202); padding-top: 10px">
-    <td style="width: 45%;">Keterangan</td>
-    <td style="width: 2%;">:</td>
-    <td class="justify-text" style="width: 78%;">{{ $doks->first()->keterangan }}</td></tr>
-    <tr><td>Progres</td><td>:</td><td>{{ $persen }}%</td></tr>
-    <tr><td>Foto/Video</td><td>:</td><td></td></tr>
-   </table>
-       <div class="image-grid"> 
-           @foreach ($doks as $dok)
-               <div class="image-container">
-                   @if ($dok->file_type == 'image')
-                       <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Tambahan">
-                   @else
-                       <p class="mb-0">Video: {{ $dok->file_path }}</p>
-                   @endif
-               </div>
-           @endforeach
-       </div>
-   @empty
-       <p class="mb-0">Tidak ada dokumentasi tambahan.</p>
-   @endforelse
+    <p class="sub-section-heading">Upload Tambahan</p>
+    @forelse ($grupUploadTambahan as $persen => $doks)
+    <table class="detail" style="border-top: 1px solid rgb(202, 202, 202); padding-top: 10px">
+     <td style="width: 45%;">Keterangan</td>
+     <td style="width: 2%;">:</td>
+     <td class="justify-text" style="width: 78%;">{{ $doks->first()->keterangan }}</td></tr>
+     <tr><td>Progres</td><td>:</td><td>{{ $persen }}%</td></tr>
+     <tr><td>Foto/Video</td><td>:</td><td></td></tr>
+    </table>
+        <div class="image-grid"> 
+            @foreach ($doks as $dok)
+            @if ($dok->file_type == 'image')
+            <div class="image-container">
+                        <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Tambahan">
+                    </div>
+                     @else
+                     <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="video">
+                     {{ asset('storage/' . $dok->file_path) }}
+                     </a>
+                     @endif
+            @endforeach
+        </div>
+    @empty
+        <p class="mb-0">Tidak ada dokumentasi tambahan.</p>
+    @endforelse
 </div>
    <!-- Dokumentasi -->
    <!-- TANDA TANGAN -->
    <table class="signature-table">
        <tr>
-           <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
+           <td>Bojong Gede, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>Kepala Desa Bojong Gede</td>
        </tr>
        <tr>
            <td style="padding-top: 70px;">Dede Malvina</td>

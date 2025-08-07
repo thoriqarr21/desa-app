@@ -74,38 +74,50 @@ class DokumentasiProyekController extends Controller
 
     
     public function storeTambahan(Request $request)
-{
-    $request->validate([
-        'laporan_id' => 'required|exists:laporan_proyeks,id',
-        'persentase' => 'required|numeric',
-        'file_path' => 'required|array|max:3',  // Pastikan hanya menerima array dan maksimal 3 file
-        'file_path.*'  => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
-        'keterangan' => 'nullable|string',
-    ]);
-
-    // Dapatkan progres sesuai persentase
-    $progres = ProgresPembangunan::where('persentase', $request->persentase)->latest()->first();
-
-    // Periksa apakah file_path ada
-    if ($request->hasFile('file_path')) { // Pastikan menggunakan 'file_path' sesuai dengan input
-        // Proses setiap file yang di-upload
+    {
+        $request->validate([
+            'laporan_id' => 'required|exists:laporan_proyeks,id',
+            'persentase' => 'required|numeric|min:0|max:100',
+            'file_path' => 'required|array|max:3',
+            'file_path.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
+            'keterangan' => 'nullable|string',
+        ]);
+    
+        // Ambil atau buat progres sesuai persentase
+        $progres = ProgresPembangunan::firstOrCreate(
+            [
+                'laporan_id' => $request->laporan_id,
+                'persentase' => $request->persentase,
+            ]
+        );
+    
+        // Simpan setiap file
         foreach ($request->file('file_path') as $file) {
-            dd($request->file('file_path')); // Check the uploaded file
             $path = $file->store('dokumentasi', 'public');
-            
-            // Simpan data dokumentasi ke database
+    
             DokumentasiProyek::create([
                 'laporan_id' => $request->laporan_id,
-                'progres_id' => $progres?->id,
+                'progres_id' => $progres->id,
                 'file_path' => $path,
                 'keterangan' => $request->keterangan,
                 'persentase' => $request->persentase,
             ]);
         }
+    
+        // Cek jika persentase 100%, ubah status proyek jadi 'selesai'
+        if ((int) $request->persentase === 100) {
+            $laporan = LaporanProyek::with('proyek')->findOrFail($request->laporan_id);
+    
+            if ($laporan->proyek && $laporan->proyek->status !== 'selesai') {
+                $laporan->proyek->update([
+                    'status' => 'selesai',
+                ]);
+            }
+        }
+    
+        return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
     }
-
-    return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
-}
+    
 
 
     /**
@@ -139,53 +151,90 @@ class DokumentasiProyekController extends Controller
     {
         $dokumentasi = DokumentasiProyek::findOrFail($id);
     
+        $laporanId = $dokumentasi->laporan_id;
+        $persentase = $dokumentasi->persentase;
+        $progresId = $dokumentasi->progres_id;
+    
         // Hapus file dari penyimpanan
         if (Storage::disk('public')->exists($dokumentasi->file_path)) {
             Storage::disk('public')->delete($dokumentasi->file_path);
         }
     
-        // Hapus data dari database
+        // Hapus dokumentasi dari database
         $dokumentasi->delete();
     
-        return back()->with('success', 'Dokumentasi berhasil dihapus.');
+        // Cek apakah masih ada dokumentasi lain untuk progres ini
+        $sisaDokumentasi = DokumentasiProyek::where('progres_id', $progresId)->count();
+    
+        if ($sisaDokumentasi === 0) {
+            // Jika tidak ada dokumentasi tersisa, hapus progres
+            $progres = ProgresPembangunan::find($progresId);
+            if ($progres) {
+                $progres->delete();
+            }
+    
+            // Jika progres 100% dihapus, ubah status proyek jadi "berjalan"
+            if ((int) $persentase === 100) {
+                $laporan = LaporanProyek::with('proyek')->find($laporanId);
+                if ($laporan && $laporan->proyek) {
+                    $laporan->proyek->update([
+                        'status' => 'berjalan',
+                    ]);
+                }
+            }
+        }
+    
+        return back()->with('danger', 'Dokumentasi berhasil dihapus.');
     }
+    
     public function destroyTambahanBerdasarkanPersen(Request $request)
-{
-    $request->validate([
-        'laporan_id' => 'required|exists:laporan_proyeks,id',
-        'persentase' => 'required|numeric|min:0|max:100',
-    ]);
-
-    // Ambil semua dokumentasi berdasarkan laporan dan persentase
-    $dokumentasiList = DokumentasiProyek::where('laporan_id', $request->laporan_id)
-        ->where('persentase', $request->persentase)
-        ->get();
-
-    if ($dokumentasiList->isEmpty()) {
-        return back()->with('error', 'Tidak ditemukan dokumentasi pada progres ' . $request->persentase . '%.');
-    }
-
-    // Hapus semua file dan data dokumentasi
-    foreach ($dokumentasiList as $dokumentasi) {
-        if (Storage::disk('public')->exists($dokumentasi->file_path)) {
-            Storage::disk('public')->delete($dokumentasi->file_path);
+    {
+        $request->validate([
+            'laporan_id' => 'required|exists:laporan_proyeks,id',
+            'persentase' => 'required|numeric|min:0|max:100',
+        ]);
+    
+        // Ambil semua dokumentasi berdasarkan laporan dan persentase
+        $dokumentasiList = DokumentasiProyek::where('laporan_id', $request->laporan_id)
+            ->where('persentase', $request->persentase)
+            ->get();
+    
+        if ($dokumentasiList->isEmpty()) {
+            return back()->with('error', 'Tidak ditemukan dokumentasi pada progres ' . $request->persentase . '%.');
         }
-        $dokumentasi->delete();
-    }
-
-    // Cari dan hapus progres jika tidak digunakan lagi
-    $progres = ProgresPembangunan::where('laporan_id', $request->laporan_id)
-        ->where('persentase', $request->persentase)
-        ->first();
-
-    if ($progres) {
-        $masihDigunakan = DokumentasiProyek::where('progres_id', $progres->id)->exists();
-        if (!$masihDigunakan) {
-            $progres->delete();
+    
+        // Hapus semua file dan data dokumentasi
+        foreach ($dokumentasiList as $dokumentasi) {
+            if (Storage::disk('public')->exists($dokumentasi->file_path)) {
+                Storage::disk('public')->delete($dokumentasi->file_path);
+            }
+            $dokumentasi->delete();
         }
+    
+        // Cari dan hapus progres jika tidak digunakan lagi
+        $progres = ProgresPembangunan::where('laporan_id', $request->laporan_id)
+            ->where('persentase', $request->persentase)
+            ->first();
+    
+        if ($progres) {
+            $masihDigunakan = DokumentasiProyek::where('progres_id', $progres->id)->exists();
+            if (!$masihDigunakan) {
+                $progres->delete();
+            }
+        }
+    
+        // Jika yang dihapus adalah progres 100%, ubah status proyek jadi "berjalan" lagi
+        if ((int) $request->persentase === 100) {
+            $laporan = LaporanProyek::with('proyek')->findOrFail($request->laporan_id);
+    
+            if ($laporan->proyek) {
+                $laporan->proyek->update([
+                    'status' => 'berjalan',
+                ]);
+            }
+        }
+    
+        return redirect()->back()->with('success', 'Dokumentasi berhasil dihapus.');
     }
-
-    return back()->with('success', 'Semua dokumentasi pada progres ' . $request->persentase . '% berhasil dihapus.');
-}
 
 }

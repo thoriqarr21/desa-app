@@ -10,6 +10,10 @@
                style="height: 45px; padding: 0 20px;">
                 <i class="fas fa-reply fs-6 me-2"></i>
                 <span>Kembali</span>
+            </a>
+            <a href="{{ route('laporan_kegiatan.cetak', $laporanKegiatan->id) }}" class="btn btn-sm btn-dark ms-2 fs-6 d-flex align-items-center" target="_blank">
+                <i class="fas fa-print fs-6 me-2"></i>
+                Cetak PDF
             </a>                       
         </div>
     
@@ -126,9 +130,9 @@
     
     <!-- Dokumentasi -->
     <div class="card shadow-sm border-0 p-4 mt-4">
-        <div class="bg-primary bg-gradient text-white p-3 rounded mb-3 d-flex align-items-center">
+        <div class="head-dokumentasi p-3 rounded mb-3 d-flex align-items-center">
             <i class="bi bi-camera me-2 fs-4"></i>
-            <h4 class="mb-0">📸 Dokumentasi Kegiatan</h4>
+            <h4 class="mb-0 text-white">📸 Dokumentasi Kegiatan</h4>
         </div>
     
         <div class="row mt-3">
@@ -141,7 +145,7 @@
                                      class="card-img-top rounded-top img-hover" 
                                      alt="Dokumentasi"
                                      style="max-height: 250px; object-fit: cover;">
-                                <span class="badge bg-success position-absolute top-0 start-0 m-2">Foto</span>
+                                <span class="badge position-absolute top-0 start-0 m-2" style="background-color: rgb(196, 196, 196)">Foto</span>
                             @else
                                 <video controls class="w-100 rounded-top img-hover" 
                                        style="max-height: 250px; object-fit: cover;">

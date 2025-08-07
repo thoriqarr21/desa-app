@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+@foreach (['success', 'primary', 'danger'] as $type)
+    @if(session($type))
+        <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
+    @endif
+@endforeach
+
+@if(session('error'))
+    <div class="alert alert-danger" role="alert" id="alert-message">
+        {{ session('error') }}
+    </div>
+@endif
 <div class="container-fluid py-2 mb-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start text-start margin-tb">
         <!-- Tombol Kembali & Cetak PDF -->
@@ -128,7 +139,10 @@
      $dokAwalPertama = $grupUploadAwal->first();
      @endphp
     <div class="card shadow-sm border-0 p-4 mt-4">
-        <h4>📸 Dokumentasi Proyek</h4>
+        <div class="head-dokumentasi p-3 rounded mb-3 d-flex align-items-center">
+            <i class="bi bi-camera me-2 fs-4"></i>
+            <h4 class="mb-0 text-white">📸 Dokumentasi Proyek Pembangunan</h4>
+        </div>
     
         <h5 class="mt-3 mb-2">📌 Upload Awal</h5>
         @if ($dokAwalPertama)

@@ -25,7 +25,17 @@
             </div>
         </div>          
     </div>
-
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
+        <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
+        <ul class="mt-2 mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
     <div class="card shadow-sm border-0 mb-5" style="background-color: #f8f9fa;">
         <div class="card-body p-4">
     <form action="{{ route('laporan_kegiatan.update', $laporanKegiatan) }}" method="POST" enctype="multipart/form-data">

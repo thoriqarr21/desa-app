@@ -26,16 +26,17 @@
         </div>          
     </div>
 
-@if (count($errors) > 0)
-    <div class="alert alert-danger">
-      <strong>Whoops!</strong> There were some problems with your input.<br><br>
-      <ul>
-         @foreach ($errors->all() as $error)
-           <li>{{ $error }}</li>
-         @endforeach
-      </ul>
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
+        <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
+        <ul class="mt-2 mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-@endif
+    @endif
     <div class="card shadow-sm border-0 mb-5" style="background-color: #fcfcfc;">
         <div class="card-body p-4">
     <form method="POST" action="{{ route('kategori_kegiatan.update', $kategoriKegiatan->id) }}">

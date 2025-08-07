@@ -260,6 +260,7 @@ public function approveaction(Request $request, LaporanKegiatan $laporanKegiatan
 }
 public function cetak($id)
 {
+    Carbon::setLocale('id');
     $bulan = date('n'); // nomor bulan (1-12)
     $tahun = date('Y');
 
@@ -301,6 +302,7 @@ protected function getAddressFromCoordinates($lat, $lng)
 
 public function exportPdfPerTahun($tahun)
 {
+    Carbon::setLocale('id');
     $bulan = date('n'); // nomor bulan (1-12)
     $tahun = date('Y');
 
@@ -339,6 +341,7 @@ public function exportPdfPerTahun($tahun)
 }
 public function exportExcelPerTahun($tahun)
 {
+    Carbon::setLocale('id');
     $bulan = date('n'); // bulan sekarang
     $tahunSekarang = date('Y');
 

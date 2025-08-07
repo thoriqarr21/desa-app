@@ -345,7 +345,9 @@ form:hover .delete {
 .periode-header i {
     margin-right: 8px;
 }
-
+.head-dokumentasi {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+}
 .periode-dates {
     display: flex;
     align-items: center;
@@ -391,6 +393,9 @@ form:hover .delete {
     background-color: #4e54c8;
     color: white;
     border-color: #4e54c8;
+}
+.btn-close {
+    color: white;
 }
 /* .icon {
     padding: 7px;

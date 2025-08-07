@@ -190,8 +190,6 @@ public function updatePassword(Request $request): RedirectResponse
         'new_password' => 'required|min:6|confirmed',
     ]);
 
-    
-
     $user = Auth::user();
 
     if (!Hash::check($request->current_password, $user->password)) {
@@ -200,8 +198,10 @@ public function updatePassword(Request $request): RedirectResponse
 
     $user->password = Hash::make($request->new_password);
     $user->save(); 
+
     return back()->with('success', 'Password berhasil diperbarui.');
 }
+
 public function updateProfile(Request $request)
 {
     $user = Auth::user();

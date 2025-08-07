@@ -94,24 +94,28 @@ public function laporanIndex(Request $request)
 
     public function laporanShow(LaporanProyek $laporanProyek): View
     {
-        $persentaseList = $laporanProyek->dokumentasi->pluck('persentase')->unique()->sort()->values();
-        $laporanProyek->load('proyek', 'user');
+        $laporanProyek = LaporanProyek::with(['proyek', 'user', 'dokumentasi'])->findOrFail($laporanProyek->id);
+
         $semuaPersen = [50, 100];
-
-    // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 0%)
-    $persentaseTerpakai = $laporanProyek->dokumentasi
-        ->where('persentase', '>', 0)
-        ->pluck('persentase')
-        ->unique()
-        ->toArray();
-        
-        $laporanProyek->load('dokumentasi'); // Pastikan dokumentasi sudah dimuat
+    
+        $persentaseList = $laporanProyek->dokumentasi->pluck('persentase')->unique()->sort()->values();
+    
+        // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 0%)
+        $persentaseTerpakai = $laporanProyek->dokumentasi
+            ->where('persentase', '>', 0)
+            ->pluck('persentase')
+            ->unique()
+            ->toArray();
+    
+        // Grup dokumentasi berdasarkan persentase
         $grupUploadTambahan = $laporanProyek->dokumentasi
-            ->groupBy('persentase'); 
-
-    // Hitung persentase yang belum dipakai
-    $persenTersisa = array_values(array_diff($semuaPersen, $persentaseTerpakai));
-        return view('frontend.laporan_proyek.show', compact('laporanProyek','persenTersisa', 'grupUploadTambahan'));
+            ->groupBy('persentase')
+            ->sortKeys();
+    
+        // Hitung persentase yang belum dipakai
+        $persenTersisa = array_values(array_diff($semuaPersen, $persentaseTerpakai));
+    
+        return view('frontend.laporan_proyek.show', compact('laporanProyek', 'persenTersisa', 'grupUploadTambahan'));
     }
 
     public function laporanEdit(LaporanProyek $laporanProyek): View
@@ -257,7 +261,15 @@ public function laporanIndex(Request $request)
 
 
     public function storeTambahan(Request $request)
-    {
+{
+    $request->validate([
+        'laporan_id' => 'required|exists:laporan_proyeks,id',
+        'persentase' => 'required|numeric|min:0|max:100',
+        'dokumentasi' => 'required|array|max:3',
+        'dokumentasi.*' => 'file|mimes:jpg,jpeg,png,mp4,mov,avi|max:10240',
+        'keterangan' => 'nullable|string',
+    ]);
+
     // Dapatkan progres sesuai persentase
     $progres = ProgresPembangunan::firstOrCreate(
         [
@@ -269,19 +281,18 @@ public function laporanIndex(Request $request)
             'updated_at' => now(),
         ]
     );
-    
-    // Pastikan $progres berhasil dibuat
+
+    // Jika gagal buat progres
     if (!$progres) {
         return back()->with('error', 'Progres gagal dibuat.');
     }
-    
-    // Jika ada file dokumentasi
+
+    // Simpan dokumentasi
     foreach ($request->file('dokumentasi') as $file) {
         $path = $file->store('dokumentasi', 'public');
-        $extension = $file->getClientOriginalExtension(); // contoh: jpg, png
-    
+        $extension = $file->getClientOriginalExtension();
         $fileType = $this->tentukanFileType($extension);
-    
+
         $progres->dokumentasi()->create([
             'laporan_id' => $request->laporan_id,
             'file_path' => $path,
@@ -289,11 +300,24 @@ public function laporanIndex(Request $request)
             'progres_id' => $progres->id,
             'persentase' => $progres->persentase,
             'is_initial' => true,
-            'file_type' => $fileType, // ← tambahkan ini
+            'file_type' => $fileType,
         ]);
     }
+
+    // Jika persentase 100%, ubah status proyek ke 'selesai'
+    if ((int) $request->persentase === 100) {
+        $laporan = LaporanProyek::with('proyek')->findOrFail($request->laporan_id);
+
+        if ($laporan->proyek && $laporan->proyek->status !== 'selesai') {
+            $laporan->proyek->update([
+                'status' => 'selesai',
+            ]);
+        }
+    }
+
     return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
 }
+
 
 public function updateTambahanBerdasarkanPersen(Request $request)
 {
@@ -337,7 +361,7 @@ public function updateTambahanBerdasarkanPersen(Request $request)
         ]);
     }
 
-    return back()->with('success', 'Dokumentasi progres ' . $request->persentase . '% berhasil diperbarui dan diganti total.');
+    return back()->with('primary', 'Dokumentasi progres ' . $request->persentase . '% berhasil diperbarui dan diganti total.');
 }
 
 private function tentukanFileType($ext)
@@ -387,6 +411,7 @@ public function laporanDestroy($id): RedirectResponse
 
 public function cetakProyek($id)
 {
+    Carbon::setLocale('id');
     $bulan = date('n'); // nomor bulan (1-12)
     $tahun = date('Y');
 
@@ -602,6 +627,7 @@ public function editLaporanKegiatan(LaporanKegiatan $laporanKegiatan): View
      }
      public function cetakKegiatan($id)
     {
+        Carbon::setLocale('id');
         $bulan = date('n'); // nomor bulan (1-12)
         $tahun = date('Y');
     
@@ -650,7 +676,7 @@ public function editLaporanKegiatan(LaporanKegiatan $laporanKegiatan): View
   
       $user->password = Hash::make($request->new_password);
       $user->save(); 
-      return back()->with('success', 'Password berhasil diperbarui.');
+      return back()->with('primary', 'Password berhasil diperbarui.');
   }
   public function updateProfile(Request $request)
 {
@@ -677,7 +703,7 @@ public function editLaporanKegiatan(LaporanKegiatan $laporanKegiatan): View
 
     $user->save();
 
-    return redirect()->back()->with('success', 'Profil berhasil di update.');
+    return redirect()->back()->with('primary', 'Profil berhasil di update.');
 }
 // ------------------------------
 

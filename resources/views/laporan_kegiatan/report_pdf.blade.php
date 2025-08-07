@@ -176,7 +176,7 @@
             <tr>
                 <td>{{ $i + 1 }}</td>
                 <td class="name-text">{{ ucfirst($item->kegiatan->nama_kegiatan ?? '-') }}</td>
-                <td class="tanggal-text" style="text-align: center;">{{ $item->kegiatan->tanggal_mulai ?? '-' }} s/d {{ $item->kegiatan->tanggal_selesai ?? '-' }}</td>
+                <td class="tanggal-text" style="text-align: center;">{{ $item->kegiatan->tanggal_mulai ? \Carbon\Carbon::parse($item->kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') : '-' }} s/d {{ $item->kegiatan->tanggal_selesai ? \Carbon\Carbon::parse($item->kegiatan->tanggal_selesai)->translatedFormat('l, d F Y') : '-'}}</td>
                 <td class="justify-text" style="text-align: center;"> {{ \Carbon\Carbon::parse($item->kegiatan->waktu_mulai)->format('H.i') ?? '-' }} s/d {{ \Carbon\Carbon::parse($item->kegiatan->waktu_selesai)->format('H.i') ?? '-' }}</td>
                 <td>{{ $item->kegiatan->lokasi_nama ?? '-' }}</td>
                 <td class="justify-text" style="text-align: center;">{{ ucfirst($item->kegiatan->status) }}</td>
@@ -188,7 +188,7 @@
        <!-- TANDA TANGAN -->
    <table class="signature-table">
     <tr>
-        <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
+        <td>Bojong Gede, {{ \Carbon\Carbon::now()->translatedFormat('d F Y')  }}<br>Kepala Desa Bojong Gede</td>
     </tr>
     <tr>
         <td style="padding-top: 70px;">Dede Malvina</td>

@@ -61,10 +61,10 @@
         <div class="card-body card-body-custom ms-3 me-3">
             <div class="card-content mt-2">
                 <h5 class="card-title d-flex align-items-center">
-                    <span style="color: #2e9744; font-weight: bold">Laporan&nbsp;</span>{{ $item->proyek->nama_proyek }}  
+                    <span><span style="color: #2e9744; font-weight: bold">Laporan&nbsp;</span>{{ $item->proyek->nama_proyek }}</span>
                 </h5>
                 <p class="card-subtitle d-flex align-items-center" style="font-weight: 600">
-                    <i class="fas fa-user me-1"></i>{{ ucfirst($item->user->name) }}
+                    <i class="fas fa-user me-2 "></i>{{ ucfirst($item->user->name) }}
                     <span class="badge pt-2 text-white ms-2" style="background-color: rgb(73, 149, 107)">{{ $item->kode_laporan }}</span>
                 </p>
             </div>

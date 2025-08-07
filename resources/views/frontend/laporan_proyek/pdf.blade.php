@@ -149,7 +149,19 @@
             display: inline-block; 
             vertical-align: top;
         }
-
+        .video {
+            display: block;
+            width: 100%;
+            max-width: 500px;            /* Batasi agar tidak melebar */
+            word-break: break-word;
+            overflow-wrap: break-word;
+            text-align: justify;
+            line-height: 1.3;
+            padding-left: 20px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: black;
+        }
         .image-container img {
             max-width: 100%;
             height: auto;
@@ -199,7 +211,8 @@
 
     <table class="detail">
        <tr><td>1. Nama Proyek</td><td>:</td><td>{{ $laporanProyek->proyek->nama_proyek }}</td></tr>
-       <tr><td>2. Tanggal</td><td>:</td><td>{{ $laporanProyek->proyek->tanggal_mulai }} s/d {{ $laporanProyek->proyek->tanggal_selesai }}</td></tr>
+       <tr><td>2. Tanggal</td><td>:</td><td>{{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_mulai)->translatedFormat('l, d F Y') }}
+        s/d {{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_selesai)->translatedFormat('l, d F Y')  }}</td></tr>
        <tr><td>3. Anggaran</td><td>:</td><td>Rp. {{ number_format($laporanProyek->proyek->anggaran, 0, ',', '.') }}</td></tr>
        <tr><td>4. Masa Kontrak</td><td>:</td><td>{{ $laporanProyek->proyek->masa_kontrak }}</td></tr>
        <tr><td>5. Deskripsi Proyek</td><td>:</td><td class="justify-text">{{ $laporanProyek->proyek->deskripsi_proyek }}</td></tr>
@@ -288,18 +301,20 @@
    </table>
    @endif
    <div class="image-grid"> 
-       @forelse ($grupUploadAwal as $dok)
-           <div class="image-container">
-               @if ($dok->file_type == 'image')
-                   <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Awal">
-               @else
-                   <p class="mb-0">Video: {{ $dok->file_path }}</p>
-               @endif
-           </div>
-       @empty
-           <p class="mb-0">Tidak ada dokumentasi awal.</p>
-       @endforelse
-   </div>
+    @forelse ($grupUploadAwal as $dok)
+    @if ($dok->file_type == 'image')
+    <div class="image-container">
+               <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Awal">
+            </div>
+            @else
+                <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="video">
+                    {{ asset('storage/' . $dok->file_path) }}
+                </a>
+                @endif
+                @empty
+                    <p class="mb-0">Tidak ada dokumentasi awal.</p>
+                    @endforelse
+                </div>
 </div>
 
 <div class="dokumentasi-detail ">
@@ -312,18 +327,19 @@
     <tr><td>Progres</td><td>:</td><td>{{ $persen }}%</td></tr>
     <tr><td>Foto/Video</td><td>:</td><td></td></tr>
    </table>
-
-       <div class="image-grid">
-           @foreach ($doks as $dok)
-               <div class="image-container">
-                   @if ($dok->file_type == 'image')
-                       <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Tambahan">
-                   @else
-                       <p class="mb-0">Video: {{ $dok->file_path }}</p>
-                   @endif
-               </div>
-           @endforeach
-       </div>
+   <div class="image-grid"> 
+    @foreach ($doks as $dok)
+    @if ($dok->file_type == 'image')
+    <div class="image-container">
+                <img src="{{ public_path('storage/' . $dok->file_path) }}" alt="Dokumentasi Tambahan">
+            </div>
+             @else
+             <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="video">
+             {{ asset('storage/' . $dok->file_path) }}
+             </a>
+             @endif
+    @endforeach
+</div>
    @empty
        <p class="mb-0">Tidak ada dokumentasi tambahan.</p>
    @endforelse
@@ -332,7 +348,7 @@
    <!-- TANDA TANGAN -->
    <table class="signature-table">
        <tr>
-           <td>Bojong Gede, {{ \Carbon\Carbon::now()->format('d F Y') }}<br>Kepala Desa Bojong Gede</td>
+           <td>Bojong Gede, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>Kepala Desa Bojong Gede</td>
        </tr>
        <tr>
            <td style="padding-top: 70px;">Dede Malvina</td>

@@ -141,7 +141,7 @@
         <div id="form-jembatan" style="display: none;">
             <div class="mb-3">
                 <strong>Panjang Jembatan</strong>
-                <input type="text" name="panjang_jembatan" class="form-control" placeholder="Satuan Meter">
+                <input type="number" name="panjang_jembatan" class="form-control" placeholder="Satuan Meter">
             </div>
             <div class="mb-3">
                 <strong>Lebar Jembatan</strong>
