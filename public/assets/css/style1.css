@@ -359,6 +359,7 @@ form:hover .delete {
     font-size: 0.9rem;
     flex-shrink: 0; /* Prevent button from shrinking */
 }
+
 .view-details-btn:hover {
     background-color: #272198;
     color: #fff;

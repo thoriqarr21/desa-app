@@ -349,7 +349,7 @@
     </div>
 
     @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
         <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
         <ul class="mt-2 mb-0">
             @foreach ($errors->all() as $error)

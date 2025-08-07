@@ -78,6 +78,7 @@
 <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
 <script>
     setTimeout(() => {

@@ -25,12 +25,29 @@
             <div class="alert alert-{{ $type }}" role="alert" id="alert-message">{{ session($type) }}</div>
         @endif
     @endforeach
-    
-    @if(session('error'))
-        <div class="alert alert-danger" role="alert" id="alert-message">
-            {{ session('error') }}
-        </div>
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
+        <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
+        <ul class="mt-2 mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
     @endif
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="fileSizeToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Peringatan</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Ukuran total file melebihi batas 30 MB!
+                <div id="countdown">Menutup dalam 5 detik...</div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-5 col-md-5">
             <div class="card p-4">
@@ -244,15 +261,15 @@
                                                                 @endforelse
                                                             </select>
                                                         </div>
-                                
+                                                    
                                                         <div class="col-md-8">
                                                             <label for="dokumentasi" class="form-label">Upload Gambar</label>
-                                                            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*">
+                                                            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*,video/*" onchange="validateFileSize(this)" required>
                                                         </div>
                                 
                                                         <div class="col-md-12">
                                                             <label for="keterangan" class="form-label">Keterangan</label>
-                                                            <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan berupa Kendala dan Evaluasi" required></textarea>
+                                                            <textarea name="keterangan" maxlength="255" class="form-control" rows="3" placeholder="Keterangan berupa Kendala dan Evaluasi" required></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,7 +292,9 @@
                                             <!-- Kiri: Progress dan Keterangan -->
                                             <div>
                                                 <strong>Progress: {{ $persen }}%</strong>
-                                                <p class="mt-2"><strong>Keterangan:</strong> {{ $doks->first()->keterangan ?? '-' }}</p>
+                                                <p class="mt-2" style="word-wrap: break-word; white-space: normal; overflow-wrap: break-word;">
+                                                    <strong>Keterangan:</strong> {{ $doks->first()->keterangan ?? '-' }}
+                                                </p>                                                
                                             </div>
                                             
                                             <!-- Kanan: Tombol Edit & Hapus -->
@@ -350,13 +369,13 @@
                                                                     <!-- Upload File Baru -->
                                                                     <div class="col-md-12">
                                                                         <label class="form-label">Ganti File (opsional)</label>
-                                                                        <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple>
+                                                                        <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple onchange="validateFileSize(this)" >
                                                                     </div>
                                             
                                                                     <!-- Keterangan -->
                                                                     <div class="col-12">
                                                                         <label for="keterangan" class="form-label">Keterangan</label>
-                                                                        <textarea name="keterangan" class="form-control  text-long" rows="3" required>{{ $doks->first()->keterangan }}</textarea>
+                                                                        <textarea name="keterangan" class="form-control  text-long" maxlength="255" rows="3" required>{{ $doks->first()->keterangan }}</textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

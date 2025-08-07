@@ -12,6 +12,18 @@
         {{ session('error') }}
     </div>
 @endif
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="fileSizeToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Peringatan</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Ukuran total file melebihi batas 30 MB
+            <div id="countdown">Menutup dalam 5 detik...</div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid py-2 mb-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start text-start margin-tb">
         <!-- Tombol Kembali & Cetak PDF -->
@@ -257,7 +269,7 @@
                                             <!-- Upload File Baru -->
                                             <div class="col-md-12">
                                                 <label class="form-label">Ganti File (opsional)</label>
-                                                <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple>
+                                                <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" onchange="validateFileSize(this)" multiple>
                                             </div>
                     
                                             <!-- Keterangan -->
@@ -378,13 +390,13 @@
                                     <!-- Upload File -->
                                     <div class="col-md-8">
                                         <label class="form-label">Upload Dokumentasi <small>(max 3 file: gambar/video)</small></label>
-                                        <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required>
+                                        <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple onchange="validateFileSize(this)" required>
                                     </div>
             
                                     <!-- Keterangan -->
                                     <div class="col-12">
                                         <label for="keterangan" class="form-label">Keterangan</label>
-                                        <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan berupa Kendala dan Evaluasi" required style="height: 120px"></textarea>
+                                        <textarea name="keterangan" class="form-control" rows="3" maxlength="255" placeholder="Keterangan berupa Kendala dan Evaluasi" required style="height: 120px"></textarea>
                                     </div>
             
                                 </div>

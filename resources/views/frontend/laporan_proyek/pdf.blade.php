@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Surat Keterangan Pengantar</title>
+    <title>Laporan Proyek Desa</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
