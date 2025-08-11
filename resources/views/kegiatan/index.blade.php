@@ -13,7 +13,7 @@
         {{ session('error') }}
     </div>
 @endif
-<div class="px-4 py-4 container-fluid mb-5">
+<div class="px-md-4 py-4 container-fluid mb-5">
     <div class="mt-4 row">
         <div class="px-3">
             <h6 class="text-muted mb-3">
@@ -141,7 +141,7 @@
                         </table>
                     </div>
 
-                    <div class="border-top py-3 px-3 d-flex align-items-center">
+                    <div class="border-top py-3 px-3 d-flex align-items-center pagination-wrapper">
                         {!! $kegiatans->appends(['search' => request('search')])->links('pagination::bootstrap-5') !!}
                     </div>
                 </div>

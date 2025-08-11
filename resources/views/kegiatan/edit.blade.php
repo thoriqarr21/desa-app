@@ -113,6 +113,7 @@
         <div class="form-group mt-3">
             <label class="form-label" for="gambar">Gambar Kegiatan</label>
             <input type="file" name="gambar" id="gambar" class="form-control">
+            <small class="text-muted">Format gambar: jpg, jpeg, png. Maks. 10MB per file.</small>
         </div>
         
         <div class="col-xs-12 col-sm-12 col-md-12">

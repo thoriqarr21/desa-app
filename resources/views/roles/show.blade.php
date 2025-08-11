@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+<div class="ccontainer-fluid py-3 mb-5 mx-5">
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">

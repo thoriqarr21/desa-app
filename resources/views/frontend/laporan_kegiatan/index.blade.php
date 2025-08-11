@@ -4,7 +4,7 @@
 
 <div class="container-fluid main-content">
     <div class="header-section">
-        <h4 class="mb-0 fw-bolder text-secondary">List Laporan Kegiatan</h4>
+        <h4 class="mb-0 fw-bolder text-secondary">List Laporan Kegiatan Desa</h4>
         <div class="d-flex align-items-center flex-wrap mt-2 mt-md-0">
             <form id="searchForm" method="GET" action="{{ route('frontend.laporan_kegiatan.index') }}" class="d-flex align-items-center flex-wrap">
                 <div class="search-input-wrapper me-2">
@@ -124,7 +124,7 @@
         </div>
     </div>
     @endforeach
-    <div class="border-top py-3 px-3 d-flex align-items-center justify-content-center">
+    <div class="border-top py-3 px-3 d-flex align-items-center">
         @if ($laporan->hasPages())
         {!! $laporan->appends(request()->only(['search', 'per_page']))->links('pagination::bootstrap-5') !!}
         @else

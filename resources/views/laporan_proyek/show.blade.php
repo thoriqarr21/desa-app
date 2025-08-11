@@ -19,7 +19,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-            Ukuran total file melebihi batas 30 MB
+            Ukuran total file melebihi batas 10 MB
             <div id="countdown">Menutup dalam 5 detik...</div>
         </div>
     </div>
@@ -88,8 +88,9 @@
                         </div>
                 
                         <div class="mb-2">
-                            <strong><i class="bi bi-clock me-1"></i>Periode :</strong>
-                            <div class="text-muted">{{ $laporanProyek->proyek->tanggal_mulai }} s/d {{ $laporanProyek->proyek->tanggal_selesai }}</div>
+                            <strong><i class="bi bi-clock me-1"></i>Periode Tanggal :</strong>
+                            <div class="text-muted">{{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_mulai)->translatedFormat('l, d F Y') }} <span style="text-transform: lowercase;">s/d</span>
+                                {{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_selesai)->translatedFormat('l, d F Y') }}</div>
                         </div>
                 
                         <div class="mb-2">
@@ -148,7 +149,9 @@
     @endphp
      {{-- Upload Awal --}}
      @php
-     $dokAwalPertama = $grupUploadAwal->first();
+      // Ambil progres terbaru dari laporan awal
+      $progresAwal = $laporanProyek->progres()->latest()->first();
+      $dokAwalPertama = $grupUploadAwal->first();
      @endphp
     <div class="card shadow-sm border-0 p-4 mt-4">
         <div class="head-dokumentasi p-3 rounded mb-3 d-flex align-items-center">
@@ -160,7 +163,7 @@
         @if ($dokAwalPertama)
         <div class="card-header bg-light rounded-top-2">
                <div class="text-muted"><strong>Keterangan:</strong> {{ $dokAwalPertama->keterangan }}</div>
-               <div class="text-muted"><strong>Progress:</strong> {{ $dokAwalPertama->progres?->persentase ?? '-' }}%</div> 
+               <div class="text-muted"><strong>Progress:</strong> {{ $progresAwal?->persentase ?? '-' }}%</div> 
         </div>
         @endif
         <div class="row mt-2">
@@ -275,7 +278,7 @@
                                             <!-- Keterangan -->
                                             <div class="col-12">
                                                 <label for="keterangan" class="form-label">Keterangan</label>
-                                                <textarea name="keterangan" class="form-control  text-long" rows="3" required>{{ $doks->first()->keterangan }}</textarea>
+                                                <textarea name="keterangan" class="form-control  text-long" rows="3" maxlength="255" required>{{ $doks->first()->keterangan }}</textarea>
                                             </div>
                                         </div>
                                     </div>

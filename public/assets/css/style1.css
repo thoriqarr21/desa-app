@@ -477,6 +477,10 @@ form:hover .delete {
     color: #6c757d; /* warna gray ala Bootstrap */
     line-height: 1.6;
 }
+/* .text-muted-kat {   
+    align-self: flex-start;
+    color: #6c757d;
+} */
 .text-laporan {
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
@@ -776,6 +780,13 @@ margin-left: 5px;
 }
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .container-fluid.main-content {
+        padding: 0;
+    }
+    
+    .view-cetak-btn {
+        margin-bottom: 8px;
+    }
     .header-section {
         flex-direction: column;
         align-items: start;
@@ -842,6 +853,9 @@ margin-left: 5px;
     }
     .text-muted {
         margin-left: 0;
+    }
+    .apexcharts-canvas {
+        justify-self: center;
     }
 }
 

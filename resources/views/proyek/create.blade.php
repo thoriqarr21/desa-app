@@ -209,6 +209,7 @@
         <div class="form-group mt-3">
             <strong>Gambar</strong>
             <input type="file" name="gambar" class="form-control">
+            <small class="text-muted">Format gambar: jpg, jpeg, png. Maks. 10MB per file.</small>
         </div>
 
         <button type="submit" class="btn btn-primary mt-4 fs-6" style="height: 40px; width: 140px"></i>Simpan</button>

@@ -196,6 +196,7 @@ class PembangunanProyekController extends Controller
      */
     public function show(PembangunanProyek $proyek): View
     {// eager load
+        Carbon::setLocale('id');
         return view('proyek.show', compact('proyek'));
     }
     /**
@@ -217,7 +218,7 @@ class PembangunanProyekController extends Controller
             'nama_proyek' => 'required|string|max:255',
             'jenis_proyek' => 'required|in:jalan,bangunan,jembatan', // Pastikan jenis proyek valid
             'deskripsi_proyek' => 'required|string',
-            'anggaran' => 'required|numeric|min:0',
+            'anggaran' => 'required',
             'status' => 'required|in:batal,berjalan,selesai',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
@@ -251,6 +252,7 @@ class PembangunanProyekController extends Controller
         ]);
         
         // Menghitung masa kontrak
+        
         $tanggalMulai = Carbon::parse($request->tanggal_mulai);
         $tanggalSelesai = Carbon::parse($request->tanggal_selesai);
         $masaKontrak = $tanggalMulai->diffInDays($tanggalSelesai) + 1 . ' hari';
@@ -268,7 +270,7 @@ class PembangunanProyekController extends Controller
             'penanggung_jawab',
             'lokasi',
         ]);
-
+        $data['anggaran'] = (float) str_replace(['Rp', '.', ' ', ','], '', $request->anggaran);
         $data['jenis_proyek'] = $request->jenis_proyek;
         $data['masa_kontrak'] = $masaKontrak;
         

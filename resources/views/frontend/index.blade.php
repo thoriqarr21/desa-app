@@ -4,24 +4,23 @@
 
 @section('content')
 
-<div class="container-fluid py-4 px-5">
-  <div class="d-flex">
-    <div class="card-body">
-      {{-- <h2>Dashboard</h2> --}}
-      <h2>RKTL Desa Bojong Gede</h2>
-      @if (session('status'))
-        <div class="alert alert-success" role="alert">
-          {{ session('status') }}
-        </div>
-      @endif
-      Halo, {{ Auth::user()->name }}
+<div class="container-fluid py-4 px-md-5 ">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+    <div class="card-body p-0">
+        <h2 class="mb-1">RKTL Desa Bojong Gede</h2>
+        @if (session('status'))
+            <div class="alert alert-success py-1 my-1" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+        <small class="text-muted">Halo, {{ Auth::user()->name }}</small>
     </div>
-  
-    <div class="d-flex align-items-end me-5">
-      <h6 class="welcome-hover animated-welcome">Selamat Datang</h6>
+
+    <div class="mt-2 mt-md-0">
+        <h6 class="welcome-hover animated-welcome mb-0">Selamat Datang</h6>
     </div>
-    
-  </div>
+</div>
+
   
   
 <hr class="animated-hr">

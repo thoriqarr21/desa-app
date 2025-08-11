@@ -140,6 +140,11 @@ class LaporanProyekController extends Controller
                 ]);
             }
         }
+        if ((int) $request->persentase === 100) {
+            $laporan->proyek->update([
+                'status' => 'selesai',
+            ]);
+        }
     
         return redirect()->route('laporan_proyek.index')->with('success', 'Laporan berhasil dikirim.');
     }
@@ -181,18 +186,23 @@ class LaporanProyekController extends Controller
                 'file_type' => $fileType,
             ]);
         }
-    
-        // Jika persentase 100%, ubah status proyek ke 'selesai'
+        // Jika persentase 100% → proyek selesai
         if ((int) $request->persentase === 100) {
             $laporan = LaporanProyek::with('proyek')->findOrFail($request->laporan_id);
-    
             if ($laporan->proyek && $laporan->proyek->status !== 'selesai') {
                 $laporan->proyek->update([
                     'status' => 'selesai',
                 ]);
             }
+        } else {
+            // Kalau persentase < 100, pastikan status proyek jadi proses
+            $laporan = LaporanProyek::with('proyek')->findOrFail($request->laporan_id);
+            if ($laporan->proyek && $laporan->proyek->status === 'selesai') {
+                $laporan->proyek->update([
+                    'status' => 'proses',
+                ]);
+            }
         }
-    
         return back()->with('success', 'Dokumentasi tambahan berhasil ditambahkan!');
     }
     
@@ -289,31 +299,36 @@ public function createTambahan($laporanId)
      */
     public function show(LaporanProyek $laporanProyek): View
     {
-        // Ambil ulang data dari database lengkap dengan relasi
-        $laporanProyek = LaporanProyek::with(['proyek', 'user', 'dokumentasi'])->findOrFail($laporanProyek->id);
+        Carbon::setLocale('id');
     
+        $laporanProyek = LaporanProyek::with(['proyek', 'user', 'dokumentasi', 'progres'])->findOrFail($laporanProyek->id);
+    
+        // Semua pilihan persentase
         $semuaPersen = [50, 100];
     
-        $persentaseList = $laporanProyek->dokumentasi->pluck('persentase')->unique()->sort()->values();
+        // Ambil persentase progres terbaru
+        $progresTerbaru = optional($laporanProyek->progres->sortByDesc('created_at')->first())->persentase ?? 0;
     
-        // Ambil persentase dokumentasi yang sudah dipakai (khusus tambahan > 0%)
-        $persentaseTerpakai = $laporanProyek->dokumentasi
-            ->where('persentase', '>', 0)
-            ->pluck('persentase')
-            ->unique()
-            ->toArray();
+        // Kalau progres terbaru = 50, berarti 50 sudah terpakai, sisanya 100
+        // Kalau progres terbaru = 0, berarti semua persentase tersedia
+        $persentaseTerpakai = array_filter($semuaPersen, function ($p) use ($progresTerbaru) {
+            return $p <= $progresTerbaru && $p > 0;
+        });
     
-        // Grup dokumentasi berdasarkan persentase
+        // Hapus yang terpakai dari semua persen
+        $persenTersisa = array_values(array_diff($semuaPersen, $persentaseTerpakai));
+    
+        // Grup dokumentasi untuk histori
         $grupUploadTambahan = $laporanProyek->dokumentasi
             ->groupBy('persentase')
             ->sortKeys();
     
-        // Hitung persentase yang belum dipakai
-        $persenTersisa = array_values(array_diff($semuaPersen, $persentaseTerpakai));
-    
-        return view('laporan_proyek.show', compact('laporanProyek', 'persenTersisa', 'grupUploadTambahan'));
+        return view('laporan_proyek.show', compact(
+            'laporanProyek',
+            'persenTersisa',
+            'grupUploadTambahan'
+        ));
     }
-    
 
     /**
      * Menampilkan form edit laporan (approval).
@@ -355,26 +370,26 @@ public function createTambahan($laporanId)
         return view('laporan_proyek.edit', compact('laporanProyek', 'proyek'));
     }
     public function update(Request $request, $id): RedirectResponse
-    {
+{
     $request->validate([
         'keterangan'=> 'required|string|max:255',
         'kendala'=> 'required|string|max:255',
         'evaluasi'=> 'required|string|max:255',
         'proyek_id' => 'required|exists:pembangunan_proyeks,id',
         'persentase' => 'required|integer|min:0|max:100',
-        'dokumentasi.*' => 'file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240',
+        'dokumentasi.*' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240',
     ]);
 
-    // Mencari laporan berdasarkan ID
-    $laporan = LaporanProyek::findOrFail($id);
+    $laporan = LaporanProyek::with(['progres.dokumentasi', 'proyek'])->findOrFail($id);
+
     $tanggal = Carbon::now()->format('Ymd');
     $proyekId = $request->proyek_id;
     $kodeLaporan = $tanggal . '-PRY' . $proyekId . '-' . Str::upper(Str::random(4));
-    
-    // Memperbarui data laporan
+
+    // Update data laporan dasar
     $laporan->update([
         'proyek_id' => $request->proyek_id,
-        // 'kode_laporan' => $kodeLaporan,
+        'kode_laporan' => $kodeLaporan,
         'keterangan' => $request->keterangan,
         'kendala' => $request->kendala,
         'evaluasi' => $request->evaluasi,
@@ -382,41 +397,65 @@ public function createTambahan($laporanId)
         'is_approved' => null,
     ]);
 
-    // Mencari progres yang terkait dengan laporan
-    $progres = $laporan->progres()->first();
-    
-    // Memperbarui persentase
-    if ($progres) {
-        $progres->update([
-            'persentase' => $request->persentase
-        ]);
-    }
+    $persentaseBaru = (int) $request->persentase;
 
-    // Mengupdate dokumentasi jika ada file baru
-    if ($request->hasFile('dokumentasi')) {
-        // Hapus semua dokumentasi yang ada sebelumnya
-        $progres->dokumentasi()->delete();
+    DB::transaction(function() use ($laporan, $request, $persentaseBaru) {
+        // Ambil semua progres terkait laporan ini (beserta dokumentasinya)
+        $progresList = $laporan->progres()->with('dokumentasi')->get();
 
-        // Menambahkan file baru
-        foreach ($request->file('dokumentasi') as $file) {
-            $path = $file->store('dokumentasi', 'public');
-
-            // Deteksi jenis file: image atau video
-            $mime = $file->getMimeType();
-            $fileType = str_contains($mime, 'video') ? 'video' : 'image';
-
-            $progres->dokumentasi()->create([
-                'laporan_id' => $laporan->id,
-                'file_path' => $path,
-                'file_type' => $fileType, // Menyimpan jenis file
-                'keterangan' => 'Upload baru', // Ganti dengan keterangan sesuai kebutuhan
-                'progres_id' => $progres->id,
-                'is_initial' => false,  // Mengindikasikan ini bukan dokumentasi awal
-            ]);
+        // Hapus semua progres yang bukan persentase baru
+        foreach ($progresList as $p) {
+            if ((int) $p->persentase !== $persentaseBaru) {
+                foreach ($p->dokumentasi as $dok) {
+                    if (Storage::disk('public')->exists($dok->file_path)) {
+                        Storage::disk('public')->delete($dok->file_path);
+                    }
+                    $dok->delete();
+                }
+                $p->delete();
+            }
         }
-    }
 
-    return redirect()->route('laporan_proyek.index')->with('primary', 'Laporan berhasil di update.');
+        // Pastikan ada record progres untuk persentase baru (buat jika belum ada)
+        $progres = ProgresPembangunan::firstOrCreate(
+            ['laporan_id' => $laporan->id, 'persentase' => $persentaseBaru],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // Upload dokumentasi baru (jika ada)
+        if ($request->hasFile('dokumentasi')) {
+            foreach ($request->file('dokumentasi') as $file) {
+                $path = $file->store('dokumentasi', 'public');
+                $mime = $file->getMimeType();
+                $fileType = Str::contains($mime, 'video') ? 'video' : 'image';
+
+                $progres->dokumentasi()->create([
+                    'laporan_id' => $laporan->id,
+                    'file_path' => $path,
+                    'file_type' => $fileType,
+                    'keterangan' => 'Upload baru',
+                    'progres_id' => $progres->id,
+                    'persentase' => $persentaseBaru,
+                    'is_initial' => false,
+                ]);
+            }
+        }
+
+        // Update status proyek
+        if ($persentaseBaru === 100) {
+            if ($laporan->proyek) {
+                $laporan->proyek->update(['status' => 'selesai']);
+            }
+        } else {
+            if ($laporan->proyek) {
+                $laporan->proyek->update(['status' => 'proses']);
+            }
+        }
+    });
+
+    return redirect()
+        ->route('laporan_proyek.index')
+        ->with('primary', 'Laporan berhasil diperbarui.');
 }
 
 public function cetak($id)
@@ -459,47 +498,40 @@ public function cetak($id)
     public function exportPdfPerTahun($tahun)   
     {
         Carbon::setLocale('id');
-    $bulan = date('n'); // nomor bulan (1-12)
-    $tahun = date('Y');
-
-    // Hitung berapa laporan yang sudah dibuat pada bulan dan tahun ini
-    $count = LaporanProyek::whereMonth('created_at', $bulan)
-                           ->whereYear('created_at', $tahun)
-                           ->count();
-
-    // Nomor urut berikutnya
-    $nomorUrut = $count + 1;
-
-    // Format nomor urut jadi dua digit, misal 01, 02, 10
-    $nomorUrutFormatted = str_pad($nomorUrut, 2, '0', STR_PAD_LEFT);
-
-    // Ubah bulan ke romawi
-    $bulanRomawi = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
-    $bulanRomawiFormatted = $bulanRomawi[$bulan - 1];
-    $laporan = LaporanProyek::with('proyek')
-        ->whereHas('proyek', fn ($q) => $q->whereYear('tanggal_mulai', $tahun))
-        ->get();
-
-    // Convert koordinat ke nama lokasi
-    foreach ($laporan as $item) {
-        \Log::info('Koordinat:', [
-            'lat' => $item->proyek->latitude ?? 'null',
-            'lng' => $item->proyek->longitude ?? 'null',
-        ]);
+        $bulan = date('n'); // nomor bulan (1-12)
+        $tahun = (int) $tahun; // jangan ditimpa dengan date('Y')
     
-        if ($item->proyek && $item->proyek->latitude && $item->proyek->longitude) {
-            $item->proyek->lokasi_nama = $this->getAddressFromCoordinates(
-                $item->proyek->latitude,
-                $item->proyek->longitude
-            );
-        } else {
-            $item->proyek->lokasi_nama = '-';
+        // Hitung berapa laporan yang sudah dibuat pada bulan dan tahun ini
+        $count = LaporanProyek::whereMonth('created_at', $bulan)
+                               ->whereYear('created_at', $tahun)
+                               ->count();
+    
+        $nomorUrutFormatted = str_pad($count + 1, 2, '0', STR_PAD_LEFT);
+        $bulanRomawi = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+        $bulanRomawiFormatted = $bulanRomawi[$bulan - 1];
+    
+        $laporan = LaporanProyek::with('proyek')
+            ->whereHas('proyek', fn ($q) => $q->whereYear('tanggal_mulai', $tahun))
+            ->get();
+    
+        foreach ($laporan as $item) {
+            if ($item->proyek && $item->proyek->latitude && $item->proyek->longitude) {
+                $item->proyek->lokasi_nama = $this->getAddressFromCoordinates(
+                    $item->proyek->latitude,
+                    $item->proyek->longitude
+                );
+            } else {
+                $item->proyek->lokasi_nama = '-';
+            }
         }
+    
+        $pdf = Pdf::loadView('laporan_proyek.report_pdf', compact(
+            'laporan', 'nomorUrutFormatted', 'bulanRomawiFormatted', 'tahun'
+        ));
+    
+        return $pdf->download("laporan_proyek_{$tahun}.pdf");
     }
     
-    $pdf = Pdf::loadView('laporan_proyek.report_pdf', compact('laporan','nomorUrutFormatted', 'bulanRomawiFormatted', 'tahun'));
-    return $pdf->download("laporan_proyek_{$tahun}.pdf");
-    }
 
     
     protected function getAddressFromCoordinates($lat, $lng)

@@ -140,6 +140,7 @@ class LaporanKegiatanController extends Controller
      */
     public function show(LaporanKegiatan $laporanKegiatan): View
     {
+        Carbon::setLocale('id');
         $laporanKegiatan->load(['dokumentasi', 'kegiatan.kategoriKegiatan']); // eager load
         return view('laporan_kegiatan.show', compact('laporanKegiatan'));
     }
@@ -304,17 +305,14 @@ public function exportPdfPerTahun($tahun)
 {
     Carbon::setLocale('id');
     $bulan = date('n'); // nomor bulan (1-12)
-    $tahun = date('Y');
+    $tahun = (int) $tahun; // pakai dari parameter, bukan date('Y')
 
     // Hitung berapa laporan yang sudah dibuat pada bulan dan tahun ini
     $count = LaporanKegiatan::whereMonth('created_at', $bulan)
                            ->whereYear('created_at', $tahun)
                            ->count();
 
-    // Nomor urut berikutnya
     $nomorUrut = $count + 1;
-
-    // Format nomor urut jadi dua digit, misal 01, 02, 10
     $nomorUrutFormatted = str_pad($nomorUrut, 2, '0', STR_PAD_LEFT);
 
     // Ubah bulan ke romawi
@@ -322,8 +320,9 @@ public function exportPdfPerTahun($tahun)
     $bulanRomawiFormatted = $bulanRomawi[$bulan - 1];
 
     $laporan = LaporanKegiatan::with('kegiatan')
-    ->whereHas('kegiatan', fn ($q) => $q->whereYear('tanggal_mulai', $tahun))
-    ->get();
+        ->whereHas('kegiatan', fn ($q) => $q->whereYear('tanggal_mulai', $tahun))
+        ->get();
+
     // Proses lokasi menjadi alamat
     foreach ($laporan as $item) {
         if ($item->kegiatan && $item->kegiatan->latitude && $item->kegiatan->longitude) {
@@ -336,9 +335,13 @@ public function exportPdfPerTahun($tahun)
         }
     }
 
-    $pdf = Pdf::loadView('laporan_kegiatan.report_pdf', compact('laporan','nomorUrutFormatted', 'bulanRomawiFormatted', 'tahun'));
+    $pdf = Pdf::loadView('laporan_kegiatan.report_pdf', compact(
+        'laporan', 'nomorUrutFormatted', 'bulanRomawiFormatted', 'tahun'
+    ));
+
     return $pdf->download("laporan_kegiatan_{$tahun}.pdf");
 }
+
 public function exportExcelPerTahun($tahun)
 {
     Carbon::setLocale('id');

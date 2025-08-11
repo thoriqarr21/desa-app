@@ -6,6 +6,7 @@ use App\Models\DesaKegiatan;
 use App\Models\KategoriKegiatan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -42,7 +43,7 @@ class DesaKegiatanController extends Controller
                         });
                 })
                 ->orderByDesc('created_at')
-                ->paginate(10)
+                ->paginate(5)
                 ->appends($request->all());
 
                 $kategoriList = KategoriKegiatan::orderBy('nama_kategori')
@@ -74,7 +75,7 @@ class DesaKegiatanController extends Controller
         'waktu_mulai' => 'required',
         'waktu_selesai' => 'required',
         'lokasi' => 'required',
-        'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        'gambar' => 'required|image|mimes:jpeg,png,jpg|max:10240',
     ]);
 
     $existingKegiatan = DesaKegiatan::where('nama_kegiatan', $request->nama_kegiatan)->first();
@@ -118,7 +119,7 @@ class DesaKegiatanController extends Controller
      */
     public function show(DesaKegiatan $kegiatan): View
     {
-        
+        Carbon::setLocale('id');
         return view('kegiatan.show', compact('kegiatan'));
     }
 
@@ -145,7 +146,7 @@ class DesaKegiatanController extends Controller
             'waktu_selesai' => 'required',
             'status' => 'required',
             'lokasi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ]);
         $tanggalMulai = \Carbon\Carbon::parse($request->tanggal_mulai);
         $tanggalSelesai = \Carbon\Carbon::parse($request->tanggal_selesai);

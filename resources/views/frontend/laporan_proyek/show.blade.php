@@ -43,7 +43,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                Ukuran total file melebihi batas 30 MB!
+                Ukuran total file melebihi batas 10 MB!
                 <div id="countdown">Menutup dalam 5 detik...</div>
             </div>
         </div>
@@ -91,9 +91,9 @@
                     <i class="fas fa-calendar-alt icon"></i>
                     <div>
                         <div class="periode-dates">
-                            <span class="text-value-flex mb-0">{{ $laporanProyek->proyek->tanggal_mulai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_mulai)->translatedFormat('l, d F Y') }}</span>
                             <span> s/d </span>
-                            <span class="text-value-flex mb-0">{{ $laporanProyek->proyek->tanggal_selesai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($laporanProyek->proyek->tanggal_selesai)->translatedFormat('l, d F Y') }}</span>
                           </div>
                         <p class="text-label">Periode Tanggal Proyek</p>
                     </div>
@@ -186,13 +186,15 @@
                                 @endphp
                                 {{-- Upload Awal --}}
                                 @php
+                                // Ambil progres terbaru dari laporan awal
+                                $progresAwal = $laporanProyek->progres()->latest()->first();
                                 $dokAwalPertama = $grupUploadAwal->first();
                                 @endphp
                             
                                 <h6 class="mt-3 mb-2 text-success">📌 Upload Awal</h6>
                                 @if ($dokAwalPertama)
                                     <div class="text-muted"><strong>Keterangan:</strong> {{ $dokAwalPertama->keterangan }}</div>
-                                    <div class="text-muted"><strong>Progress:</strong> {{ $dokAwalPertama->progres?->persentase ?? '-' }}%</div>
+                                    <div class="text-muted"><strong>Progress:</strong> {{ $progresAwal?->persentase ?? '-' }}%</div>
                                 @endif
                                 <div class="row mt-2">
                                     @forelse ($grupUploadAwal as $dok)
@@ -263,7 +265,7 @@
                                                         </div>
                                                     
                                                         <div class="col-md-8">
-                                                            <label for="dokumentasi" class="form-label">Upload Gambar</label>
+                                                            <label for="dokumentasi" class="form-label">Upload Dokumentasi <small>(max 3 file: gambar/video)</small></label>
                                                             <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*,video/*" onchange="validateFileSize(this)" required>
                                                         </div>
                                 
@@ -674,6 +676,12 @@
         }
     .text-muted {
         margin-left: 5px;
+    }
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
     }
     </style>
     @endsection

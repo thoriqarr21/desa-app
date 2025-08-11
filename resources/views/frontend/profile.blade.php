@@ -2,6 +2,12 @@
 
 @section('content')
 <style>
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
+    }
     /* Animasi untuk kartu profil */
     .card {
         transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -299,7 +305,6 @@ h5.animated-title:hover i {
 }
 
 </style>
-
 
 <div class="container-fluid py-4 mb-5">
     <div class="row justify-content-center">

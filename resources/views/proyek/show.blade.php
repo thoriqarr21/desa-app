@@ -43,7 +43,7 @@
     
                     <div class="mb-2">
                         <strong><i class="bi bi-calendar-week me-1"></i>Periode :</strong>
-                        <div class="text-muted">{{ $proyek->tanggal_mulai }} sampai {{ $proyek->tanggal_selesai }}</div>
+                        <div class="text-muted">{{ \Carbon\Carbon::parse($proyek->tanggal_mulai)->translatedFormat('l, d F Y') }} <span style="text-transform: lowercase;">s/d</span> {{ \Carbon\Carbon::parse($proyek->tanggal_mulai)->translatedFormat('l, d F Y') }}</div>
                     </div>
     
                     <div class="mb-2">

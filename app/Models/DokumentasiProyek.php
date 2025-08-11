@@ -19,4 +19,8 @@ class DokumentasiProyek extends Model
 {
     return $this->belongsTo(LaporanProyek::class, 'laporan_id');
 }
+public function progresTerbaru()
+{
+    return $this->hasOne(ProgresPembangunan::class, 'laporan_id')->orderByDesc('persentase');
+}
 }

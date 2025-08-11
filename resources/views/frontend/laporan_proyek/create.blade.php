@@ -283,6 +283,10 @@
         }
     }
     @media (max-width: 768px) {
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
         .main-form-card {
             padding: 25px;
         }

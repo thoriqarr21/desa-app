@@ -11,7 +11,7 @@
             <form id="searchForm" method="GET" action="{{ route('frontend.laporan_proyek.index') }}" class="d-flex align-items-center flex-wrap">
                 <div class="search-input-wrapper me-2">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" class="form-control" name="search" value="{{ request('search') }}" placeholder="Cari nama kegiatan">
+                    <input type="text" id="searchInput" class="form-control" name="search" value="{{ request('search') }}" placeholder="Search">
                 </div>
             </form>
     

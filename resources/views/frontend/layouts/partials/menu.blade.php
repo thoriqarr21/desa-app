@@ -13,7 +13,7 @@
             <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
                 <div class="logo-link-wrapper">
                     <img class="logo" src="{{ asset('assets/img/logo_pemkab_bogor.jpg') }}" alt="logo">
-                    <a href="#" class="logo-text fw-bold">Desa Bojong Gede</a>
+                    <a href="{{ route('frontend.index') }}" class="logo-text fw-bold">Desa Bojong Gede</a>
                 </div>
                 <button class="btn fs-2" onclick="toggleMobileMenu()">×</button>
             </div>

@@ -431,6 +431,7 @@ form:hover .delete {
     display: block;
     font-weight: 700;
 }
+
 .text-value-flex {
     font-size: 16px;
     color: #0a3c09;
@@ -454,6 +455,21 @@ form:hover .delete {
         width: 100%;
         align-items: center;
     }
+    .pagination-wrapper .pagination,
+.pagination-wrapper .d-sm-flex {
+    margin-bottom: 0;
+}
+
+.pagination-wrapper > nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+    .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
     .navbar-nav {
         margin-top: 5px;
         margin-bottom: 3px;
@@ -464,7 +480,9 @@ form:hover .delete {
         flex-direction: column !important;
         align-items: stretch;
     }
-    
+    .ml-responsive {
+        margin-left: 5px; /* Anda bisa menyesuaikan nilai ini */
+      }
     .export-wrapper > * {
         width: 100% !important;
     }

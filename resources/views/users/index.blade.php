@@ -11,7 +11,7 @@
         {{ session('error') }}
     </div>
 @endif
-    <div class="px-5 py-4 container-fluid mb-5">
+    <div class="px-md-5 py-4 container-fluid mb-5">
         <div class="row">
             <div class="px-3 ">
                 <h6 class="text-muted mb-3">
@@ -111,17 +111,17 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         @can('user-edit')
-                                        <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-user-edit" aria-hidden="true"></i></a>                        
+                                        <a href="{{ route('users.edit',$user->id) }}"><i class="edit fas fa-user-edit" aria-hidden="true"></i></a>                        
                                         @endcan
                                         @can('user-show')
-                                        <a href="{{ route('users.show',$user->id) }}"><i class="fas fa-list-ul ms-1" aria-hidden="true"></i></a>
+                                        <a href="{{ route('users.show',$user->id) }}"><i class="show fas fa-list-ul ms-1" aria-hidden="true"></i></a>
                                         @endcan
                                         @can('user-delete')                                     
                                         <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
                                             @csrf
                                             @method('DELETE')
                           
-                                            <button type="submit"><i class="fa-solid fa-trash ms-1"></i></button>
+                                            <button type="submit"><i class="delete fa-solid fa-trash ms-1"></i></button>
                                         </form>
                                         @endcan
 

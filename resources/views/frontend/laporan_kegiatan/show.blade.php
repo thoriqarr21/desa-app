@@ -54,9 +54,9 @@
                     <i class="fas fa-calendar-alt icon"></i>
                     <div>
                         <div class="periode-dates">
-                            <span class="text-value-flex mb-0">{{ $laporanKegiatan->kegiatan->tanggal_mulai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }}</span>
                             <span> s/d </span>
-                            <span class="text-value-flex mb-0">{{ $laporanKegiatan->kegiatan->tanggal_selesai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_selesai)->translatedFormat('l, d F Y') }}</span>
                           </div>
                         <p class="text-label">Periode Tanggal Kegiatan</p>
                     </div>

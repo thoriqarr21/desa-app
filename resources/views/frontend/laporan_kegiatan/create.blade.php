@@ -271,6 +271,10 @@
         .main-form-card {
             padding: 25px;
         }
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
         .header-card h4 {
             font-size: 1.2rem;
             flex-direction: column;

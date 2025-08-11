@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+<div class="container-fluid py-3 mb-3 ms-2">
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -24,7 +24,7 @@
         </div>
     @endif
 </div>
-<div class="container mt-4">
+<div class="container-fluid py-3 mb-5 ms-2">
     <div class="card p-3 rounded-8"> 
         <form method="POST" action="{{ route('roles.update', $role->id) }}">
             @csrf
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary btn-sm mb-3 fs-6"><i class="fa-solid fa-floppy-disk" style="font-size: 15px"></i> Submit</button>
+                    <button type="submit" class="btn btn-primary mt-3 fs-6">Update</button>
                 </div>
             </div>
         </form>

@@ -13,7 +13,7 @@ function validateFileSize(input) {
         totalSize += input.files[i].size;
     }
 
-    const maxTotalSize = 30 * 1024 * 1024; // 30MB
+    const maxTotalSize = 10 * 1024 * 1024; // 30MB
 
     if (totalSize > maxTotalSize) {
         // Reset file input
@@ -40,3 +40,23 @@ function validateFileSize(input) {
         }, 1000);
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Cari semua <i> yang punya class keyword di awal (show/edit/delete)
+    document.querySelectorAll('i').forEach(function(icon) {
+        let classes = icon.className.split(/\s+/);
+        if (classes.length > 0) {
+            let keyword = classes[0]; // class pertama, misal "show"
+            if (!icon.hasAttribute('title')) {
+                icon.setAttribute('title', keyword.charAt(0).toUpperCase() + keyword.slice(1));
+                icon.setAttribute('data-bs-toggle', 'tooltip');
+            }
+        }
+    });
+
+    // Aktifkan Bootstrap tooltip di semua elemen yang punya data-bs-toggle="tooltip"
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});

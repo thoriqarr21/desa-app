@@ -12,7 +12,18 @@
                 <span>Kembali</span>
             </a>                       
         </div>
-    
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="fileSizeToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Peringatan</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Ukuran total file melebihi batas 10 MB!
+                    <div id="countdown">Menutup dalam 5 detik...</div>
+                </div>
+            </div>
+        </div>
         <!-- Judul Update -->
         <div class="card card-head border-0 mt-3 mt-md-0 mb-4 w-full" 
              style="box-shadow: 2px 2px 3px 1px rgb(219, 219, 219);">
@@ -121,7 +132,7 @@
         
         <div class="form-group">
             <label class="form-label" for="dokumentasi">Dokumentasi (opsional)</label>
-            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*,video/*">
+            <input type="file" name="dokumentasi[]" class="form-control" multiple accept="image/*,video/*" onchange="validateFileSize(this)">
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Update</button>

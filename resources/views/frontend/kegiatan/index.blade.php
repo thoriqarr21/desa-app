@@ -19,7 +19,7 @@
             <form id="searchForm" method="GET" action="{{ route('frontend.kegiatan.index') }}" class="d-flex align-items-center flex-wrap">
                 <div class="search-input-wrapper me-2">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" class="form-control" name="search" value="{{ request('search') }}" placeholder="Cari nama kegiatan">
+                    <input type="text" id="searchInput" class="form-control" name="search" value="{{ request('search') }}" placeholder="Search">
                 </div>
             </form>
             @php
@@ -68,7 +68,7 @@
                 <i class="fas fa-th-list icon" style="background-color: #d4edda;"></i>
                 <div class="detail-text">
                     <span style="color: rgb(49, 125, 49); font-weight: 800">{{ ucfirst($kegiatan->kategoriKegiatan->nama_kategori) }}</span>
-                    <small class="text-muted"  style="font-weight: 600">Kategori</small>
+                    <small class="text-muted"  style="font-weight: 600; margin-left: 0;">Kategori Kegiatan</small>
                 </div>
             </div>
             <div class="detail-item">
@@ -79,9 +79,9 @@
                 </div>
             </div>
             <div class="detail-item">
-                <i class="fas fa-calendar-days icon" style="background-color: #d8edc4"></i>
+                <i class="fas fa-calendar-days icon" style="background-color: rgb(224, 218, 170)"></i>
                 <div class="detail-text">
-                    <span style="color: rgb(49, 125, 49); font-weight: 800">{{ $kegiatan->tanggal_mulai }}</span>
+                    <span style="color: rgb(143, 149, 68); font-weight: 800">{{ $kegiatan->tanggal_mulai }}</span>
                     <small class="text-muted" style="font-weight: 600">Tanggal Kegiatan</small>
                 </div>
             </div>

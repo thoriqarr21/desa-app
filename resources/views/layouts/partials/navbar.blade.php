@@ -1,4 +1,4 @@
-<nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-sm rounded " id="navbarBlur" navbar-scroll="true">
+<nav class="navbar navbar-main navbar-expand-lg mx-md-5 px-lg-0 shadow-sm rounded " id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-2 rounded-2" style="box-shadow: 0px 5px 15px 0px rgba(61, 61, 61, 0.709);">
         @php
         $segment = request()->segment(1);

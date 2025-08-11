@@ -25,6 +25,18 @@
             </div>
         </div>          
     </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="fileSizeToast" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Peringatan</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Ukuran total file melebihi batas 10 MB
+                <div id="countdown">Menutup dalam 5 detik...</div>
+            </div>
+        </div>
+    </div>
     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
         <strong>Terjadi kesalahan!</strong> Silakan periksa kembali data yang Anda masukkan:
@@ -81,7 +93,7 @@
 
         <div class="form-group mb-3">
             <strong>Upload Dokumentasi (max 3 file: gambar/video)</strong>
-            <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required>
+            <input type="file" name="dokumentasi[]" class="form-control" accept="image/*,video/*" multiple required onchange="validateFileSize(this)">
             <small class="text-muted">Format gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
         </div>
         

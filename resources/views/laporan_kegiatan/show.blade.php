@@ -50,7 +50,7 @@
                 
                             <div class="mb-2">
                                 <strong><i class="bi bi-calendar-event me-1"></i>Tanggal Kegiatan:</strong>
-                                <div class="text-muted">{{ $laporanKegiatan->kegiatan->tanggal_mulai }} s/d {{ $laporanKegiatan->kegiatan->tanggal_selesai }}</div>
+                                <div class="text-muted">{{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }} <span style="text-transform: lowercase;">s/d</span> {{ \Carbon\Carbon::parse($laporanKegiatan->kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }}</div>
                             </div>
                 
                             <div class="mb-2">

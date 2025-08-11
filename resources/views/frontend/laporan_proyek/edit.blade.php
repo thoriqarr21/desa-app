@@ -286,6 +286,10 @@
         }
     }
     @media (max-width: 768px) {
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
         .main-form-card {
             padding: 25px;
         }
@@ -442,7 +446,7 @@
                         <label class="form-label-custom">Upload Dokumentasi</label>
                     </div>
                     <div class="col-md-9">
-                        <input type="file" name="dokumentasi[]" class="form-control form-control-custom" accept="image/*,video/*" multiple>
+                        <input type="file" name="dokumentasi[]" class="form-control form-control-custom" accept="image/*,video/*" multiple required>
                         <small class="text-muted file-upload-small-text">Max 3 file. Gambar: jpg, png. Video: mp4, mov, avi. Maks. 10MB per file.</small>
                     </div>
                 </div>

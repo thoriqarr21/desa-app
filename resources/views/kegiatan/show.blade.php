@@ -41,7 +41,7 @@
                          style="max-height: 230px; object-fit: cover; width: 100%;">
             
                     <div class="mb-2">
-                        <strong><i class="bi bi-calendar-week me-1"></i>Periode Waktu :</strong>
+                        <strong><i class="bi bi-calendar-week me-1"></i>Waktu Kegiatan :</strong>
                         <div class="text-muted">{{ $kegiatan->waktu_mulai }} WIB S/D {{ $kegiatan->waktu_selesai }} WIB</div>
                     </div>
             
@@ -52,8 +52,8 @@
             
             
                     <div class="mb-2">
-                        <strong><i class="bi bi-diagram-3 me-1"></i>Periode Kegiatan :</strong>
-                        <div class="text-muted">{{ $kegiatan->tanggal_mulai }} sampai {{ $kegiatan->tanggal_selesai }}</div>
+                        <strong><i class="bi bi-diagram-3 me-1"></i>Tanggal Kegiatan :</strong>
+                        <div class="text-muted">{{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }} <span style="text-transform: lowercase;">s/d</span> {{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }}</div>
                     </div>
                 </div>
             

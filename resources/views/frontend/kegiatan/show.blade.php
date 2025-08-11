@@ -65,9 +65,9 @@
                     <i class="fas fa-calendar-alt icon"></i>
                     <div>
                         <div class="periode-dates">
-                            <span class="text-value-flex mb-0">{{ $kegiatan->tanggal_mulai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->translatedFormat('l, d F Y') }}</span>
                             <span> s/d </span>
-                            <span class="text-value-flex mb-0">{{ $kegiatan->tanggal_selesai }}</span>
+                            <span class="text-value-flex mb-0">{{ \Carbon\Carbon::parse($kegiatan->tanggal_selesai)->translatedFormat('l, d F Y') }}</span>
                           </div>
                         <p class="text-label">Periode Tanggal Kegiatan</p>
                     </div>
@@ -342,9 +342,15 @@
         color: #ff6b81; 
         margin-top: 5px;
     }
-.text-muted {
-    margin-left: 5px;
-}
+    .text-muted {
+        margin-left: 5px;
+    }
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding-left: 0; 
+            padding-right: 0; 
+        }
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

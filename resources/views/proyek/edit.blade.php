@@ -184,8 +184,9 @@
 
         <!-- Input untuk anggaran -->
         <div class="form-group">
-            <strong for="anggaran">Anggaran</strong>
-            <input type="number" name="anggaran" id="anggaran" class="form-control" value="{{ old('anggaran', $proyek->anggaran) }}" required>
+            <label for="anggaran"><strong>Anggaran</strong></label>
+            <input type="text" name="anggaran" id="anggaran" class="form-control" 
+                value="{{ old('anggaran', $proyek->anggaran) }}" required>
         </div>
 
         <!-- Input untuk status -->
@@ -242,6 +243,7 @@
         <div class="form-group mt-3">
             <strong for="gambar">Gambar Proyek</strong>
             <input type="file" name="gambar" id="gambar" class="form-control">
+            <small class="text-muted">Format gambar: jpg, jpeg, png. Maks. 10MB per file.</small>
         </div>
 
         <!-- Submit Button -->
@@ -250,14 +252,37 @@
 </div>
 
 <script>
-    // setTimeout(function() {
-    //             const alertBox = document.getElementById('alertError');
-    //             if (alertBox) {
-    //                 alertBox.style.transition = "opacity 0.5s ease";
-    //                 alertBox.style.opacity = 0;
-    //                 setTimeout(() => alertBox.remove(), 500); // hapus elemen setelah fade out
-    //             }
-    //         }, 5000); // 5000 ms = 5 detik
+const anggaranInput = document.getElementById('anggaran');
+
+// Format awal
+if (anggaranInput.value) {
+    anggaranInput.value = formatRupiah(anggaranInput.value, 'Rp. ');
+}
+
+// Format saat ketik
+anggaranInput.addEventListener('keyup', function () {
+    let value = this.value.replace(/[^\d]/g, '');
+    this.value = value ? formatRupiah(value, 'Rp. ') : '';
+});
+
+// Hapus Rp & titik sebelum submit
+document.querySelector('form').addEventListener('submit', function () {
+    anggaranInput.value = anggaranInput.value.replace(/[^\d]/g, '');
+});
+
+function formatRupiah(angka, prefix) {
+    let numberString = angka.toString(),
+        sisa = numberString.length % 3,
+        rupiah = numberString.substr(0, sisa),
+        ribuan = numberString.substr(sisa).match(/\d{3}/g);
+
+    if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+
+    return prefix + rupiah;
+}
     document.getElementById('jenis_proyek').addEventListener('change', function() {
         var jenisProyek = this.value;
         document.getElementById('form-jalan').style.display = (jenisProyek === 'jalan') ? 'block' : 'none';

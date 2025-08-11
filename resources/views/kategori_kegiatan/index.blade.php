@@ -12,7 +12,7 @@
         {{ session('error') }}
     </div>
 @endif
-<div class="px-4 py-4 container-fluid mb-5">
+<div class="px-lg-4 py-4 container-fluid mb-5">
     <div class="mt-4 row">
         <div class="px-3 ">
             <h6 class="text-muted mb-3">
@@ -44,7 +44,7 @@
                         </form>
                         
                         
-                        <a href="{{ route('kategori_kegiatan.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 me-2" style="font-size: 15px">
+                        <a href="{{ route('kategori_kegiatan.create') }}" class="btn btn-sm btn-dark btn-icon d-flex align-items-center justify-content-center mb-0 me-2 ml-responsive" style="font-size: 15px">
                             <i class="fas fa-plus me-2" style="font-size: 15px;"></i>
                             Kategori Kegiatan
                         </a>
